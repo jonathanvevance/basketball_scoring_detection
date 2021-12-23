@@ -1,0 +1,52 @@
+body {
+  margin: 0;
+  font-family: 'Kulim Park', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+@font-face {
+  font-family: 'Proxima Bold';
+  src: url('./assets/Proxima\ Nova\ Bold.otf');
+}
+@font-face {
+  font-family: 'Proxima Reg';
+  src: url('./assets/ProximaNova-Regular.otf');
+}
+
+.MuiStepIcon-active,
+.MuiStepIcon-completed,
+.MuiSlider-root,
+.Mui-checked {
+  color: #e00420 !important;
+}
+
+.MuiButton-contained,
+.MuiButton-containedPrimary {
+  background-color: #e00420 !important;
+  color: white !important;
+}
+.MuiButton-root.Mui-disabled {
+  background-color: grey !important;
+  opacity: 0.5;
+}
+
+.MuiCheckbox-colorSecondary.Mui-checked {
+  color: black !important;
+}
+
+.MuiStepConnector-line {
+  border-color: black !important;
+}
+
+.MuiTypography-body1,
+.MuiTypography-body2,
+.MuiInputLabel-outlined,
+.MuiInputBase-input {
+  font-family: 'Proxima Reg' !important;
+}
