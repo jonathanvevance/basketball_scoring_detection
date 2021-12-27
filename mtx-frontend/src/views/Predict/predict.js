@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import UploadVideo from './upload';
 
-const Results = () => {
+const UploadUI = () => {
   return (
     <div>
       <UploadVideo></UploadVideo>
@@ -9,4 +9,4 @@ const Results = () => {
   );
 };
 
-export default Results;
+export default UploadUI;

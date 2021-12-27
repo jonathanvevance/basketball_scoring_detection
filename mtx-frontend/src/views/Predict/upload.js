@@ -1,5 +1,6 @@
 import React, { Component, useState } from 'react';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 
 function FileUpload() {
   const [fileData, setFileData] = useState('');
@@ -18,6 +19,7 @@ function FileUpload() {
     }).then((res) => {
       alert(res.data.message);
       console.log(res.data);
+      document.location.href = 'http://localhost:3000/results';
     });
   };
   const fileDataShow = () => {
