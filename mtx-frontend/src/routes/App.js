@@ -5,10 +5,14 @@ import { createBrowserHistory } from 'history';
 import NavBar from '../components/NavBar';
 
 import Predict from '../views/Predict/predict';
+import Results from '../views/Results/results';
 
 var hist = createBrowserHistory();
 
-var routes = [{ path: '/', component: Predict }];
+var routes = [
+  { path: '/', component: Predict },
+  { path: '/results', component: Results },
+];
 
 export default class App extends React.Component {
   render() {
