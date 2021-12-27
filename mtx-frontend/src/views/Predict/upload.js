@@ -1,15 +1,16 @@
 import React, { Component, useState } from 'react';
 import axios from 'axios';
-import { Redirect } from 'react-router-dom';
+import Dropzone from 'react-dropzone-uploader';
+import 'react-dropzone-uploader/dist/styles.css';
 
 function FileUpload() {
   const [fileData, setFileData] = useState('');
-  const getFile = (e) => {
-    setFileData(e.target.files[0]);
+  const getFile = (files) => {
+    setFileData(files);
   };
   console.log(fileData.name);
   const uploadFile = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     const data = new FormData();
     data.append('file', fileData, fileData.name);
     axios({
@@ -22,34 +23,20 @@ function FileUpload() {
       document.location.href = 'http://localhost:3000/results';
     });
   };
-  const fileDataShow = () => {
-    if (fileData) {
-      return (
-        <div>
-          <h2>File Details:</h2>
 
-          <p>File Name: {fileData.name}</p>
-
-          <p>File Type: {fileData.type}</p>
-
-          <p>Last Modified: {fileData.lastModifiedDate.toDateString()}</p>
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <br />
-          <h4>Choose before Pressing the Upload button</h4>
-        </div>
-      );
-    }
-  };
   return (
-    <form onSubmit={uploadFile}>
-      <input type='file' name='file' onChange={getFile} required />
-      <input type='submit' name='upload' value='Upload' />
-      {fileDataShow()}
-    </form>
+    <Dropzone
+      // getUploadParams={() => ({ url: 'http://localhost:5000/upload' })} // specify upload params and url for your files
+      onChangeStatus={({ meta, file }, status) => {
+        getFile(file);
+      }}
+      onSubmit={(files) => {
+        // console.log(files[0].file);
+        // getFile(files);
+        uploadFile();
+      }} // e.g., submit the uploaded file URLs to your backend
+      accept='video/mp4'
+    />
   );
 }
 
