@@ -17,6 +17,7 @@ const NavBar = (props) => {
     return [
       { path: '/results', name: 'RESULTS' },
       { path: '/visualization', name: 'VISUALIZATION' },
+      { path: '/charts', name: 'CHARTS' },
     ];
   };
   return (

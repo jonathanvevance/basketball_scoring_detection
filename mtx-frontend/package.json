@@ -18,6 +18,7 @@
     "react-dom": "^17.0.2",
     "react-dropzone": "^11.4.2",
     "react-dropzone-uploader": "^2.11.0",
+    "react-google-charts": "^3.0.15",
     "react-loading": "^2.0.3",
     "react-redux": "^7.2.6",
     "react-router-dom": "^5.3.0",
