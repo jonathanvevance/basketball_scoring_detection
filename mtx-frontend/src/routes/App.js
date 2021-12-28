@@ -6,7 +6,7 @@ import NavBar from '../components/NavBar';
 
 import Predict from '../views/Predict/predict';
 import Results from '../views/Results/results';
-import { ChartControls } from '../views/Visualisation/chart';
+import ChartControls from '../views/Visualisation/chart';
 
 var hist = createBrowserHistory();
 
