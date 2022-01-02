@@ -1,150 +1,74 @@
-.overall {
+body {
   font-family: 'Proxima Reg';
 }
 
-.container {
-  position: relative;
-  width: 600px;
-  margin: auto;
-}
-
-.preview {
-  position: absolute;
-  left: 70px;
-  max-width: 200px;
-}
-
-.btn-upload {
-  position: relative !important;
-  margin-right: 10px !important;
-  color: #da4148;
-  font-family: 'Proxima Reg';
-}
-
-.file-name {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  display: inline-block;
-  max-width: 300px;
-  vertical-align: middle;
-}
-
-.list-group {
-  padding: 0;
-  margin: 0;
-}
-
-.list-header {
-  margin-top: 10px !important;
-}
-
-.upload-message {
-  font-weight: bold;
-  color: #63a84e;
-}
-
-.upload-message.error {
-  color: #da4148;
-}
-
-.btn-choose {
-  margin-right: 10px !important;
-  position: relative;
-  color: #da4148;
-  font-family: 'Proxima Reg';
-}
-
-.split {
-  height: 100%;
-  width: 50%;
-  position: fixed;
-  z-index: 1;
-  top: 50px;
-  overflow-x: hidden;
-  padding-top: 20px;
-}
-
-/* Control the left side */
-.top {
-  top: 0;
-  background-color: rgb(255, 255, 255);
-}
-
-/* Control the right side */
-.bottom {
-  bottom: 0;
-  background-color: rgb(255, 255, 255);
-}
-
-/* If you want the content centered horizontally and vertically */
-.centered {
-  position: relative;
-  /* top: 50%; */
-  /* left: 50%; */
-  /* transform: translate(-50%, 10px); */
+div#layout {
   text-align: center;
 }
 
-/* Style the image inside the centered container, if needed */
-.centered img {
-  width: 150px;
-  border-radius: 50%;
+div#container {
+  width: 1000px;
+  height: 600px;
+  margin: auto;
+  background-color: #2f4a6d;
 }
-.close {
-  display: none;
+
+svg {
+  width: 100%;
+  height: 100%;
 }
-.open {
-  display: block;
-  position: relative;
-  margin-top: 30px;
-  margin-bottom: 30px;
-  margin-left: 30px;
-  padding-bottom: 20px;
-  padding-top: 20px;
+
+.bar {
+  fill: #80cbc4;
 }
-.grid-layout .top {
-  width: 1500px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 1500px);
-  grid-gap: 10px;
-  justify-content: center;
+
+text {
+  font-size: 12px;
+  fill: #fff;
 }
-.grid-layout .bottom {
-  width: 1500px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 1500px);
-  grid-gap: 10px;
-  justify-content: center;
+
+path {
+  stroke: gray;
 }
-.tile-right {
-  margin-top: 40px;
-  position: absolute;
-  display: inline-block;
-  /* border: 5px solid #000; */
-  width: 700px;
-  right: 20px;
+
+line {
+  stroke: gray;
 }
-.tile-left {
-  position: absolute;
-  display: inline-block;
-  /* border: 5px solid #000; */
-  width: 700px;
-  left: 170px;
-  /* width: 600px; */
+
+line#limit {
+  stroke: #fed966;
+  stroke-width: 3;
+  stroke-dasharray: 3 6;
 }
-.tile-middle {
-  position: absolute;
-  display: inline-block;
-  /* border: 5px solid #000; */
-  top: -150px;
-  width: 100px;
-  /* width: 600px; */
+
+.grid path {
+  stroke-width: 0;
 }
-.tile {
-  position: absolute;
-  display: inline-block;
-  /* border: 5px solid #000; */
-  height: 500px;
-  /* width: 600px; */
+
+.grid .tick line {
+  stroke: #9faaae;
+  stroke-opacity: 0.3;
+}
+
+text.divergence {
+  font-size: 14px;
+  fill: #2f4a6d;
+}
+
+text.value {
+  font-size: 14px;
+}
+
+text.title {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+text.label {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+text.source {
+  font-size: 10px;
 }
