@@ -1,39 +1,6 @@
 import React from 'react';
 import * as d3 from 'd3';
-// import { LineChart } from '@d3/line-chart';
-
-const margin = { top: 40, right: 80, bottom: 60, left: 50 },
-  width = 960 - margin.left - margin.right,
-  height = 280 - margin.top - margin.bottom,
-  color = 'OrangeRed';
-
-// const chart = (data) => {
-//   const [activeIndex, setActiveIndex] = React.useState(null),
-//     [data, setData] = React.useState([]);
-
-//   const yMinValue = d3.min(data, (d) => d.value),
-//     yMaxValue = d3.max(data, (d) => d.value);
-
-//   const getX = d3
-//     .scaleTime()
-//     .domain(d3.extent(data, (d) => d.time))
-//     .range([0, width]);
-
-//   const getY = d3
-//     .scaleLinear()
-//     .domain([yMinValue - 1, yMaxValue + 2])
-//     .range([height, 0]);
-
-//   const getXAxis = (ref) => {
-//     const xAxis = d3.axisBottom(getX);
-//     d3.select(ref).call(xAxis.tickFormat(d3.timeFormat('%b')));
-//   };
-
-//   const getYAxis = (ref) => {
-//     const yAxis = d3.axisLeft(getY).tickSize(-width).tickPadding(7);
-//     d3.select(ref).call(yAxis);
-//   };
-// };
+import './chart.css';
 
 class ChartControls extends React.Component {
   constructor(props) {
@@ -44,21 +11,28 @@ class ChartControls extends React.Component {
     };
   }
   componentDidMount() {
-    // axios.get('http://localhost:5000/getprobab').then((result) => {
-    //   console.log(result.data.data);
-    //   this.setState({ data: result.data.data });
-    // });
     this.drawLineChart();
   }
   async drawLineChart() {
-    const dataset = await d3.json('http://localhost:4000/getvalue');
-    // console.log(dataset);
+    const dataset = await d3
+      .json('http://localhost:4000/getvalue')
+      .then((d) => {
+        const parseDate = d3.timeParse('%s');
+        d.forEach((i) => {
+          i.time = parseDate(i.time);
+          i.value = Number(i.value);
+        });
+        return d;
+      });
+    let activeIndex = null;
+
+    console.log(dataset);
     const yAccessor = (d) => d.value;
     const xAccessor = (d) => d['time'];
     console.log(xAccessor(dataset[2]));
 
     let dimensions = {
-      width: window.innerWidth * 0.6,
+      width: window.innerWidth * 0.8,
       height: 600,
       margin: {
         top: 115,
@@ -138,7 +112,7 @@ class ChartControls extends React.Component {
     const xAxisGenerator = d3.axisBottom().scale(xScale);
     const xAxis = bounds
       .append('g')
-      .call(xAxisGenerator.tickFormat(d3.timeFormat('%b')))
+      .call(xAxisGenerator.tickFormat(d3.timeFormat('%s')))
       .style('transform', `translateY(${dimensions.boundedHeight}px)`);
 
     wrapper
@@ -151,7 +125,8 @@ class ChartControls extends React.Component {
       .attr('text-anchor', 'middle')
       .text('Probability Chart')
       .style('font-size', '36px')
-      .style('text-decoration', 'underline');
+      .style('text-decoration', 'underline')
+      .style('color', 'red');
   }
 
   render() {
