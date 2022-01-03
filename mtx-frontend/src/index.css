@@ -1,22 +1,22 @@
 body {
   margin: 0;
-  font-family: 'Kulim Park', sans-serif;
+  font-family: "Kulim Park", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
 @font-face {
-  font-family: 'Proxima Bold';
-  src: url('./assets/Proxima\ Nova\ Bold.otf');
+  font-family: "Proxima Bold";
+  src: url("./assets/Proxima\ Nova\ Bold.otf");
 }
 @font-face {
-  font-family: 'Proxima Reg';
-  src: url('./assets/ProximaNova-Regular.otf');
+  font-family: "Proxima Reg";
+  src: url("./assets/ProximaNova-Regular.otf");
 }
 
 .MuiStepIcon-active,
@@ -48,5 +48,5 @@ code {
 .MuiTypography-body2,
 .MuiInputLabel-outlined,
 .MuiInputBase-input {
-  font-family: 'Proxima Reg' !important;
+  font-family: "Proxima Reg" !important;
 }

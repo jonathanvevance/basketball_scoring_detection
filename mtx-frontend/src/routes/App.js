@@ -1,27 +1,49 @@
-import React from 'react';
-import { Router, Route, Switch } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
+import React from "react";
+import { Router, Route, Switch } from "react-router-dom";
+import { createBrowserHistory } from "history";
+import "../App.css";
+import NavBar from "../components/NavBar";
 
-import NavBar from '../components/NavBar';
-
-import Predict from '../views/Predict/predict';
-import Results from '../views/Results/results';
-import ChartControls from '../views/Visualisation/chart';
+import Predict from "../views/Predict/predict";
+import Results from "../views/Results/results";
+import ChartControls from "../views/Visualisation/chart";
 
 var hist = createBrowserHistory();
 
 var routes = [
-  { path: '/', component: Predict },
-  { path: '/results', component: Results },
-  { path: '/charts', component: ChartControls },
+  { path: "/", component: Predict },
+  { path: "/results", component: Results },
+  { path: "/charts", component: ChartControls },
 ];
 
 export default class App extends React.Component {
+  state = {
+    loading: true,
+  };
+
+  componentDidMount() {
+    this.fakeRequest().then(() => {
+      const ball = document.querySelector(".loader");
+      if (ball) {
+        ball.remove(); // removing the spinner element
+        this.setState({ loading: false }); // home page displays
+      }
+    });
+  }
+
+  fakeRequest = () => {
+    return new Promise((resolve) => setTimeout(() => resolve(), 2500));
+  };
+
   render() {
+    if (this.state.loading) {
+      return null; //app is not ready (fake request is in process)
+    }
+
     return (
       <div>
         <NavBar />
-        <div style={{ marginTop: '10px' }}>
+        <div>
           <Router history={hist}>
             <Switch>
               {routes.map((prop, key) => {
