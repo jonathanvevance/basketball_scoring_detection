@@ -132,20 +132,6 @@ class ChartControls extends React.Component {
   render() {
     return (
       <div id='root'>
-        <div id='options'>
-          <label>
-            <input name='radio' type='radio' />
-            2018
-          </label>
-          <label>
-            <input name='radio' type='radio' />
-            2019
-          </label>
-          <label>
-            <input name='radio' type='radio' checked />
-            2020
-          </label>
-        </div>
         <div id='wrapper'></div>
       </div>
     );
