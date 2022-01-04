@@ -6,24 +6,14 @@ class ChartControls extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
+      data: props.data,
       options: [],
     };
   }
   componentDidMount() {
-    this.drawLineChart();
+    this.drawLineChart(this.state.data);
   }
-  async drawLineChart() {
-    const dataset = await d3
-      .json('http://localhost:4000/getvalue')
-      .then((d) => {
-        const parseDate = d3.timeParse('%s');
-        d.forEach((i) => {
-          i.time = parseDate(i.time);
-          i.value = Number(i.value);
-        });
-        return d;
-      });
+  async drawLineChart(dataset) {
     let activeIndex = null;
 
     console.log(dataset);
@@ -130,11 +120,7 @@ class ChartControls extends React.Component {
   }
 
   render() {
-    return (
-      <div id='root'>
-        <div id='wrapper'></div>
-      </div>
-    );
+    return <div id='wrapper'></div>;
   }
 }
 
