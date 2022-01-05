@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const animatedComponents = makeAnimated();
 
-const Countries = [
+const options = [
   { label: 'Full', value: 1 },
   { label: 'First 40', value: 2 },
   { label: 'Last 60', value: 3 },
@@ -28,7 +28,7 @@ class SimpleListMenu extends Component {
           <div className='col-md-3'></div>
           <div className='col-md-6'>
             <Select
-              options={Countries}
+              options={options}
               components={animatedComponents}
               onChange={(event) => this.onChangeCallback(event)}
             />
