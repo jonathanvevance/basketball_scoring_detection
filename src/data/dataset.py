@@ -114,3 +114,20 @@ class video_folder(Dataset):
             bag_tensors.append(torch.zeros_like(bag_tensors[-1]))
 
         return torch.stack(bag_tensors), torch.Tensor([self.labels[idx], self.max_video_frames - pad_length])
+
+
+# https://stackoverflow.com/a/55593757
+class CustomTensorDataset(Dataset):
+    """TensorDataset with support of transforms."""
+    def __init__(self, tensors, transform=None):
+        self.tensors = tensors
+        self.transform = transform
+
+    def __getitem__(self, index):
+        x = self.tensors[index]
+        if self.transform:
+            x = self.transform(x)
+        return x
+
+    def __len__(self):
+        return self.tensors[0].size(0)
