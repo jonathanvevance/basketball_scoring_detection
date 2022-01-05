@@ -45,8 +45,6 @@ def train():
     model = model.to(cfg.DEVICE)
     model = mil_model_wrapper(model)
 
-    exit()
-
     # load saved weights if needed
     if cfg.LOAD_MODEL:
         load_model(model, cfg.LOAD_MODEL_PTH, cfg.DEVICE)

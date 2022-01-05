@@ -7,6 +7,7 @@ from sklearn.metrics import roc_auc_score
 
 from data.dataset import video_folder
 
+
 class get_batch_video_probabs(nn.Module):
     def __init__(self, device, max_video_frames):
         super().__init__()
