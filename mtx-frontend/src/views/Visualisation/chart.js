@@ -28,7 +28,7 @@ class ChartControls extends React.Component {
         top: 115,
         right: 20,
         bottom: 40,
-        left: 60,
+        left: 100,
       },
     };
     dimensions.boundedWidth =
@@ -97,6 +97,14 @@ class ChartControls extends React.Component {
 
     const yAxisGenerator = d3.axisLeft().scale(yScale);
     const yAxis = bounds.append('g').call(yAxisGenerator);
+    wrapper
+      .append('text')
+      .attr('transform', 'rotate(-90)')
+      .attr('y', 0 - dimensions.margin.left)
+      .attr('x', 0 - dimensions.height / 2)
+      .attr('dy', '1em')
+      .style('text-anchor', 'middle')
+      .text('Probability');
 
     // Generate X Axis
     const xAxisGenerator = d3.axisBottom().scale(xScale);
@@ -104,6 +112,18 @@ class ChartControls extends React.Component {
       .append('g')
       .call(xAxisGenerator.tickFormat(d3.timeFormat('%s')))
       .style('transform', `translateY(${dimensions.boundedHeight}px)`);
+    wrapper
+      .append('text') // text label for the x axis
+      .attr(
+        'transform',
+        'translate(' +
+          dimensions.width / 2 +
+          ' ,' +
+          (dimensions.height + dimensions.margin.bottom) +
+          ')'
+      )
+      .style('text-anchor', 'middle')
+      .text('Time');
 
     wrapper
       .append('g')
