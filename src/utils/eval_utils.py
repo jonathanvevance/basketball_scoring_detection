@@ -6,6 +6,15 @@ from torch.utils.data import DataLoader
 from sklearn.metrics import roc_auc_score
 
 from data.dataset import video_folder
+from models.conv_net import simpleConvNet
+from utils.mil_utils import mil_model_wrapper
+
+
+def load_model_clf(MODEL_WEIGHTS_PATH, device):
+    model = simpleConvNet()
+    model = mil_model_wrapper(model.to(device))
+    model.load_state_dict(torch.load(MODEL_WEIGHTS_PATH, map_location = device))
+    return model.model
 
 
 class get_batch_video_probabs(nn.Module):

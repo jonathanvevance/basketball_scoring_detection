@@ -5,10 +5,7 @@ from torchvision import transforms
 
 from utils.img_video_utils import get_cropped_pil_images_inference
 from utils.img_video_utils import save_frames_from_video_inference
-from utils.train_utils import load_model
-from models.conv_net import simpleConvNet
-
-from utils.mil_utils import mil_model_wrapper #! hacky (shouldnt need to do this)
+from utils.eval_utils import load_model_clf
 
 RESIZE = 128
 THRESHOLD = 0.8
@@ -22,13 +19,8 @@ def run_predictions(pil_images):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     # load model
-    model = simpleConvNet()
-    model = model.to(device)
-    model = mil_model_wrapper(model) #! hacky (shouldnt need to do this)
-    model = load_model(model, MODEL_WEIGHTS_PATH, device)
-    model = model.model #! hacky (shouldnt need to do this)
+    model = load_model_clf(MODEL_WEIGHTS_PATH, device)
     model = model.eval()
-    #! TODO: clean this up
 
     # run predictions, return predictions
     for i, pil_image in enumerate(pil_images):
