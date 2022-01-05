@@ -1,6 +1,6 @@
 .wrapper {
   font-size: 16px;
-  color: #666;
+  color: rgba(44, 139, 36, 0.356);
   padding: 25px;
 }
 
@@ -9,8 +9,8 @@ svg {
 }
 
 text {
-  fill: gainsboro;
-  color: gainsboro;
+  fill: rgb(20, 72, 216);
+  color: rgb(27, 180, 207);
   font-size: 16px;
 }
 

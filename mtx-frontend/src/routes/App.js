@@ -6,14 +6,14 @@ import NavBar from '../components/NavBar';
 
 import Predict from '../views/Predict/predict';
 import Results from '../views/Results/results';
-import ChartControls from '../views/Visualisation/chart';
+import VisualsUI from '../views/Visualisation/visuals';
 
 var hist = createBrowserHistory();
 
 var routes = [
   { path: '/', component: Predict },
   { path: '/results', component: Results },
-  { path: '/charts', component: ChartControls },
+  { path: '/charts', component: VisualsUI },
 ];
 
 export default class App extends React.Component {

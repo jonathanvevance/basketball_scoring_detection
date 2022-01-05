@@ -6,24 +6,14 @@ class ChartControls extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
+      data: props.data,
       options: [],
     };
   }
   componentDidMount() {
-    this.drawLineChart();
+    this.drawLineChart(this.state.data);
   }
-  async drawLineChart() {
-    const dataset = await d3
-      .json('http://localhost:4000/getvalue')
-      .then((d) => {
-        const parseDate = d3.timeParse('%s');
-        d.forEach((i) => {
-          i.time = parseDate(i.time);
-          i.value = Number(i.value);
-        });
-        return d;
-      });
+  async drawLineChart(dataset) {
     let activeIndex = null;
 
     console.log(dataset);
@@ -38,7 +28,7 @@ class ChartControls extends React.Component {
         top: 115,
         right: 20,
         bottom: 40,
-        left: 60,
+        left: 100,
       },
     };
     dimensions.boundedWidth =
@@ -107,6 +97,14 @@ class ChartControls extends React.Component {
 
     const yAxisGenerator = d3.axisLeft().scale(yScale);
     const yAxis = bounds.append('g').call(yAxisGenerator);
+    wrapper
+      .append('text')
+      .attr('transform', 'rotate(-90)')
+      .attr('y', 0 - dimensions.margin.left)
+      .attr('x', 0 - dimensions.height / 2)
+      .attr('dy', '1em')
+      .style('text-anchor', 'middle')
+      .text('Probability');
 
     // Generate X Axis
     const xAxisGenerator = d3.axisBottom().scale(xScale);
@@ -114,6 +112,18 @@ class ChartControls extends React.Component {
       .append('g')
       .call(xAxisGenerator.tickFormat(d3.timeFormat('%s')))
       .style('transform', `translateY(${dimensions.boundedHeight}px)`);
+    wrapper
+      .append('text') // text label for the x axis
+      .attr(
+        'transform',
+        'translate(' +
+          dimensions.width / 2 +
+          ' ,' +
+          (dimensions.height + dimensions.margin.bottom) +
+          ')'
+      )
+      .style('text-anchor', 'middle')
+      .text('Time');
 
     wrapper
       .append('g')
@@ -130,25 +140,7 @@ class ChartControls extends React.Component {
   }
 
   render() {
-    return (
-      <div id='root'>
-        <div id='options'>
-          <label>
-            <input name='radio' type='radio' />
-            2018
-          </label>
-          <label>
-            <input name='radio' type='radio' />
-            2019
-          </label>
-          <label>
-            <input name='radio' type='radio' checked />
-            2020
-          </label>
-        </div>
-        <div id='wrapper'></div>
-      </div>
-    );
+    return <div id='wrapper'></div>;
   }
 }
 
