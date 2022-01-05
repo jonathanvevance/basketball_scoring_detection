@@ -15,4 +15,5 @@ pip3 install torchvision
 pip3 install click
 pip3 install tqdm
 pip3 install scikit-learn
+pip3 install matplotlib
 deactivate
