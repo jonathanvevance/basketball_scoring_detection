@@ -1,13 +1,13 @@
 # setup yolov3
-# sudo apt-get update
-# sudo apt-get -y install unzip
-# sudo apt-get -y install dos2unix
+sudo apt-get update
+sudo apt-get -y install unzip
+sudo apt-get -y install dos2unix
 
-# dos2unix setup_yolo_framework.sh
-# dos2unix download_basketball_model.sh
+dos2unix setup_yolo_framework.sh
+dos2unix download_basketball_model.sh
 
-# sudo bash setup_yolo_framework.sh
-# sudo bash download_basketball_model.sh
+sudo bash setup_yolo_framework.sh
+sudo bash download_basketball_model.sh
 
 # TEST 
 cd yolov3
