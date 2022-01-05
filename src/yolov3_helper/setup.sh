@@ -19,3 +19,5 @@ python3 detect.py \
   --source ../basketball/samples \
   --names data/basketball.names \
   --save-txt --classes 1 # filter for basket
+
+cp ../detect.py detect.py

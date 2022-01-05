@@ -13,7 +13,7 @@ from utils.file_utils import make_folder
 VIDEO_UPLOAD_PATH = 'data/inference/video_upload/video.mp4'
 VIDEO_UPLOAD_DIRECTORY = 'data/inference/video_upload'
 FRAMES_UPLOAD_DIRECTORY = 'data/inference/frames_upload'
-UPLOAD_FRAMES_COORDS_JSON = 'data/inference/frames_upload'
+UPLOAD_FRAMES_COORDS_JSON = 'data/inference/frames_upload/bounding_boxes.json'
 
 def filter_images_func(image_name):
     if len(image_name) < 4:

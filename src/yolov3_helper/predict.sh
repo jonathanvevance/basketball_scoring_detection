@@ -7,5 +7,4 @@ python3 detect.py \
   --names data/basketball.names \
   --source $1 \
   --output $2 \
-  --device 0 \
   --save-txt --classes 1 # filter for basket

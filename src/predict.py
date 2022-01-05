@@ -8,6 +8,9 @@ from utils.img_video_utils import save_frames_from_video_inference
 from utils.train_utils import load_model
 from models.conv_net import simpleConvNet
 
+from utils.mil_utils import mil_model_wrapper #! hacky (shouldnt need to do this)
+
+RESIZE = 128
 THRESHOLD = 0.8
 MODEL_WEIGHTS_PATH = 'models/best.pt'
 FRAMES_UPLOAD_DIRECTORY = 'data/inference/frames_upload'
@@ -21,7 +24,10 @@ def run_predictions(pil_images):
     # load model
     model = simpleConvNet()
     model = model.to(device)
+    model = mil_model_wrapper(model) #! hacky (shouldnt need to do this)
     model = load_model(model, MODEL_WEIGHTS_PATH, device)
+    model = model.model #! hacky (shouldnt need to do this)
+    model = model.eval()
 
     # run predictions, return predictions
     for pil_image in pil_images:
@@ -30,8 +36,9 @@ def run_predictions(pil_images):
             frame_probabs.append(0)
             continue
 
+        pil_image = transforms.Resize((RESIZE, RESIZE))(pil_image)
         image_tensor = transforms.ToTensor()(pil_image)
-        output = model(image_tensor)
+        output = model(torch.unsqueeze(image_tensor, 0))
         print(output)
         frame_probabs.append(output)
 
@@ -48,11 +55,11 @@ def predict():
     save_frames_from_video_inference()
 
     # run basket detection
-    commands = [
-        'cd ./src/yolov3_helper',
-        'sudo bash predict.sh' + ' ../../../' + FRAMES_UPLOAD_DIRECTORY + ' ../../../' + FRAMES_UPLOAD_DIRECTORY
-    ]
-    os.system(';'.join(commands)) # bounding boxes saved to src/yolov3_helper/yolov3/output/bounding_boxes.json
+    # commands = [
+    #     'cd ./src/yolov3_helper',
+    #     'sudo bash predict.sh' + ' ../../../' + FRAMES_UPLOAD_DIRECTORY + ' ../../../' + FRAMES_UPLOAD_DIRECTORY
+    # ]
+    # os.system(';'.join(commands)) # bounding boxes saved to src/yolov3_helper/yolov3/output/bounding_boxes.json
 
     # crop basket images
     pil_images = get_cropped_pil_images_inference()
