@@ -1,9 +1,14 @@
 
 import torch
 from tqdm import tqdm
+import numpy as np
 import torch.nn as nn
 from torch.utils.data import DataLoader
 from sklearn.metrics import roc_auc_score
+from sklearn.metrics import RocCurveDisplay
+from sklearn.metrics import roc_curve
+from sklearn.metrics import classification_report
+import matplotlib.pyplot as plt
 
 from data.dataset import video_folder
 from models.conv_net import simpleConvNet
@@ -93,12 +98,20 @@ def print_classification_metrics(model, dataset_path, transform, max_video_frame
     # criteria
     scores, labels = get_all_video_probabs(model, dataloader, device, max_video_frames)
 
-    print(scores)
-    print(type(scores))
-    print(len(scores))
-
-    # print classification report
+    # show ROC curve
     auroc_score = roc_auc_score(labels, scores)
-
     print("\n---------------------------\n")
     print("AUROC SCORE ON THE DATASET IS :", auroc_score)
+    RocCurveDisplay.from_predictions(labels, scores)
+    plt.show()
+
+    # decide optimal threshold (TPR - FPR)
+    fpr, tpr, thresholds = roc_curve(labels, scores)
+    optimal_idx = np.argmax(tpr - fpr)
+    optimal_threshold = thresholds[optimal_idx]
+
+    # get classification report
+    y_pred_class = scores > optimal_threshold
+    print("\n---------------------------\n")
+    print("Threshold value is:", optimal_threshold)
+    print(classification_report(labels, y_pred_class))
