@@ -11,7 +11,7 @@ random.seed(0)
 from utils.img_video_utils import save_frames_from_video_folder_mil
 from utils.img_video_utils import save_cropped_images
 from utils.file_utils import copy_tree
-from utils.file_utils import clear_empty_subdirectories #!!!!!
+from utils.file_utils import clear_empty_subdirectories
 
 # FRAMES_DIR = 'data/training/multi_instance/frames'
 # DATASET_ROOT = 'data/training/hackolympics_data'
@@ -20,8 +20,7 @@ from utils.file_utils import clear_empty_subdirectories #!!!!!
 
 FRAMES_DIR = '/mnt/d/MTX_hackathon/backuppp/data/training/multi_instance/frames'
 DATASET_ROOT = '/mnt/d/MTX_hackathon/backuppp/data/training/hackolympics_data'
-#! CROPPED_DATASET_DIR = '/mnt/d/MTX_hackathon/backuppp/data/training/multi_instance/cropped'
-CROPPED_DATASET_DIR = '/mnt/d/MTX_hackathon/backuppp/data/training/multi_instance/new_cropped'
+CROPPED_DATASET_DIR = '/mnt/d/MTX_hackathon/backuppp/data/training/multi_instance/cropped'
 FINAL_DATASET_DIR = '/mnt/d/MTX_hackathon/backuppp/data/training/multi_instance/final'
 
 def create_dataset_structure(root_directory, val_required = False):
@@ -107,7 +106,7 @@ def get_directories():
     return data_dir_list, frames_dir_list, cropped_dir_list, final_dir_dict
 
 
-def split_train_val_sets(final_dir_dict, val_ratio): #! WRONG!!
+def split_train_val_sets(final_dir_dict, val_ratio):
 
     train_cropped_scoring_folder = os.path.join(CROPPED_DATASET_DIR, 'train/1')
     train_cropped_nonscoring_folder = os.path.join(CROPPED_DATASET_DIR, 'train/0')
@@ -202,8 +201,8 @@ def main(videos, yolov3, split, val_ratio):
                 commands = [
                     'cd ./src/yolov3_helper',
                     'sudo bash predict.sh' + ' ../../../' + video_frames_dir + ' ../../../' + video_frames_dir
-                ] #! changed saving path in detect.py - check if this works
-                # os.system(';'.join(commands)) # this stores json in video_frames_dir itself
+                ]
+                os.system(';'.join(commands)) # this stores json in video_frames_dir itself
 
                 # Step 3: Crop according to bounding boxes and save them
                 cropped_frames_dir = os.path.join(cropped_dir_list[idx], video)

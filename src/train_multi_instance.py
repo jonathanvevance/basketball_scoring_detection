@@ -33,11 +33,9 @@ def train():
     # load dataset objects, data loaders
     train_dataset = binary_mil_folder(os.path.join(cfg.DATASET_FOLDER, "train"), transform = train_transform, max_video_frames = cfg.MAX_VIDEO_FRAMES)
     val_dataset = binary_mil_folder(os.path.join(cfg.DATASET_FOLDER, "val"), transform = test_transform, max_video_frames = cfg.MAX_VIDEO_FRAMES)
-    test_dataset = binary_mil_folder(os.path.join(cfg.DATASET_FOLDER, "test"), transform = test_transform, max_video_frames = cfg.MAX_VIDEO_FRAMES)
 
     train_loader = DataLoader(dataset = train_dataset, batch_size = cfg.BATCH_SIZE, shuffle = True)
     val_loader = DataLoader(dataset = val_dataset, batch_size = cfg.BATCH_SIZE, shuffle = True)
-    test_loader = DataLoader(dataset = test_dataset, batch_size = cfg.BATCH_SIZE, shuffle = True)
 
     # Strictly use GPU if available
     cfg.DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -46,6 +44,8 @@ def train():
     model = simpleConvNet(train_loader)
     model = model.to(cfg.DEVICE)
     model = mil_model_wrapper(model)
+
+    exit()
 
     # load saved weights if needed
     if cfg.LOAD_MODEL:

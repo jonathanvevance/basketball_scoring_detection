@@ -13,7 +13,7 @@ from utils.file_utils import make_folder
 VIDEO_UPLOAD_PATH = 'data/inference/video_upload/video.mp4'
 VIDEO_UPLOAD_DIRECTORY = 'data/inference/video_upload'
 FRAMES_UPLOAD_DIRECTORY = 'data/inference/frames_upload'
-UPLOAD_FRAMES_COORDS_JSON = 'src/yolov3_helper/yolov3/output/bounding_boxes.json' #! to be changed (in predict.sh)
+UPLOAD_FRAMES_COORDS_JSON = 'data/inference/frames_upload'
 
 def filter_images_func(image_name):
     if len(image_name) < 4:
@@ -23,7 +23,7 @@ def filter_images_func(image_name):
     return False
 
 
-def get_cropped_pil_images_inference(crop_size = 100, standardise = False): # only during inference
+def get_cropped_pil_images_inference(crop_size = 100, standardise = True): # only during inference
 
     frame_imgs = filter(filter_images_func, os.listdir(FRAMES_UPLOAD_DIRECTORY))
     frame_imgs = sorted(frame_imgs, key = lambda x: int(x[:-4]))
@@ -84,8 +84,7 @@ def get_last_frame_id(target_folder):
 def save_frames_from_video_folder_clf(video_folder, target_folder): # only during training (dataset creation)
     """Used for classification based training."""
 
-    count = get_last_frame_id(target_folder) + 1 #! WHY DO WE NEED THIS? THINK...
-    # count = 1 #! Use this instead??
+    count = get_last_frame_id(target_folder) + 1
     video_filepaths = [os.path.join(video_folder, filename) for filename in os.listdir(video_folder)]
 
     for video_filepath in tqdm(video_filepaths, desc = f'Transferring to {target_folder}'):
@@ -102,9 +101,6 @@ def save_frames_from_video_folder_clf(video_folder, target_folder): # only durin
 
 def save_frames_from_video_folder_mil(video_folder, target_folder): # only during training (dataset creation)
     """Used for multi instance based training."""
-
-    if 'train/1' in target_folder:
-        return
 
     video_files = os.listdir(video_folder)
 

@@ -29,14 +29,8 @@ def get_all_video_probabs(model, dataloader, device, max_video_frames):
     all_scores = []
     criterion = get_batch_video_probabs(device, max_video_frames)
 
-    i = 0 #!
-
     with tqdm(dataloader, unit = "batch", leave = True) as tqdm_progressbar:
         for (inputs, labels) in tqdm_progressbar:
-
-            i += 1
-            if i == 3:
-                break
 
             tqdm_progressbar.set_description(f"Getting video predictions")
 

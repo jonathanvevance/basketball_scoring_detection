@@ -4,7 +4,7 @@ import torch.nn.functional as F
 from torchvision import models
 
 class verySimpleNet(nn.Module):
-    def __init__(self, train_loader):
+    def __init__(self, train_loader = None):
         super(verySimpleNet, self).__init__()
 
         self.resnet_fe = models.resnet18(pretrained = True)
@@ -12,8 +12,12 @@ class verySimpleNet(nn.Module):
         for param in self.resnet_fe.parameters():
             param.requires_grad = False
 
-        sample_image_batch, __ = iter(train_loader).next()
-        linear_dim = self.get_linear_dim(sample_image_batch)
+        if train_loader is not None:
+            sample_image_batch, __ = iter(train_loader).next()
+            linear_dim = self.get_linear_dim(sample_image_batch)
+        else:
+            linear_dim = 256 #
+
         self.fc = nn.Linear(linear_dim, 1)
 
     def get_linear_dim(self, x):
@@ -33,28 +37,26 @@ class verySimpleNet(nn.Module):
         return x
 
 class simpleConvNet(nn.Module):
-    def __init__(self, train_loader, use_fe = True):
+    def __init__(self, train_loader = None):
         super(simpleConvNet, self).__init__()
-        self.use_fe = use_fe
 
         # feature extractor
-        if self.use_fe:
-            self.resnet_fe = models.resnet18(pretrained = True)
-            self.resnet_fe = nn.Sequential(*list(self.resnet_fe.children())[:-3])
-            for param in self.resnet_fe.parameters():
-                param.requires_grad = False
+        self.resnet_fe = models.resnet18(pretrained = True)
+        self.resnet_fe = nn.Sequential(*list(self.resnet_fe.children())[:-3])
+        for param in self.resnet_fe.parameters():
+            param.requires_grad = False
 
         # conv layers
-        if self.use_fe:
-            self.conv1 = nn.Conv2d(256, 32, 3, 1)
-        else:
-            self.conv1 = nn.Conv2d(3, 32, 3, 1)
-
+        self.conv1 = nn.Conv2d(256, 32, 3, 1)
         self.conv2 = nn.Conv2d(32, 64, 3, 1)
         self.dropout1 = nn.Dropout2d(0.25)
 
-        sample_image_batch, __ = iter(train_loader).next()
-        linear_dim = self.get_linear_dim(sample_image_batch)
+        if train_loader is not None:
+            sample_image_batch, __ = iter(train_loader).next()
+            linear_dim = self.get_linear_dim(sample_image_batch)
+        else:
+            linear_dim = 256 # for the saved model
+
         self.fc1 = nn.Linear(linear_dim, 1)
 
     def get_linear_dim(self, x):
