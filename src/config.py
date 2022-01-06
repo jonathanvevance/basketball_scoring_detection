@@ -11,6 +11,7 @@ ES_DELTA = 0
 
 # Data, saving, etc settings
 DATASET_FOLDER = '/mnt/d/MTX_hackathon/backuppp/data/training/multi_instance/final'
+SAVE_MODEL = True
 SAVE_MODEL_PTH = '/mnt/d/MTX_hackathon/saved_model.pt'
 LOAD_MODEL = True
 LOAD_MODEL_PTH = '/mnt/d/MTX_hackathon/saved_model_2.pt'

@@ -55,8 +55,8 @@ def train():
 
     model = train_model(model, criterion, optimizer, train_loader, val_loader, cfg.EPOCHS, cfg.ES_PATIENCE, cfg.ES_DELTA, cfg.DEVICE)
 
-    # saving the model
-    save_model(model, cfg.SAVE_MODEL_PTH)
+    if cfg.SAVE_MODEL: # saving the model
+        save_model(model, cfg.SAVE_MODEL_PTH)
 
     # evaluate model
     print_classification_metrics(
