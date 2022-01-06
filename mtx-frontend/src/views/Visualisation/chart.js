@@ -1,6 +1,7 @@
 import React from 'react';
 import * as d3 from 'd3';
 import './chart.css';
+import IndexContext from './indexcontext';
 
 class ChartControls extends React.Component {
   constructor(props) {
@@ -8,18 +9,65 @@ class ChartControls extends React.Component {
     this.state = {
       data: props.data,
       options: [],
+      newData: null,
     };
   }
   componentDidMount() {
-    this.drawLineChart(this.state.data);
+    console.log(this.context);
+    const { index, changeIndex } = this.context;
+    // this.setState({ newData: this.changeData(this.context.index) });
+    // console.log(this.changeData(index));
+    // console.log(this.state.newData);
+    this.drawLineChart(this.changeData(index));
   }
+  changeData = (index) => {
+    const oldData = this.state.data;
+    if (index === '1') return this.state.data;
+    else if (index === '2') {
+      let data = [];
+      for (let i = 0; i < (this.state.data.length * 2) / 5; i++) {
+        data.push(this.state.data[i]);
+      }
+      return data;
+    } else if (index === '3') {
+      let data = [];
+      for (
+        let i = (this.state.data.length * 2) / 5;
+        i < this.state.data.length;
+        i++
+      ) {
+        data.push(this.state.data[i]);
+      }
+      return data;
+    } else if (index === '4') {
+      let data = [];
+      for (
+        let i = (this.state.data.length * 3) / 5;
+        i < this.state.data.length;
+        i++
+      ) {
+        data.push(this.state.data[i]);
+      }
+      return data;
+    } else if (index === '5') {
+      let data = [];
+      for (
+        let i = (this.state.data.length * 4) / 5;
+        i < this.state.data.length;
+        i++
+      ) {
+        data.push(this.state.data[i]);
+      }
+      return data;
+    }
+  };
   async drawLineChart(dataset) {
     let activeIndex = null;
 
     console.log(dataset);
     const yAccessor = (d) => d.value;
     const xAccessor = (d) => d['time'];
-    console.log(xAccessor(dataset[2]));
+    // console.log(xAccessor(dataset[2]));
 
     let dimensions = {
       width: window.innerWidth * 0.8,
@@ -43,7 +91,7 @@ class ChartControls extends React.Component {
       .attr('height', dimensions.height);
 
     //Log our new Wrapper Variable to the console to see what it looks like
-    console.log(wrapper);
+    // console.log(wrapper);
 
     // 4. Create a Bounding Box
 
@@ -143,5 +191,7 @@ class ChartControls extends React.Component {
     return <div id='wrapper'></div>;
   }
 }
+
+ChartControls.contextType = IndexContext;
 
 export default ChartControls;
