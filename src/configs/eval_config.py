@@ -8,9 +8,6 @@ DEVICE = "cpu"
 
 # Data settings
 LOAD_MODEL_PTH = "models/best.pt"
-# FRAMES_DIR = '/mnt/d/MTX_hackathon/backuppp/data/evaluation/frames'
-# DATASET_ROOT = '/mnt/d/MTX_hackathon/backuppp/data/evaluation/eval_dataset'
-# FINAL_DATASET_DIR = '/mnt/d/MTX_hackathon/backuppp/data/evaluation/final'
 FRAMES_DIR = 'data/evaluation/frames'
 DATASET_ROOT = 'data/evaluation/eval_dataset'
 FINAL_DATASET_DIR = 'data/evaluation/final'

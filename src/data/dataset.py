@@ -4,7 +4,6 @@ import torch
 import random
 from PIL import Image
 from torch.utils.data import Dataset
-from torchvision import transforms
 
 from utils.file_utils import listdir
 from utils.img_video_utils import filter_images_func

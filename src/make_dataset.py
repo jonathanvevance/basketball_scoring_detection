@@ -11,7 +11,7 @@ from utils.file_utils import copy_tree
 from utils.file_utils import clear_empty_subdirectories
 from utils.file_utils import create_dataset_structure
 from utils.img_video_utils import save_cropped_images
-from utils.img_video_utils import save_frames_from_video_folder_mil
+from utils.img_video_utils import save_frames_from_video_folder
 
 # FRAMES_DIR = 'data/training/frames'
 # DATASET_ROOT = 'data/training/hackolympics_data'
@@ -175,7 +175,7 @@ def main(videos, yolov3, split, val_ratio):
     if videos:
         # Step 1: collect frames from videos and put them in frames folders
         for idx in range(len(data_dir_list)):
-            save_frames_from_video_folder_mil(data_dir_list[idx], frames_dir_list[idx])
+            save_frames_from_video_folder(data_dir_list[idx], frames_dir_list[idx])
 
     if yolov3:
 

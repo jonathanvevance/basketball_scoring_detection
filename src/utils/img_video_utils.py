@@ -85,33 +85,7 @@ def save_frames_from_video_inference(): # only during inference
 
 # ------------------------------------ TRAINING FUNCTIONS --------------------------------------------------
 
-def get_last_frame_id(target_folder):
-    frame_imgs = list(filter(filter_images_func, listdir(target_folder)))
-    if len(frame_imgs) > 0:
-        return int(max(frame_imgs, key = lambda x: int(x[:-4]))[:-4])
-    return 0
-
-
-def save_frames_from_video_folder_clf(video_folder, target_folder): # only during training (dataset creation)
-    """Used for classification based training."""
-
-    count = get_last_frame_id(target_folder) + 1
-    video_files = list(filter(filter_videos_func, listdir(video_folder)))
-    video_filepaths = [os.path.join(video_folder, filename) for filename in video_files]
-
-    for video_filepath in tqdm(video_filepaths, desc = f'Transferring to {target_folder}'):
-        vidObj = cv2.VideoCapture(video_filepath)
-
-        while True:
-            success, image = vidObj.read()
-            if not success:
-                break
-
-            cv2.imwrite(os.path.join(target_folder, str(count) + '.jpg'), image)
-            count += 1
-
-
-def save_frames_from_video_folder_mil(video_folder, target_folder): # only during training (dataset creation)
+def save_frames_from_video_folder(video_folder, target_folder): # only during training (dataset creation)
     """Used for multi instance based training."""
 
     video_files = list(filter(filter_videos_func, listdir(video_folder)))

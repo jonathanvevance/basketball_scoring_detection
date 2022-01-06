@@ -14,7 +14,7 @@ from utils.file_utils import listdir
 from utils.file_utils import create_class_structure
 from utils.img_video_utils import filter_videos_func
 from utils.img_video_utils import save_cropped_images
-from utils.img_video_utils import save_frames_from_video_folder_mil
+from utils.img_video_utils import save_frames_from_video_folder
 
 #! TODO: write assumptions about expecting scoring_clips and non_scoring_clips
 
@@ -42,7 +42,7 @@ def prepare_eval_dataset():
     data_dir_list, frames_dir_list, final_dir_list = get_directories()
 
     for idx in range(len(data_dir_list)):
-        save_frames_from_video_folder_mil(data_dir_list[idx], frames_dir_list[idx])
+        save_frames_from_video_folder(data_dir_list[idx], frames_dir_list[idx])
 
     for idx in range(len(frames_dir_list)):
         videos = list(filter(filter_videos_func, listdir(frames_dir_list[idx])))
@@ -63,7 +63,7 @@ def prepare_eval_dataset():
 
 def evaluate():
 
-    # prepare_eval_dataset() #! TODO: uncomment
+    prepare_eval_dataset()
 
     transform = transforms.Compose([
         transforms.Resize((cfg.RESIZE, cfg.RESIZE)),
