@@ -2,19 +2,64 @@
 import os
 import csv
 import torch
+from tqdm import tqdm
 from torchvision import transforms
+from torch.utils.data import DataLoader
 
 from utils.img_video_utils import get_cropped_pil_images_inference
 from utils.img_video_utils import save_frames_from_video_inference
 from utils.eval_utils import load_model_clf
+from data.dataset import CustomTensorDataset
 
 RESIZE = 128
 THRESHOLD = 0.93
+BATCH_SIZE = 128 #! TODO: REQUEST BATCH SIZE AS ENV VAR
 MODEL_WEIGHTS_PATH = 'models/best.pt'
 FRAMES_UPLOAD_DIRECTORY = 'data/inference/frames_upload'
 FRAMES_PROBAB_CSV_PATH = 'reports/probability_values.csv'
 
-#! TODO: CODE DATA LOADER FOR INFERENCE (REQUEST BATCH SIZE AS ENV VAR)
+
+def run_predictions_batch(pil_images):
+
+    is_scoring = False
+    frame_probabs = [['time', 'values']]
+
+    is_valid_mask = [True if img else False for img in pil_images]
+    pil_images = [img for img in pil_images if img is not None]
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+    # load model
+    model = load_model_clf(MODEL_WEIGHTS_PATH, device)
+    model = model.eval()
+
+    transform = transforms.Compose([
+        transforms.Resize((RESIZE, RESIZE)),
+        transforms.ToTensor()
+    ])
+
+    dataset = CustomTensorDataset(pil_images, transform)
+    dataloader = DataLoader(dataset, batch_size = BATCH_SIZE, shuffle = False)
+
+    all_valid_probabs = []
+    for img_batch in tqdm(dataloader):
+        img_batch = img_batch.to(device)
+        probabs_batch = model(img_batch)
+        all_valid_probabs.extend(torch.squeeze(probabs_batch).tolist())
+
+    print(all_valid_probabs)
+
+    valid_idx = 0
+    for frame_num, is_valid in enumerate(is_valid_mask):
+        if is_valid:
+            if all_valid_probabs[valid_idx] > THRESHOLD:
+                is_scoring = True
+            frame_probabs.append([frame_num, all_valid_probabs[valid_idx]])
+            valid_idx += 1
+        else:
+            frame_probabs.append([frame_num, 0])
+
+    return is_scoring, frame_probabs
+
 
 def run_predictions(pil_images):
 
@@ -27,7 +72,7 @@ def run_predictions(pil_images):
     model = model.eval()
 
     # run predictions, return predictions
-    for frame_num, pil_image in enumerate(pil_images):
+    for frame_num, pil_image in enumerate(tqdm(pil_images)):
 
         if pil_image is None: # no basket detected
             frame_probabs.append([frame_num, 0])
@@ -63,6 +108,7 @@ def predict():
 
     # run predictions
     is_scoring, pred_probabs = run_predictions(pil_images)
+    # is_scoring, pred_probabs = run_predictions_batch(pil_images)
 
     # save as csv file
     with open(FRAMES_PROBAB_CSV_PATH, 'w', newline = "") as f:

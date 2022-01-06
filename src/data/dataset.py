@@ -132,4 +132,4 @@ class CustomTensorDataset(Dataset):
         return x
 
     def __len__(self):
-        return self.tensors[0].size(0)
+        return len(self.tensors)
