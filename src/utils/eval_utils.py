@@ -61,35 +61,7 @@ def get_all_video_probabs(model, dataloader, device, max_video_frames):
     return all_scores, all_labels
 
 
-def evaluate_model(model, criterion, val_loader, device, epoch = -1):
-    """
-    model :: mil_model_wrapper object
-    val_loader :: binary_mil_folder object
-    criterion :: mil_loss object
-    """
-
-    model.eval()
-    val_losses_total = 0
-
-    with tqdm(val_loader, unit = "batch", leave = True) as tqdm_progressbar:
-        for idx, (inputs, labels) in enumerate(tqdm_progressbar):
-
-            tqdm_progressbar.set_description(f"Epoch {epoch} (validating)")
-
-            inputs, labels = inputs.to(device), labels.to(device)
-            inputs, labels = inputs.to(torch.float32), labels.to(torch.float32)
-
-            outputs = model(inputs).to(torch.float32)
-            loss = criterion(outputs, labels)
-
-            val_losses_total += loss.item()
-            val_losses_avg = val_losses_total / (idx + 1)
-            tqdm_progressbar.set_postfix(val_loss = val_losses_avg)
-
-    return val_losses_avg
-
-
-def print_classification_metrics(model, dataset_path, transform, max_video_frames, batch_size, device):
+def print_classification_metrics(model, dataset_path, transform, max_video_frames, batch_size, device, threshold = None):
 
     # get dataset, dataloader
     dataset = video_folder(dataset_path, transform, max_video_frames, )
@@ -106,12 +78,13 @@ def print_classification_metrics(model, dataset_path, transform, max_video_frame
     plt.show()
 
     # decide optimal threshold (TPR - FPR)
-    fpr, tpr, thresholds = roc_curve(labels, scores)
-    optimal_idx = np.argmax(tpr - fpr)
-    optimal_threshold = thresholds[optimal_idx]
+    if threshold is None:
+        fpr, tpr, thresholds = roc_curve(labels, scores)
+        optimal_idx = np.argmax(tpr - fpr)
+        threshold = thresholds[optimal_idx]
 
     # get classification report
-    y_pred_class = scores > optimal_threshold
+    y_pred_class = scores > threshold
     print("\n---------------------------\n")
-    print("Threshold value is:", optimal_threshold)
+    print("Threshold value is:", threshold)
     print(classification_report(labels, y_pred_class))

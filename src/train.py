@@ -5,7 +5,7 @@ from torchvision import transforms
 from torch import optim
 from torch.utils.data import DataLoader
 
-import config as cfg
+from configs import train_config as cfg
 from models.conv_net import simpleConvNet
 from data.dataset import binary_mil_folder
 from utils.mil_utils import mil_loss
@@ -13,7 +13,7 @@ from utils.mil_utils import mil_model_wrapper
 from utils.train_utils import save_model
 from utils.train_utils import load_model
 from utils.train_utils import EarlyStopping
-from utils.eval_utils import evaluate_model
+from utils.train_utils import evaluate_model
 from utils.eval_utils import print_classification_metrics
 
 
@@ -55,18 +55,20 @@ def train():
 
     model = train_model(model, criterion, optimizer, train_loader, val_loader, cfg.EPOCHS, cfg.ES_PATIENCE, cfg.ES_DELTA, cfg.DEVICE)
 
-    if cfg.SAVE_MODEL: # saving the model
+    # saving the model
+    if cfg.SAVE_MODEL:
         save_model(model, cfg.SAVE_MODEL_PTH)
 
     # evaluate model
-    print_classification_metrics(
-        model,
-        os.path.join(cfg.DATASET_FOLDER, 'test'),
-        test_transform,
-        cfg.MAX_VIDEO_FRAMES,
-        cfg.BATCH_SIZE,
-        cfg.DEVICE
-    )
+    if cfg.EVALUATE_ON_TEST_SET:
+        print_classification_metrics(
+            model,
+            os.path.join(cfg.DATASET_FOLDER, 'test'),
+            test_transform,
+            cfg.MAX_VIDEO_FRAMES,
+            cfg.BATCH_SIZE,
+            cfg.DEVICE
+        )
 
 
 def train_model(model, criterion, optimizer, train_loader, val_loader, epochs, es_patience, es_delta, device):

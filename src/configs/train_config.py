@@ -15,3 +15,6 @@ SAVE_MODEL = True
 SAVE_MODEL_PTH = '/mnt/d/MTX_hackathon/saved_model.pt'
 LOAD_MODEL = True
 LOAD_MODEL_PTH = '/mnt/d/MTX_hackathon/saved_model_2.pt'
+
+# Others
+EVALUATE_ON_TEST_SET = True
