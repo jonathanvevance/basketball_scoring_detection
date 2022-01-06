@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.07fa5247.css",
+    "main.js": "/static/js/main.11aa4959.js",
+    "static/media/bb_court.jpeg": "/static/media/bb_court.d1c8c0c2522049cf4ae1.jpeg",
+    "static/media/Proxima Nova Bold.otf": "/static/media/Proxima Nova Bold.fcaab2524c5baabd71f6.otf",
+    "static/media/ProximaNova-Regular.otf": "/static/media/ProximaNova-Regular.ea03f826587148b7335d.otf",
+    "index.html": "/index.html",
+    "main.07fa5247.css.map": "/static/css/main.07fa5247.css.map",
+    "main.11aa4959.js.map": "/static/js/main.11aa4959.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.07fa5247.css",
+    "static/js/main.11aa4959.js"
+  ]
+}
