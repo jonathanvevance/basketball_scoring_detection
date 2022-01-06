@@ -13,6 +13,11 @@ def clear_folder(folder_path):
         os.remove(os.path.join(folder_path, file))
 
 
+def clear_subfolders_in_folder(folder_path):
+    for subfolder in listdir(folder_path):
+        clear_folder(os.path.join(folder_path, subfolder))
+
+
 def make_folder(target_folder):
     if os.path.exists(target_folder):
         clear_folder(target_folder)

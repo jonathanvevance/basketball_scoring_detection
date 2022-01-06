@@ -11,6 +11,8 @@ from utils.mil_utils import mil_model_wrapper
 from utils.train_utils import load_model
 from utils.eval_utils import print_classification_metrics
 from utils.file_utils import listdir
+from utils.file_utils import clear_subfolders_in_folder
+from utils.file_utils import clear_empty_subdirectories
 from utils.file_utils import create_class_structure
 from utils.img_video_utils import filter_videos_func
 from utils.img_video_utils import save_cropped_images
@@ -37,6 +39,11 @@ def get_directories():
     return data_dir_list, frames_dir_list, final_dir_list
 
 
+def dataset_cleanup(final_dir_list):
+    for final_dir in final_dir_list:
+        clear_empty_subdirectories(final_dir)
+
+
 def prepare_eval_dataset():
 
     data_dir_list, frames_dir_list, final_dir_list = get_directories()
@@ -60,10 +67,14 @@ def prepare_eval_dataset():
             final_frames_dir = os.path.join(final_dir_list[idx], video)
             save_cropped_images(video_frames_dir, final_frames_dir, standardise = True)
 
+    dataset_cleanup(final_dir_list)
+
+    return data_dir_list, frames_dir_list, final_dir_list
+
 
 def evaluate():
 
-    prepare_eval_dataset()
+    __, frames_dir_list, final_dir_list = prepare_eval_dataset()
 
     transform = transforms.Compose([
         transforms.Resize((cfg.RESIZE, cfg.RESIZE)),
@@ -93,6 +104,13 @@ def evaluate():
         cfg.DEVICE,
         cfg.THRESHOLD
     )
+
+    # clear temporary files stored
+    for frames_dir in frames_dir_list:
+        clear_subfolders_in_folder(frames_dir)
+
+    for final_dir in final_dir_list:
+        clear_subfolders_in_folder(final_dir)
 
 
 evaluate()
