@@ -20,8 +20,8 @@ def run_predictions(pil_images):
 
     is_scoring = False
     frame_probabs = [["time", "values"]]
-    # device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    device = torch.device("cpu")
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    # device = torch.device("cpu")
 
     # load model
     model = load_model_clf(MODEL_WEIGHTS_PATH, device)
@@ -36,6 +36,7 @@ def run_predictions(pil_images):
 
         pil_image = transforms.Resize((RESIZE, RESIZE))(pil_image)
         image_tensor = transforms.ToTensor()(pil_image)
+        image_tensor = image_tensor.to(device)
         output = model(torch.unsqueeze(image_tensor, 0))
         frame_probabs.append([frame_num, output[0].item()])
 
