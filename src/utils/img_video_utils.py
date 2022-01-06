@@ -23,6 +23,14 @@ def filter_images_func(image_name):
     return False
 
 
+def filter_videos_func(video_name):
+    if len(video_name) < 4:
+        return False
+    if video_name[-3:] in ['mp4']:
+        return True
+    return False
+
+
 def get_cropped_pil_images_inference(crop_size = 100, standardise = True): # only during inference
 
     frame_imgs = filter(filter_images_func, os.listdir(FRAMES_UPLOAD_DIRECTORY))
@@ -87,7 +95,8 @@ def save_frames_from_video_folder_clf(video_folder, target_folder): # only durin
     """Used for classification based training."""
 
     count = get_last_frame_id(target_folder) + 1
-    video_filepaths = [os.path.join(video_folder, filename) for filename in os.listdir(video_folder)]
+    video_files = list(filter(filter_videos_func, os.listdir(video_folder)))
+    video_filepaths = [os.path.join(video_folder, filename) for filename in video_files]
 
     for video_filepath in tqdm(video_filepaths, desc = f'Transferring to {target_folder}'):
         vidObj = cv2.VideoCapture(video_filepath)
@@ -104,7 +113,7 @@ def save_frames_from_video_folder_clf(video_folder, target_folder): # only durin
 def save_frames_from_video_folder_mil(video_folder, target_folder): # only during training (dataset creation)
     """Used for multi instance based training."""
 
-    video_files = os.listdir(video_folder)
+    video_files = list(filter(filter_videos_func, os.listdir(video_folder)))
 
     for video_file in tqdm(video_files, desc = f'Transferring to video folders in {target_folder}'):
 

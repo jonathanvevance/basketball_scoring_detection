@@ -2,10 +2,11 @@
 import os
 import torch
 import random
-
 from PIL import Image
 from torch.utils.data import Dataset
 from torchvision import transforms
+
+from utils.img_video_utils import filter_images_func
 
 
 class binary_mil_folder(Dataset):
@@ -39,8 +40,8 @@ class binary_mil_folder(Dataset):
         nonscoring_video_path = os.path.join(self.nonscoring_path, nonscoring_video)
 
         bag_tensors = []
-        scoring_frames = os.listdir(scoring_video_path)
-        nonscoring_frames = os.listdir(nonscoring_video_path)
+        scoring_frames = list(filter(filter_images_func, os.listdir(scoring_video_path)))
+        nonscoring_frames = list(filter(filter_images_func, os.listdir(nonscoring_video_path)))
 
         for frame in scoring_frames:
             pil_img = Image.open(os.path.join(scoring_video_path, frame))
@@ -97,7 +98,8 @@ class video_folder(Dataset):
 
         bag_tensors = []
         video_path = self.video_paths[idx]
-        frame_paths = [os.path.join(video_path, frame) for frame in os.listdir(video_path)]
+        frames = list(filter(filter_images_func, os.listdir(video_path)))
+        frame_paths = [os.path.join(video_path, frame) for frame in frames]
 
         for frame_path in frame_paths:
             pil_img = Image.open(frame_path)

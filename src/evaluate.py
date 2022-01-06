@@ -1,6 +1,8 @@
 
 import os
+import torch
 from torchvision import transforms
+from torch.utils.data import DataLoader
 
 from configs import eval_config as cfg
 from data.dataset import video_folder
@@ -9,6 +11,7 @@ from utils.mil_utils import mil_model_wrapper
 from utils.train_utils import load_model
 from utils.eval_utils import print_classification_metrics
 from utils.file_utils import create_class_structure
+from utils.img_video_utils import filter_videos_func
 from utils.img_video_utils import save_cropped_images
 from utils.img_video_utils import save_frames_from_video_folder_mil
 
@@ -41,7 +44,7 @@ def prepare_eval_dataset():
         save_frames_from_video_folder_mil(data_dir_list[idx], frames_dir_list[idx])
 
     for idx in range(len(frames_dir_list)):
-        videos = os.listdir(frames_dir_list[idx])
+        videos = list(filter(filter_videos_func, os.listdir(frames_dir_list[idx])))
 
         for video in videos:
             video_frames_dir = os.path.join(frames_dir_list[idx], video)
@@ -59,7 +62,7 @@ def prepare_eval_dataset():
 
 def evaluate():
 
-    prepare_eval_dataset()
+    # prepare_eval_dataset() #! TODO: uncomment
 
     transform = transforms.Compose([
         transforms.Resize((cfg.RESIZE, cfg.RESIZE)),
@@ -67,15 +70,28 @@ def evaluate():
     ])
 
     dataset = video_folder(cfg.FINAL_DATASET_DIR, transform, cfg.MAX_VIDEO_FRAMES)
+    dataloader = DataLoader(dataset = dataset, batch_size = cfg.BATCH_SIZE, shuffle = True)
 
+    # set device
+    cfg.DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     # load model
-    model = simpleConvNet(train_loader)
+    model = simpleConvNet(dataloader)
     model = model.to(cfg.DEVICE)
     model = mil_model_wrapper(model)
 
-    # load saved weights if needed
-    if cfg.LOAD_MODEL:
-        load_model(model, cfg.LOAD_MODEL_PTH, cfg.DEVICE)
+    # load saved weights
+    load_model(model, cfg.LOAD_MODEL_PTH, cfg.DEVICE)
 
-    print_classification_metrics(model, dataset_path, transform, max_video_frames, batch_size, device, threshold)
+    print_classification_metrics(
+        model,
+        cfg.FINAL_DATASET_DIR,
+        transform,
+        cfg.MAX_VIDEO_FRAMES,
+        cfg.BATCH_SIZE,
+        cfg.DEVICE,
+        cfg.THRESHOLD
+    )
+
+
+evaluate()
