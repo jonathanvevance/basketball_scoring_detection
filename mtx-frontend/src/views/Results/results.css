@@ -1,5 +1,5 @@
 body {
-  font-family: 'Proxima Reg';
+  font-family: "Proxima Reg";
 }
 
 div#layout {
@@ -28,7 +28,7 @@ text {
 }
 
 path {
-  stroke: gray;
+  stroke: #ee6730;
 }
 
 line {
