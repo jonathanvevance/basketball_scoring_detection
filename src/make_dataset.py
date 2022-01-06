@@ -6,6 +6,7 @@ from tqdm import tqdm
 import random
 random.seed(0)
 
+from utils.file_utils import listdir
 from utils.file_utils import copy_tree
 from utils.file_utils import clear_empty_subdirectories
 from utils.file_utils import create_dataset_structure
@@ -108,7 +109,7 @@ def split_train_val_sets(final_dir_dict, val_ratio):
     test_nonscoring_folder = final_dir_dict['test']['0']
 
     # move scoring (cropped) frames folders
-    train_cropped_scoring_videos = os.listdir(train_cropped_scoring_folder)
+    train_cropped_scoring_videos = listdir(train_cropped_scoring_folder)
     random.shuffle(train_cropped_scoring_videos)
     num_val = int(len(train_cropped_scoring_videos) * val_ratio)
 
@@ -123,7 +124,7 @@ def split_train_val_sets(final_dir_dict, val_ratio):
         copy_tree(source_video_dir, destination_video_dir) # copy folder
 
     # move nonscoring (cropped) frames folders
-    train_cropped_nonscoring_videos = os.listdir(train_cropped_nonscoring_folder)
+    train_cropped_nonscoring_videos = listdir(train_cropped_nonscoring_folder)
     random.shuffle(train_cropped_nonscoring_videos)
     num_val = int(len(train_cropped_nonscoring_videos) * val_ratio)
 
@@ -138,13 +139,13 @@ def split_train_val_sets(final_dir_dict, val_ratio):
         copy_tree(source_video_dir, destination_video_dir) # copy folder
 
     # move test frames folders
-    test_cropped_scoring_videos = os.listdir(test_cropped_scoring_folder)
+    test_cropped_scoring_videos = listdir(test_cropped_scoring_folder)
     for video in tqdm(test_cropped_scoring_videos):
         source_video_dir = os.path.join(test_cropped_scoring_folder, video)
         destination_video_dir = os.path.join(test_scoring_folder, video)
         copy_tree(source_video_dir, destination_video_dir)
 
-    test_cropped_nonscoring_videos = os.listdir(test_cropped_nonscoring_folder)
+    test_cropped_nonscoring_videos = listdir(test_cropped_nonscoring_folder)
     for video in tqdm(test_cropped_nonscoring_videos):
         source_video_dir = os.path.join(test_cropped_nonscoring_folder, video)
         destination_video_dir = os.path.join(test_nonscoring_folder, video)
@@ -180,7 +181,7 @@ def main(videos, yolov3, split, val_ratio):
 
         # Step 2: Run yolov3 basket detector on frames and get bounding box coords
         for idx in range(len(frames_dir_list)):
-            videos = os.listdir(frames_dir_list[idx])
+            videos = listdir(frames_dir_list[idx])
 
             for video in videos:
                 video_frames_dir = os.path.join(frames_dir_list[idx], video)

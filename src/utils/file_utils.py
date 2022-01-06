@@ -3,10 +3,14 @@ import shutil
 from tqdm import tqdm
 from functools import partial
 
+
+def listdir(path):
+    return [f for f in listdir(path) if not f.startswith('.')]
+
+
 def clear_folder(folder_path):
-    for file in os.listdir(folder_path):
-        if not file.endswith('.gitkeep'):
-            os.remove(os.path.join(folder_path, file))
+    for file in listdir(folder_path):
+        os.remove(os.path.join(folder_path, file))
 
 
 def make_folder(target_folder):
@@ -24,10 +28,10 @@ def copy_tree(source_folder, destination_folder):
 
 def clear_empty_subdirectories(folder_path):
 
-    subdir_paths = [os.path.join(folder_path, subdir) for subdir in os.listdir(folder_path)]
+    subdir_paths = [os.path.join(folder_path, subdir) for subdir in listdir(folder_path)]
     for subdir_path in tqdm(subdir_paths, desc = f'Cleaning up {folder_path}'):
         if os.path.isdir(subdir_path):
-            if len(os.listdir(subdir_path)) == 0:
+            if len(listdir(subdir_path)) == 0:
                 os.rmdir(subdir_path)
 
 
