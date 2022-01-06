@@ -5,7 +5,7 @@ from functools import partial
 
 
 def listdir(path):
-    return [f for f in listdir(path) if not f.startswith('.')]
+    return [f for f in os.listdir(path) if not f.startswith('.')]
 
 
 def clear_folder(folder_path):
