@@ -15,7 +15,6 @@ FRAMES_UPLOAD_DIRECTORY = 'data/inference/frames_upload'
 FRAMES_PROBAB_CSV_PATH = 'reports/probability_values.csv'
 
 #! TODO: CODE DATA LOADER FOR INFERENCE (REQUEST BATCH SIZE AS ENV VAR)
-#! TODO: TEST PREDICT IN GPU (FAILED FOR ADHIL)
 
 def run_predictions(pil_images):
 
@@ -36,6 +35,7 @@ def run_predictions(pil_images):
 
         pil_image = transforms.Resize((RESIZE, RESIZE))(pil_image)
         image_tensor = transforms.ToTensor()(pil_image)
+        image_tensor = image_tensor.to(device)
         output = model(torch.unsqueeze(image_tensor, 0))
         frame_probabs.append([frame_num, output[0].item()])
 
