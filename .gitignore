@@ -88,3 +88,6 @@ target/
 # exclude these from source control
 /src/yolov3_helper/yolov3/
 /src/yolov3_helper/basketball/
+
+# nodemodules
+/src/server/node_modules/

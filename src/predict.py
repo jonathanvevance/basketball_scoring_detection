@@ -1,4 +1,3 @@
-
 import os
 import csv
 import torch
@@ -91,17 +90,17 @@ def run_predictions(pil_images):
 
 
 def predict():
-    '''predict Yes or No per frame per video.'''
+    """predict Yes or No per frame per video."""
 
     # get frames from video
     save_frames_from_video_inference()
 
     # run basket detection
     commands = [
-        'cd ./src/yolov3_helper',
-        'sudo bash predict.sh' + ' ../../../' + FRAMES_UPLOAD_DIRECTORY + ' ../../../' + FRAMES_UPLOAD_DIRECTORY
+        "cd ./src/yolov3_helper",
+        "sudo bash predict.sh" + " ../../../" + FRAMES_UPLOAD_DIRECTORY + " ../../../" + FRAMES_UPLOAD_DIRECTORY,
     ]
-    os.system(';'.join(commands)) # bounding boxes saved to src/yolov3_helper/yolov3/output/bounding_boxes.json
+    os.system(";".join(commands))  # bounding boxes saved to src/yolov3_helper/yolov3/output/bounding_boxes.json
 
     # crop basket images
     pil_images = get_cropped_pil_images_inference()
@@ -119,4 +118,5 @@ def predict():
 
     #! TODO: SEE PROBABS FROM SAVED_MODEL_6.PT - are they good?
 
-predict()
+
+# predict()

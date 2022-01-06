@@ -16,4 +16,5 @@ pip3 install click
 pip3 install tqdm
 pip3 install scikit-learn
 pip3 install matplotlib
+pip3 install -r src/server/requirements.txt
 deactivate
