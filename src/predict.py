@@ -1,5 +1,6 @@
 
 import os
+import csv
 import torch
 from torchvision import transforms
 
@@ -8,14 +9,17 @@ from utils.img_video_utils import save_frames_from_video_inference
 from utils.eval_utils import load_model_clf
 
 RESIZE = 128
-THRESHOLD = 0.8
+THRESHOLD = 0.93
 MODEL_WEIGHTS_PATH = 'models/best.pt'
 FRAMES_UPLOAD_DIRECTORY = 'data/inference/frames_upload'
+FRAMES_PROBAB_CSV_PATH = 'reports/probability_values.csv'
+
+#! TODO: CODE DATA LOADER FOR INFERENCE (REQUEST BATCH SIZE AS ENV VAR)
 
 def run_predictions(pil_images):
 
     is_scoring = False
-    frame_probabs = []
+    frame_probabs = [['time', 'values']]
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     # load model
@@ -23,17 +27,16 @@ def run_predictions(pil_images):
     model = model.eval()
 
     # run predictions, return predictions
-    for i, pil_image in enumerate(pil_images):
+    for frame_num, pil_image in enumerate(pil_images):
 
         if pil_image is None: # no basket detected
-            frame_probabs.append(0)
+            frame_probabs.append([frame_num, 0])
             continue
 
         pil_image = transforms.Resize((RESIZE, RESIZE))(pil_image)
         image_tensor = transforms.ToTensor()(pil_image)
         output = model(torch.unsqueeze(image_tensor, 0))
-        print(i, output)
-        frame_probabs.append(output)
+        frame_probabs.append([frame_num, output[0].item()])
 
         if output > THRESHOLD:
             is_scoring = True
@@ -60,11 +63,13 @@ def predict():
     # run predictions
     is_scoring, pred_probabs = run_predictions(pil_images)
 
-    return is_scoring, pred_probabs
-    #! CONFIRM FOMMAT. MAKE INTO CSV FILE (RETURN OR SAVE - ASK ADHIL)
+    # save as csv file
+    with open(FRAMES_PROBAB_CSV_PATH, 'w', newline = "") as f:
+        writer = csv.writer(f)
+        writer.writerows(pred_probabs)
 
-    #! SEE PROBABS FROM SAVED_MODEL_6.PT - are they good enough?
+    return is_scoring
 
-    #! 
+    #! TODO: SEE PROBABS FROM SAVED_MODEL_6.PT - are they good?
 
 predict()
