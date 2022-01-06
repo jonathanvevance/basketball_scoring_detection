@@ -61,5 +61,10 @@ def predict():
     is_scoring, pred_probabs = run_predictions(pil_images)
 
     return is_scoring, pred_probabs
+    #! CONFIRM FOMMAT. MAKE INTO CSV FILE (RETURN OR SAVE - ASK ADHIL)
+
+    #! SEE PROBABS FROM SAVED_MODEL_6.PT - are they good enough?
+
+    #! 
 
 predict()

@@ -1,21 +1,69 @@
 
+import os
 
 from configs import eval_config as cfg
 from models.conv_net import simpleConvNet
 from utils.mil_utils import mil_model_wrapper
 from utils.train_utils import load_model
-from utils.eval_utils import print_classification_matrics
+from utils.eval_utils import print_classification_metrics
+from utils.file_utils import create_class_structure
+from utils.img_video_utils import save_cropped_images
+from utils.img_video_utils import save_frames_from_video_folder_mil
+
+#! TODO: write assumptions about expecting scoring_clips and non_scoring_clips
+
+FRAMES_DIR = '/mnt/d/MTX_hackathon/backuppp/data/evaluation/frames'
+DATASET_ROOT = '/mnt/d/MTX_hackathon/backuppp/data/evaluation/eval_dataset'
+FINAL_DATASET_DIR = '/mnt/d/MTX_hackathon/backuppp/data/evaluation/final'
+
+def get_directories():
+
+    data_scoring_dir = os.path.join(DATASET_ROOT, 'scoring_clips')
+    data_nonscoring_dir = os.path.join(DATASET_ROOT, 'non_scoring_clips')
+    data_dir_list = [data_scoring_dir, data_nonscoring_dir]
+
+    create_class_structure(FRAMES_DIR)
+    frames_scoring_dir = os.path.join(FRAMES_DIR, '1')
+    frames_nonscoring_dir = os.path.join(FRAMES_DIR, '0')
+    frames_dir_list = [frames_scoring_dir, frames_nonscoring_dir]
+
+    create_class_structure(FINAL_DATASET_DIR)
+    final_scoring_dir = os.path.join(FINAL_DATASET_DIR, '1')
+    final_nonscoring_dir = os.path.join(FINAL_DATASET_DIR, '0')
+    final_dir_list = [final_scoring_dir, final_nonscoring_dir]
+
+    return data_dir_list, frames_dir_list, final_dir_list
 
 
-def prepare_eval_dataset(): #!!! HAVE TO CONVERT VIDEOS TO CROPPED FRAMES
 
-    # input: folder with 0 and 1 with *.mp4 files
-    # Step 1: get frames into a temp folder (import - look at predict.py)
+
+
+def prepare_eval_dataset():
+
+    data_dir_list, frames_dir_list, final_dir_list = get_directories()
+
+    for idx in range(len(data_dir_list)):
+        save_frames_from_video_folder_mil(data_dir_list[idx], frames_dir_list[idx])
+
+    for idx in range(len(frames_dir_list)):
+        videos = os.listdir(frames_dir_list[idx])
+
+        for video in videos:
+            video_frames_dir = os.path.join(frames_dir_list[idx], video)
+
+            commands = [
+                'cd ./src/yolov3_helper',
+                'sudo bash predict.sh' + ' ../../../' + video_frames_dir + ' ../../../' + video_frames_dir
+            ]
+            os.system(';'.join(commands)) # this stores json in video_frames_dir itself
+
+            # Step 3: Crop according to bounding boxes and save them
+            final_frames_dir = os.path.join(final_dir_list[idx], video)
+            save_cropped_images(video_frames_dir, final_frames_dir, standardise = True)
+
+
     # Step 2: get yolov3 bounding boxes
-    # Step 3: save cropped frames into temp_ folder
-
-    # 
-
+    # Step 3: save final frames into data/evaluation/final folder
     pass
 
 def evaluate():

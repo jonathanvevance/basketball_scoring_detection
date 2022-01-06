@@ -127,7 +127,7 @@ def save_frames_from_video_folder_mil(video_folder, target_folder): # only durin
             count += 1
 
 
-def save_cropped_images(frames_folder, target_folder, crop_size = 100, standardise = False): # only during training (dataset creation)
+def save_cropped_images(frames_folder, target_folder, crop_size = 100, standardise = True): # only during training (dataset creation)
 
     make_folder(target_folder) # make target folder
 

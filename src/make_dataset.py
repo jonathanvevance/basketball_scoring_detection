@@ -2,15 +2,15 @@
 import os
 import click
 from tqdm import tqdm
-from functools import partial
 
 import random
 random.seed(0)
 
-from utils.img_video_utils import save_frames_from_video_folder_mil
-from utils.img_video_utils import save_cropped_images
 from utils.file_utils import copy_tree
 from utils.file_utils import clear_empty_subdirectories
+from utils.file_utils import create_dataset_structure
+from utils.img_video_utils import save_cropped_images
+from utils.img_video_utils import save_frames_from_video_folder_mil
 
 # FRAMES_DIR = 'data/training/frames'
 # DATASET_ROOT = 'data/training/hackolympics_data'
@@ -23,20 +23,6 @@ FRAMES_DIR = '/mnt/d/MTX_hackathon/backuppp/data/training/multi_instance/frames'
 DATASET_ROOT = '/mnt/d/MTX_hackathon/backuppp/data/training/hackolympics_data'
 CROPPED_DATASET_DIR = '/mnt/d/MTX_hackathon/backuppp/data/training/multi_instance/cropped'
 FINAL_DATASET_DIR = '/mnt/d/MTX_hackathon/backuppp/data/training/multi_instance/final'
-
-def create_dataset_structure(root_directory, val_required = False):
-
-    folders_list = ['train', 'test', 'train/1', 'train/0', 'test/1', 'test/0']
-
-    if val_required:
-        folders_list.extend(['val', 'val/1', 'val/0'])
-
-    # https://www.geeksforgeeks.org/make-multiple-directories-based-on-a-list-using-python/
-    concat_root_path = partial(os.path.join, root_directory)
-    make_directory = partial(os.makedirs, exist_ok=True)
-
-    for path_items in map(concat_root_path, folders_list):
-        make_directory(path_items)
 
 
 def get_directories():
@@ -207,7 +193,7 @@ def main(videos, yolov3, split, val_ratio):
 
                 # Step 3: Crop according to bounding boxes and save them
                 cropped_frames_dir = os.path.join(cropped_dir_list[idx], video)
-                save_cropped_images(video_frames_dir, cropped_frames_dir, standardise = False)
+                save_cropped_images(video_frames_dir, cropped_frames_dir, standardise = True)
 
     if split:
         # Step 4: Split train-test
