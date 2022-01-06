@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import os
-import shutil
 import click
 from tqdm import tqdm
 from functools import partial
@@ -13,10 +12,12 @@ from utils.img_video_utils import save_cropped_images
 from utils.file_utils import copy_tree
 from utils.file_utils import clear_empty_subdirectories
 
-# FRAMES_DIR = 'data/training/multi_instance/frames'
+# FRAMES_DIR = 'data/training/frames'
 # DATASET_ROOT = 'data/training/hackolympics_data'
-# CROPPED_DATASET_DIR = 'data/training/multi_instance/cropped'
-# FINAL_DATASET_DIR = 'data/training/multi_instance/final'
+# CROPPED_DATASET_DIR = 'data/training/cropped'
+# FINAL_DATASET_DIR = 'data/training/final'
+
+#! TODO: remove the lines below. uncomment above
 
 FRAMES_DIR = '/mnt/d/MTX_hackathon/backuppp/data/training/multi_instance/frames'
 DATASET_ROOT = '/mnt/d/MTX_hackathon/backuppp/data/training/hackolympics_data'

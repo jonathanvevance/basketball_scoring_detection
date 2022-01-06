@@ -18,3 +18,5 @@ LOAD_MODEL_PTH = '/mnt/d/MTX_hackathon/saved_model_2.pt'
 
 # Others
 EVALUATE_ON_TEST_SET = True
+
+#! TODO: change paths to repo folder structure

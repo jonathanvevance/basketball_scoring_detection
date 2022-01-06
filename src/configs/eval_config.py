@@ -7,3 +7,5 @@ THRESHOLD = 0.938
 
 # Data settings
 DATASET_PATH = '/mnt/d/MTX_hackathon/backuppp/data/training/multi_instance/final/test'
+
+#! TODO: change paths to repo folder structure
