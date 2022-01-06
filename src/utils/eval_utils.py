@@ -61,7 +61,9 @@ def get_all_video_probabs(model, dataloader, device, max_video_frames):
     return all_scores, all_labels
 
 
-def print_classification_metrics(model, dataset_path, transform, max_video_frames, batch_size, device, threshold = None):
+def print_classification_metrics(
+    model, dataset_path, transform, max_video_frames, batch_size, device, threshold = None, num_undetected_tuple = None
+):
 
     # get dataset, dataloader
     dataset = video_folder(dataset_path, transform, max_video_frames)
@@ -69,6 +71,17 @@ def print_classification_metrics(model, dataset_path, transform, max_video_frame
 
     # criteria
     scores, labels = get_all_video_probabs(model, dataloader, device, max_video_frames)
+
+    # account for (basket) undetected videos (tjese wo;; )
+    if num_undetected_tuple is None:
+        # Note: this works only for the given Public Dataset
+        num_scoring_undetected, num_nonscoring_undetected = (1, 30)
+    else:
+        num_scoring_undetected, num_nonscoring_undetected = num_undetected_tuple
+
+    scores.extend([0 for __ in range(num_scoring_undetected + num_nonscoring_undetected)])
+    labels.extend([1 for __ in range(num_scoring_undetected)])
+    labels.extend([0 for __ in range(num_nonscoring_undetected)])
 
     # show ROC curve
     auroc_score = roc_auc_score(labels, scores)

@@ -34,11 +34,14 @@ def copy_tree(source_folder, destination_folder):
 
 def clear_empty_subdirectories(folder_path):
 
+    num_cleared = 0
     subdir_paths = [os.path.join(folder_path, subdir) for subdir in listdir(folder_path)]
     for subdir_path in tqdm(subdir_paths, desc = f'Cleaning up {folder_path}'):
         if os.path.isdir(subdir_path):
             if len(listdir(subdir_path)) == 0:
                 os.rmdir(subdir_path)
+                num_cleared += 1
+    return num_cleared
 
 
 def create_dataset_structure(root_directory, val_required = False):

@@ -39,9 +39,15 @@ def get_directories():
     return data_dir_list, frames_dir_list, final_dir_list
 
 
-def dataset_cleanup(final_dir_list):
-    for final_dir in final_dir_list:
-        clear_empty_subdirectories(final_dir)
+def dataset_cleanup():
+
+    final_scoring_dir = os.path.join(cfg.FINAL_DATASET_DIR, '1')
+    final_nonscoring_dir = os.path.join(cfg.FINAL_DATASET_DIR, '0')
+
+    num_scoring_undetected = clear_empty_subdirectories(final_scoring_dir)
+    num_nonscoring_undetected = clear_empty_subdirectories(final_nonscoring_dir)
+
+    return num_scoring_undetected, num_nonscoring_undetected
 
 
 def prepare_eval_dataset():
@@ -67,15 +73,17 @@ def prepare_eval_dataset():
             final_frames_dir = os.path.join(final_dir_list[idx], video)
             save_cropped_images(video_frames_dir, final_frames_dir, standardise = True)
 
-    dataset_cleanup(final_dir_list)
+    num_scoring_undetected, num_nonscoring_undetected = dataset_cleanup()
 
-    return data_dir_list, frames_dir_list, final_dir_list
+    return (data_dir_list, frames_dir_list, final_dir_list), (num_scoring_undetected, num_nonscoring_undetected)
 
 
 def evaluate():
 
-    __, frames_dir_list, final_dir_list = prepare_eval_dataset()
+    directory_lists_tuple, num_undetected_tuple = prepare_eval_dataset()
+    __, frames_dir_list, final_dir_list = directory_lists_tuple
 
+    print()
     transform = transforms.Compose([
         transforms.Resize((cfg.RESIZE, cfg.RESIZE)),
         transforms.ToTensor(),
@@ -102,7 +110,8 @@ def evaluate():
         cfg.MAX_VIDEO_FRAMES,
         cfg.BATCH_SIZE,
         cfg.DEVICE,
-        cfg.THRESHOLD
+        cfg.THRESHOLD,
+        num_undetected_tuple # basket undetected counts
     )
 
     # clear temporary files stored
