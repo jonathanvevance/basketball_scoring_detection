@@ -84,7 +84,7 @@ def print_classification_metrics(model, dataset_path, transform, max_video_frame
         threshold = thresholds[optimal_idx]
 
     # get classification report
-    y_pred_class = scores > threshold
+    y_pred_class = np.array(scores) > threshold
     print("\n---------------------------\n")
     print("Threshold value is:", threshold)
     print(classification_report(labels, y_pred_class))
