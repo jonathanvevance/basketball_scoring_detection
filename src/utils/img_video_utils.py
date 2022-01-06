@@ -92,7 +92,6 @@ def save_frames_from_video_folder(video_folder, target_folder): # only during tr
 
     for video_file in tqdm(video_files, desc = f'Transferring to video folders in {target_folder}'):
 
-
         video_target_folder = os.path.join(target_folder, video_file)
         make_folder(video_target_folder)
 
