@@ -9,7 +9,7 @@ svg {
 }
 
 text {
-  fill: rgb(20, 72, 216);
+  fill: #474646;
   color: rgb(27, 180, 207);
   font-size: 16px;
 }
@@ -56,7 +56,7 @@ text {
 }
 
 .tooltip:before {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 50%;

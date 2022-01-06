@@ -4,16 +4,16 @@ import { createBrowserHistory } from "history";
 import "../App.css";
 import NavBar from "../components/NavBar";
 
-import Predict from '../views/Predict/predict';
-import Results from '../views/Results/results';
-import VisualsUI from '../views/Visualisation/visuals';
+import Predict from "../views/Predict/predict";
+import Results from "../views/Results/results";
+import VisualsUI from "../views/Visualisation/visuals";
 
 var hist = createBrowserHistory();
 
 var routes = [
-  { path: '/', component: Predict },
-  { path: '/results', component: Results },
-  { path: '/charts', component: VisualsUI },
+  { path: "/", component: Predict },
+  { path: "/results", component: Results },
+  { path: "/charts", component: VisualsUI },
 ];
 
 export default class App extends React.Component {
@@ -32,7 +32,7 @@ export default class App extends React.Component {
   }
 
   fakeRequest = () => {
-    return new Promise((resolve) => setTimeout(() => resolve(), 2500));
+    return new Promise((resolve) => setTimeout(() => resolve(), 3000));
   };
 
   render() {

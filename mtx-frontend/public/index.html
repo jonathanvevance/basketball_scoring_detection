@@ -28,9 +28,9 @@
       .ball {
         position: absolute;
         width: 50px;
-        animation: bounce 0.5s;
+        animation: bounce 1s;
         animation-direction: alternate;
-        animation-timing-function: cubic-bezier(0.5, 0.05, 1, 0.5);
+        animation-timing-function: cubic-bezier(0.44, 0.26, 0.4, 0.99);
         animation-iteration-count: infinite;
       }
       @keyframes bounce {
@@ -60,6 +60,101 @@
           -webkit-transform: translate3d(0, 200px, 0);
           transform: translate3d(0, 200px, 0);
         }
+      }
+      /* Chart animation  */
+      .chartLoading {
+        position: fixed;
+        float: left;
+        top: 50%;
+        left: 50%;
+        height: 120px;
+        padding: 0px;
+        width: 160px;
+        margin-top: -50px;
+        margin-left: -70px;
+        border-left: 1px solid #000;
+        border-bottom: 1px solid #000;
+        padding: 10px;
+        box-sizing: border-box;
+      }
+      @keyframes barMove {
+        0% {
+          background-color: #003049;
+        }
+        30% {
+          background-color: #d62828;
+        }
+        50% {
+          height: 100px;
+          margin-top: 0px;
+        }
+        80% {
+          background-color: #f77f00;
+        }
+        100% {
+          background-color: #fcbf49;
+        }
+      }
+
+      .chartLoading .bar1 {
+        height: 10px;
+        width: 30px;
+        background-color: #fff;
+        display: inline-block;
+        margin-top: 90px;
+        -webkit-animation: barMove 2.5s infinite;
+        -moz-animation: barMove 2.5s infinite;
+        -o-animation: barMove 2.5s infinite;
+        animation: barMove 2.5s infinite;
+        border-top-left-radius: 2px;
+        border-top-right-radius: 2px;
+        -webkit-animation-delay: 0.25s;
+        animation-delay: 0.25s;
+      }
+      .chartLoading .bar2 {
+        height: 10px;
+        width: 30px;
+        background-color: #fff;
+        display: inline-block;
+        margin-top: 90px;
+        -webkit-animation: barMove 2.5s infinite;
+        -moz-animation: barMove 2.5s infinite;
+        -o-animation: barMove 2.5s infinite;
+        animation: barMove 2.5s infinite;
+        border-top-left-radius: 2px;
+        border-top-right-radius: 2px;
+        -webkit-animation-delay: 0.5s;
+        animation-delay: 0.5s;
+      }
+      .chartLoading .bar3 {
+        height: 10px;
+        width: 30px;
+        background-color: #fff;
+        display: inline-block;
+        margin-top: 90px;
+        -webkit-animation: barMove 2.5s infinite;
+        -moz-animation: barMove 2.5s infinite;
+        -o-animation: barMove 2.5s infinite;
+        animation: barMove 2.5s infinite;
+        border-top-left-radius: 2px;
+        border-top-right-radius: 2px;
+        -webkit-animation-delay: 0.75s;
+        animation-delay: 0.75s;
+      }
+      .chartLoading .bar4 {
+        height: 10px;
+        width: 30px;
+        background-color: #fff;
+        display: inline-block;
+        margin-top: 90px;
+        -webkit-animation: barMove 2.5s infinite;
+        -moz-animation: barMove 2.5s infinite;
+        -o-animation: barMove 2.5s infinite;
+        animation: barMove 2.5s infinite;
+        border-top-left-radius: 2px;
+        border-top-right-radius: 2px;
+        -webkit-animation-delay: 1s;
+        animation-delay: 1s;
       }
     </style>
     <!--
