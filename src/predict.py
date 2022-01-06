@@ -15,6 +15,7 @@ FRAMES_UPLOAD_DIRECTORY = 'data/inference/frames_upload'
 FRAMES_PROBAB_CSV_PATH = 'reports/probability_values.csv'
 
 #! TODO: CODE DATA LOADER FOR INFERENCE (REQUEST BATCH SIZE AS ENV VAR)
+#! TODO: TEST PREDICT IN GPU (FAILED FOR ADHIL)
 
 def run_predictions(pil_images):
 

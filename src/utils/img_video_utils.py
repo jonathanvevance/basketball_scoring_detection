@@ -52,8 +52,6 @@ def get_cropped_pil_images_inference(crop_size = 100, standardise = True): # onl
             cropped_pil_img = pil_img.crop((x1, y1, x2, y2))
             cropped_pil_images.append(cropped_pil_img)
 
-            # cropped_pil_img.save(os.path.join(VIDEO_UPLOAD_DIRECTORY, frame_img)) #! debugging
-
     clear_folder(FRAMES_UPLOAD_DIRECTORY) # clear frames
 
     return cropped_pil_images

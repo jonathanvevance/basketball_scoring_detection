@@ -64,7 +64,7 @@ def get_all_video_probabs(model, dataloader, device, max_video_frames):
 def print_classification_metrics(model, dataset_path, transform, max_video_frames, batch_size, device, threshold = None):
 
     # get dataset, dataloader
-    dataset = video_folder(dataset_path, transform, max_video_frames, )
+    dataset = video_folder(dataset_path, transform, max_video_frames)
     dataloader = DataLoader(dataset = dataset, batch_size = batch_size, shuffle = True)
 
     # criteria

@@ -1,7 +1,9 @@
 
 import os
+from torchvision import transforms
 
 from configs import eval_config as cfg
+from data.dataset import video_folder
 from models.conv_net import simpleConvNet
 from utils.mil_utils import mil_model_wrapper
 from utils.train_utils import load_model
@@ -12,30 +14,23 @@ from utils.img_video_utils import save_frames_from_video_folder_mil
 
 #! TODO: write assumptions about expecting scoring_clips and non_scoring_clips
 
-FRAMES_DIR = '/mnt/d/MTX_hackathon/backuppp/data/evaluation/frames'
-DATASET_ROOT = '/mnt/d/MTX_hackathon/backuppp/data/evaluation/eval_dataset'
-FINAL_DATASET_DIR = '/mnt/d/MTX_hackathon/backuppp/data/evaluation/final'
-
 def get_directories():
 
-    data_scoring_dir = os.path.join(DATASET_ROOT, 'scoring_clips')
-    data_nonscoring_dir = os.path.join(DATASET_ROOT, 'non_scoring_clips')
+    data_scoring_dir = os.path.join(cfg.DATASET_ROOT, 'scoring_clips')
+    data_nonscoring_dir = os.path.join(cfg.DATASET_ROOT, 'non_scoring_clips')
     data_dir_list = [data_scoring_dir, data_nonscoring_dir]
 
-    create_class_structure(FRAMES_DIR)
-    frames_scoring_dir = os.path.join(FRAMES_DIR, '1')
-    frames_nonscoring_dir = os.path.join(FRAMES_DIR, '0')
+    create_class_structure(cfg.FRAMES_DIR)
+    frames_scoring_dir = os.path.join(cfg.FRAMES_DIR, '1')
+    frames_nonscoring_dir = os.path.join(cfg.FRAMES_DIR, '0')
     frames_dir_list = [frames_scoring_dir, frames_nonscoring_dir]
 
-    create_class_structure(FINAL_DATASET_DIR)
-    final_scoring_dir = os.path.join(FINAL_DATASET_DIR, '1')
-    final_nonscoring_dir = os.path.join(FINAL_DATASET_DIR, '0')
+    create_class_structure(cfg.FINAL_DATASET_DIR)
+    final_scoring_dir = os.path.join(cfg.FINAL_DATASET_DIR, '1')
+    final_nonscoring_dir = os.path.join(cfg.FINAL_DATASET_DIR, '0')
     final_dir_list = [final_scoring_dir, final_nonscoring_dir]
 
     return data_dir_list, frames_dir_list, final_dir_list
-
-
-
 
 
 def prepare_eval_dataset():
@@ -62,13 +57,17 @@ def prepare_eval_dataset():
             save_cropped_images(video_frames_dir, final_frames_dir, standardise = True)
 
 
-    # Step 2: get yolov3 bounding boxes
-    # Step 3: save final frames into data/evaluation/final folder
-    pass
-
 def evaluate():
 
     prepare_eval_dataset()
+
+    transform = transforms.Compose([
+        transforms.Resize((cfg.RESIZE, cfg.RESIZE)),
+        transforms.ToTensor(),
+    ])
+
+    dataset = video_folder(cfg.FINAL_DATASET_DIR, transform, cfg.MAX_VIDEO_FRAMES)
+
 
     # load model
     model = simpleConvNet(train_loader)
