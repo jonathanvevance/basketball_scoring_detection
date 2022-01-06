@@ -2,10 +2,11 @@
 import os
 import torch
 import random
-
 from PIL import Image
 from torch.utils.data import Dataset
-from torchvision import transforms
+
+from utils.file_utils import listdir
+from utils.img_video_utils import filter_images_func
 
 
 class binary_mil_folder(Dataset):
@@ -19,8 +20,8 @@ class binary_mil_folder(Dataset):
         self.scoring_path = os.path.join(dataset_path, '1')
         self.nonscoring_path = os.path.join(dataset_path, '0')
 
-        self.scoring_videos = os.listdir(self.scoring_path)
-        self.nonscoring_videos = os.listdir(self.nonscoring_path)
+        self.scoring_videos = listdir(self.scoring_path)
+        self.nonscoring_videos = listdir(self.nonscoring_path)
 
         self.transform = transform
         self.max_video_frames = max_video_frames
@@ -39,8 +40,8 @@ class binary_mil_folder(Dataset):
         nonscoring_video_path = os.path.join(self.nonscoring_path, nonscoring_video)
 
         bag_tensors = []
-        scoring_frames = os.listdir(scoring_video_path)
-        nonscoring_frames = os.listdir(nonscoring_video_path)
+        scoring_frames = list(filter(filter_images_func, listdir(scoring_video_path)))
+        nonscoring_frames = list(filter(filter_images_func, listdir(nonscoring_video_path)))
 
         for frame in scoring_frames:
             pil_img = Image.open(os.path.join(scoring_video_path, frame))
@@ -81,8 +82,8 @@ class video_folder(Dataset):
 
         self.scoring_path = os.path.join(dataset_path, '1')
         self.nonscoring_path = os.path.join(dataset_path, '0')
-        self.scoring_videopaths = [os.path.join(self.scoring_path, video) for video in os.listdir(self.scoring_path)]
-        self.nonscoring_videopaths = [os.path.join(self.nonscoring_path, video) for video in os.listdir(self.nonscoring_path)]
+        self.scoring_videopaths = [os.path.join(self.scoring_path, video) for video in listdir(self.scoring_path)]
+        self.nonscoring_videopaths = [os.path.join(self.nonscoring_path, video) for video in listdir(self.nonscoring_path)]
 
         self.video_paths = self.scoring_videopaths + self.nonscoring_videopaths
         self.labels = [1 for __ in range(len(self.scoring_videopaths))] + [0 for __ in range(len(self.nonscoring_videopaths))]
@@ -97,7 +98,8 @@ class video_folder(Dataset):
 
         bag_tensors = []
         video_path = self.video_paths[idx]
-        frame_paths = [os.path.join(video_path, frame) for frame in os.listdir(video_path)]
+        frames = list(filter(filter_images_func, listdir(video_path)))
+        frame_paths = [os.path.join(video_path, frame) for frame in frames]
 
         for frame_path in frame_paths:
             pil_img = Image.open(frame_path)
@@ -130,4 +132,4 @@ class CustomTensorDataset(Dataset):
         return x
 
     def __len__(self):
-        return self.tensors[0].size(0)
+        return len(self.tensors)

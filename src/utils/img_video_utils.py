@@ -6,6 +6,7 @@ import cv2
 from PIL import Image
 from tqdm import tqdm
 
+from utils.file_utils import listdir
 from utils.file_utils import clear_folder
 from utils.file_utils import make_folder
 
@@ -23,9 +24,17 @@ def filter_images_func(image_name):
     return False
 
 
+def filter_videos_func(video_name):
+    if len(video_name) < 4:
+        return False
+    if video_name[-3:] in ['mp4']:
+        return True
+    return False
+
+
 def get_cropped_pil_images_inference(crop_size = 100, standardise = True): # only during inference
 
-    frame_imgs = filter(filter_images_func, os.listdir(FRAMES_UPLOAD_DIRECTORY))
+    frame_imgs = filter(filter_images_func, listdir(FRAMES_UPLOAD_DIRECTORY))
     frame_imgs = sorted(frame_imgs, key = lambda x: int(x[:-4]))
 
     with open(UPLOAD_FRAMES_COORDS_JSON) as f:
@@ -52,8 +61,6 @@ def get_cropped_pil_images_inference(crop_size = 100, standardise = True): # onl
             cropped_pil_img = pil_img.crop((x1, y1, x2, y2))
             cropped_pil_images.append(cropped_pil_img)
 
-            # cropped_pil_img.save(os.path.join(VIDEO_UPLOAD_DIRECTORY, frame_img)) #! debugging
-
     clear_folder(FRAMES_UPLOAD_DIRECTORY) # clear frames
 
     return cropped_pil_images
@@ -78,38 +85,12 @@ def save_frames_from_video_inference(): # only during inference
 
 # ------------------------------------ TRAINING FUNCTIONS --------------------------------------------------
 
-def get_last_frame_id(target_folder):
-    frame_imgs = list(filter(filter_images_func, os.listdir(target_folder)))
-    if len(frame_imgs) > 0:
-        return int(max(frame_imgs, key = lambda x: int(x[:-4]))[:-4])
-    return 0
-
-
-def save_frames_from_video_folder_clf(video_folder, target_folder): # only during training (dataset creation)
-    """Used for classification based training."""
-
-    count = get_last_frame_id(target_folder) + 1
-    video_filepaths = [os.path.join(video_folder, filename) for filename in os.listdir(video_folder)]
-
-    for video_filepath in tqdm(video_filepaths, desc = f'Transferring to {target_folder}'):
-        vidObj = cv2.VideoCapture(video_filepath)
-
-        while True:
-            success, image = vidObj.read()
-            if not success:
-                break
-
-            cv2.imwrite(os.path.join(target_folder, str(count) + '.jpg'), image)
-            count += 1
-
-
-def save_frames_from_video_folder_mil(video_folder, target_folder): # only during training (dataset creation)
+def save_frames_from_video_folder(video_folder, target_folder): # only during training (dataset creation)
     """Used for multi instance based training."""
 
-    video_files = os.listdir(video_folder)
+    video_files = list(filter(filter_videos_func, listdir(video_folder)))
 
     for video_file in tqdm(video_files, desc = f'Transferring to video folders in {target_folder}'):
-
 
         video_target_folder = os.path.join(target_folder, video_file)
         make_folder(video_target_folder)
@@ -127,11 +108,11 @@ def save_frames_from_video_folder_mil(video_folder, target_folder): # only durin
             count += 1
 
 
-def save_cropped_images(frames_folder, target_folder, crop_size = 100, standardise = False): # only during training (dataset creation)
+def save_cropped_images(frames_folder, target_folder, crop_size = 100, standardise = True): # only during training (dataset creation)
 
     make_folder(target_folder) # make target folder
 
-    frame_imgs = filter(filter_images_func, os.listdir(frames_folder))
+    frame_imgs = filter(filter_images_func, listdir(frames_folder))
     frame_imgs = sorted(frame_imgs, key = lambda x: int(x[:-4]))
     frames_coords_json_path = os.path.join(frames_folder, 'bounding_boxes.json')
 
