@@ -97,6 +97,11 @@ It is required to bypass password prompts on Ubuntu so that all functions work p
    ```sh
    sudo chmod -R 777 data
    ```
+5. To install NodeJS backend dependencies, from the root directory
+   ```sh
+   cd src/server
+   npm install
+   ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
