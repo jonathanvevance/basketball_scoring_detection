@@ -90,7 +90,7 @@ It is required to bypass password prompts on Ubuntu so that all functions work p
    ```
 3. From the root directory,
    ```sh
-   cd src/yolov3_helper;
+   cd src/yolov3_helper
    sudo bash setup.sh
    ```
 4. To prevent file permission issues, from the root directory,
@@ -114,7 +114,7 @@ It is required to bypass password prompts on Ubuntu so that all functions work p
                 ├── clip_1.mp4
                 ├── clip_2.mp4
                 ├── ...
-            ├──non_scoring_clips
+            ├── non_scoring_clips
                 ├── clip_4.mp4
                 ├── clip_6.mp4
                 ├── ...
@@ -138,7 +138,7 @@ It is required to bypass password prompts on Ubuntu so that all functions work p
                 ├── clip_1.mp4
                 ├── clip_2.mp4
                 ├── ...
-            ├──non_scoring_clips
+            ├── non_scoring_clips
                 ├── clip_4.mp4
                 ├── clip_6.mp4
                 ├── ...
@@ -167,8 +167,6 @@ It is required to bypass password prompts on Ubuntu so that all functions work p
 - [] Interactive video player in the web application. 
 - [] Inference speedup using TensorRT on GPU and Intel OpenVino on Intel CPU.
 
-See the [open issues](https://github.com/jonathanvevance/basketall_scoring_detection/issues) for a full list of proposed features (and known issues).
-
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
@@ -186,7 +184,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- Jonathan Ve Vance - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com -->
 1. Jonathan Ve Vance - [Linkedin](https://linkedin.com/in/jonathanvevance) - jonathanvevance@gmail.com
 2. Irfan Thayyil
-3. Aadil
+3. Aadil Muhammed K
 4. Akshay Krishna
 
 
