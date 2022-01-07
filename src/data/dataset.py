@@ -2,10 +2,12 @@
 import os
 import torch
 import random
-
 from PIL import Image
 from torch.utils.data import Dataset
-from torchvision import transforms
+
+from utils.file_utils import listdir
+from utils.file_utils import get_empty_subdirectories
+from utils.img_video_utils import filter_images_func
 
 
 class binary_mil_folder(Dataset):
@@ -19,28 +21,30 @@ class binary_mil_folder(Dataset):
         self.scoring_path = os.path.join(dataset_path, '1')
         self.nonscoring_path = os.path.join(dataset_path, '0')
 
-        self.scoring_videos = os.listdir(self.scoring_path)
-        self.nonscoring_videos = os.listdir(self.nonscoring_path)
+        # filter out empty video folders
+        __, valid_scoring_folders = get_empty_subdirectories(self.scoring_path)
+        __, valid_nonscoring_folders = get_empty_subdirectories(self.nonscoring_path)
+
+        self.scoring_videopaths = valid_scoring_folders
+        self.nonscoring_videopaths = valid_nonscoring_folders
 
         self.transform = transform
         self.max_video_frames = max_video_frames
 
     def __len__(self, ):
-        return len(self.scoring_videos)
+        return len(self.scoring_videopaths)
 
     def __getitem__(self, idx):
 
-        scoring_video = self.scoring_videos[idx]
-        scoring_video_path = os.path.join(self.scoring_path, scoring_video)
+        scoring_video_path = self.scoring_videopaths[idx]
 
         # sample a random nonscoring video
-        nonscoring_idx = random.randint(0, len(self.nonscoring_videos) - 1)
-        nonscoring_video = self.nonscoring_videos[nonscoring_idx]
-        nonscoring_video_path = os.path.join(self.nonscoring_path, nonscoring_video)
+        nonscoring_idx = random.randint(0, len(self.nonscoring_videopaths) - 1)
+        nonscoring_video_path = self.nonscoring_videopaths[nonscoring_idx]
 
         bag_tensors = []
-        scoring_frames = os.listdir(scoring_video_path)
-        nonscoring_frames = os.listdir(nonscoring_video_path)
+        scoring_frames = list(filter(filter_images_func, listdir(scoring_video_path)))
+        nonscoring_frames = list(filter(filter_images_func, listdir(nonscoring_video_path)))
 
         for frame in scoring_frames:
             pil_img = Image.open(os.path.join(scoring_video_path, frame))
@@ -75,20 +79,37 @@ class binary_mil_folder(Dataset):
         return torch.stack(bag_tensors), torch.tensor([len(scoring_frames), len(nonscoring_frames)])
 
 
-class video_folder(Dataset):
+class eval_folder(Dataset):
 
     def __init__(self, dataset_path, transform, max_video_frames):
 
         self.scoring_path = os.path.join(dataset_path, '1')
         self.nonscoring_path = os.path.join(dataset_path, '0')
-        self.scoring_videopaths = [os.path.join(self.scoring_path, video) for video in os.listdir(self.scoring_path)]
-        self.nonscoring_videopaths = [os.path.join(self.nonscoring_path, video) for video in os.listdir(self.nonscoring_path)]
+
+        # filter out empty video folders
+        empty_scoring_folders, valid_scoring_folders = get_empty_subdirectories(self.scoring_path)
+        empty_nonscoring_folders, valid_nonscoring_folders = get_empty_subdirectories(self.nonscoring_path)
+
+        self.scoring_videopaths = valid_scoring_folders
+        self.nonscoring_videopaths = valid_nonscoring_folders
+        self.scoring_basket_undetected_videopaths = empty_scoring_folders
+        self.nonscoring_basket_undetected_videopaths = empty_nonscoring_folders
 
         self.video_paths = self.scoring_videopaths + self.nonscoring_videopaths
         self.labels = [1 for __ in range(len(self.scoring_videopaths))] + [0 for __ in range(len(self.nonscoring_videopaths))]
 
         self.transform = transform
         self.max_video_frames = max_video_frames
+
+    def get_basket_undetected_videos(self):
+
+        num_scoring_undetected = len(self.scoring_basket_undetected_videopaths)
+        num_nonscoring_undetected = len(self.nonscoring_basket_undetected_videopaths)
+        augment_scores = [0 for __ in range(num_scoring_undetected + num_nonscoring_undetected)]
+        augment_labels = [1 for __ in range(num_scoring_undetected)] + [0 for __ in range(num_nonscoring_undetected)]
+        undetected_paths = self.scoring_basket_undetected_videopaths + self.nonscoring_basket_undetected_videopaths
+
+        return augment_scores, augment_labels, undetected_paths
 
     def __len__(self):
         return len(self.labels)
@@ -97,7 +118,8 @@ class video_folder(Dataset):
 
         bag_tensors = []
         video_path = self.video_paths[idx]
-        frame_paths = [os.path.join(video_path, frame) for frame in os.listdir(video_path)]
+        frames = list(filter(filter_images_func, listdir(video_path)))
+        frame_paths = [os.path.join(video_path, frame) for frame in frames]
 
         for frame_path in frame_paths:
             pil_img = Image.open(frame_path)
@@ -113,7 +135,12 @@ class video_folder(Dataset):
         for __ in range(pad_length):
             bag_tensors.append(torch.zeros_like(bag_tensors[-1]))
 
-        return torch.stack(bag_tensors), torch.Tensor([self.labels[idx], self.max_video_frames - pad_length])
+        return {
+            'X': torch.stack(bag_tensors),
+            'Y': torch.Tensor([self.labels[idx]]),
+            'len': torch.Tensor([self.max_video_frames - pad_length]),
+            'path': video_path
+        }
 
 
 # https://stackoverflow.com/a/55593757
@@ -130,4 +157,4 @@ class CustomTensorDataset(Dataset):
         return x
 
     def __len__(self):
-        return self.tensors[0].size(0)
+        return len(self.tensors)

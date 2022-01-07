@@ -1,17 +1,19 @@
 {
   "files": {
-    "main.css": "/static/css/main.47d9c89a.css",
-    "main.js": "/static/js/main.c0931b3f.js",
-    "static/media/bb_court.jpeg": "/static/media/bb_court.d1c8c0c2522049cf4ae1.jpeg",
+    "main.css": "/static/css/main.57f39034.css",
+    "main.js": "/static/js/main.224234f4.js",
+    "static/media/stephen-curry-basketball.gif": "/static/media/stephen-curry-basketball.9dba7089cd6dcd808fc4.gif",
+    "static/media/bb_court.jpeg": "/static/media/bb_court.6a730ba997f72c162c2f.jpeg",
+    "static/media/rim.jpeg": "/static/media/rim.a9ef5263f0e5fbedda1c.jpeg",
     "static/media/loader.png": "/static/media/loader.d607620eab6e50f122ef.png",
     "static/media/Proxima Nova Bold.otf": "/static/media/Proxima Nova Bold.fcaab2524c5baabd71f6.otf",
     "static/media/ProximaNova-Regular.otf": "/static/media/ProximaNova-Regular.ea03f826587148b7335d.otf",
     "index.html": "/index.html",
-    "main.47d9c89a.css.map": "/static/css/main.47d9c89a.css.map",
-    "main.c0931b3f.js.map": "/static/js/main.c0931b3f.js.map"
+    "main.57f39034.css.map": "/static/css/main.57f39034.css.map",
+    "main.224234f4.js.map": "/static/js/main.224234f4.js.map"
   },
   "entrypoints": [
-    "static/css/main.47d9c89a.css",
-    "static/js/main.c0931b3f.js"
+    "static/css/main.57f39034.css",
+    "static/js/main.224234f4.js"
   ]
 }
