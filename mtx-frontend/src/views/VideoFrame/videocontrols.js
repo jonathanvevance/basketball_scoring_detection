@@ -40,6 +40,9 @@ function ShowVideo() {
 
   const handleProgress = (e) => {
     console.log('Current time: ', e.target.currentTime);
+    console.log(e);
+    changeTime(e.target.currentTime);
+    this.props.parentCallback(e.target.currentTime);
   };
 
   const handleDuration = (duration) => {
@@ -56,7 +59,7 @@ function ShowVideo() {
         controls={controls}
         isPlaying={isPlaying}
         volume={volume}
-        loop={true}
+        loop={false}
         height={'auto'}
         width={'640px'}
         timeStart={timeStart}

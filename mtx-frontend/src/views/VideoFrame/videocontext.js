@@ -6,6 +6,7 @@ export class VideoContextProvider extends Component {
   state = {
     frame: '0',
     videoTime: '0',
+    totalTime: '0',
   };
 
   changeFrame = (frame) => {
@@ -14,13 +15,23 @@ export class VideoContextProvider extends Component {
   changeTime = (time) => {
     this.setState({ videoTime: time });
   };
+  changeTotalTime = (time) => {
+    this.setState({ totalTime: time });
+  };
 
   render() {
-    const { frame, videoTime } = this.state;
-    const { changeFrame, changeTime } = this;
+    const { frame, videoTime, totalTime } = this.state;
+    const { changeFrame, changeTime, changeTotalTime } = this;
     return (
       <VideoContext.Provider
-        value={{ frame, videoTime, changeFrame, changeTime }}
+        value={{
+          frame,
+          videoTime,
+          totalTime,
+          changeFrame,
+          changeTime,
+          changeTotalTime,
+        }}
       >
         {this.props.children}
       </VideoContext.Provider>
