@@ -8,10 +8,10 @@ const animatedComponents = makeAnimated();
 
 const options = [
   { label: "Full", value: "1" },
-  { label: "First 40", value: "2" },
-  { label: "Last 60", value: "3" },
-  { label: "Last 40", value: "4" },
-  { label: "Last 20", value: "5" },
+  { label: "First 40 %", value: "2" },
+  { label: "Last 60 %", value: "3" },
+  { label: "Last 40 %", value: "4" },
+  { label: "Last 20 %", value: "5" },
 ];
 
 class SimpleListMenu extends Component {

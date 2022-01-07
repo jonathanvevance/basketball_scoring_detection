@@ -1,7 +1,8 @@
-.wrapper {
+#wrapper {
   font-size: 16px;
   color: rgba(44, 139, 36, 0.356);
   padding: 25px;
+  transform: translate(-400px,0px);
 }
 
 svg {
@@ -76,4 +77,8 @@ text {
   font-weight: 600;
   font-size: 1.1em;
   line-height: 1.4em;
+}
+.score-message{
+  fill: 'red';
+  color: 'red';
 }
