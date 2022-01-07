@@ -112,18 +112,15 @@ def predict():
 
     # run predictions
     is_scoring, pred_probabs = run_predictions(pil_images)
-    is_scoring_, pred_probabs_ = run_predictions_batch(pil_images)  #! TODO: batch inference
+    # is_scoring_, pred_probabs_ = run_predictions_batch(pil_images)  #! TODO: batch inference
 
-    for i in range(len(pred_probabs)):
-        print(pred_probabs[i], pred_probabs_[i])
-
-    # adding a column 'fps' into rows
-    csv_rows = [pred_row + [fps] for pred_row in pred_probabs]
+    # adding columns 'fps' and 'is_scoring' into rows
+    csv_rows = [pred_row + [fps, is_scoring] for pred_row in pred_probabs]
 
     # save as csv file
     with open(FRAMES_PROBAB_CSV_PATH, "w", newline="") as f:
         writer = csv.writer(f)
-        writer.writerow(["time", "values", "fps"])
+        writer.writerow(["time", "values", "fps", "is_scoring"])
         writer.writerows(csv_rows)
 
     return is_scoring
