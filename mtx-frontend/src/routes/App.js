@@ -34,7 +34,7 @@ export default class App extends React.Component {
   }
 
   fakeRequest = () => {
-    return new Promise((resolve) => setTimeout(() => resolve(), 2500));
+    return new Promise((resolve) => setTimeout(() => resolve(), 3000));
   };
 
   render() {
