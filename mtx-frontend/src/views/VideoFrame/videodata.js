@@ -22,7 +22,16 @@ class VideoData extends Component {
   }
   getFrameData = () => {
     console.log(this.context.videoTime, this.state.fps);
-    console.log('Current frame: ', this.state.fps * this.context.videoTime);
+    console.log(
+      'current frame without ceil(): ',
+      this.state.fps * this.context.videoTime
+    );
+    const currentFrame = Math.ceil(this.state.fps * this.context.videoTime);
+    console.log('Current frame: ', currentFrame);
+    if (currentFrame < this.state.dataset.length) {
+      this.setState({ frame: currentFrame });
+      this.setState({ frameProbab: this.state.dataset[currentFrame]['value'] });
+    }
   };
 
   render() {
