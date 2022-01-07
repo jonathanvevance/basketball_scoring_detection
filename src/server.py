@@ -25,11 +25,11 @@ def index():
 
 @app.route("/getvalue", methods=["GET", "POST"])
 def getProbability():
-    shutil.copy("data/inference/video_upload/video.mp4","src/server/assets/video.mp4")
+    shutil.copy("data/inference/video_upload/video.mp4", "src/server/assets/video.mp4")
     is_scoring = predict.predict()
     # result = request.form['word'] in dictionary
     lineData = []
-    with open("/home/amark/Projects/MTX-HackOlympics/reports/probability_values.csv") as file:
+    with open("reports/probability_values.csv") as file:
         reader = csv.DictReader(file, delimiter=",")
         for index, row in enumerate(reader):
             lineData.append({"time": row["time"], "value": row["values"]})
@@ -41,7 +41,7 @@ def getProbability():
 @app.route("/getvideodata", methods=["GET", "POST"])
 def getVideoProbab():
     lineData = []
-    with open("/home/amark/Projects/MTX-HackOlympics/reports/probability_values.csv") as file:
+    with open("reports/probability_values.csv") as file:
         reader = csv.DictReader(file, delimiter=",")
         for index, row in enumerate(reader):
             lineData.append({"time": row["time"], "value": row["values"], "fps": row["fps"]})
