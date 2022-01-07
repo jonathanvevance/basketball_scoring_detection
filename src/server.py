@@ -5,6 +5,7 @@ from flask_cors import CORS
 import csv
 import time
 import predict
+import shutil
 
 app = Flask(__name__, static_folder="./build", static_url_path="/")
 
@@ -24,6 +25,7 @@ def index():
 
 @app.route("/getvalue", methods=["GET", "POST"])
 def getProbability():
+    shutil.copy("data/inference/video_upload/video.mp4","src/server/assets/video.mp4")
     is_scoring = predict.predict()
     # result = request.form['word'] in dictionary
     lineData = []
