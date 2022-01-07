@@ -1,22 +1,41 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 import VideoPlayer from 'react-video-player-extended';
 import './styles.css';
 import VideoContext from './videocontext';
 
-function ShowVideo() {
-  const [url] = useState('http://localhost:5000/video');
-  const [settings, setSettings] = useState(['Title', 'FPS']);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [volume, setVolume] = useState(0.7);
-  const [timeStart] = useState(0);
-  const [fps] = useState(30);
+class ShowVideo extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      url: 'http://localhost:5000/video',
+      settings: ['Title', 'FPS'],
+      isPlaying: false,
+      volume: 0.7,
+      timeStart: 0,
+      fps: 30,
+    };
+  }
 
-  const { frame, videoTime, changeFrame, changeTime } =
-    React.useContext(VideoContext);
-  console.log(frame, changeFrame);
-  console.log(videoTime, changeTime);
+  componentDidMount() {
+    const {
+      frame,
+      videoTime,
+      totalTime,
+      changeFrame,
+      changeTime,
+      changeTotalTime,
+    } = this.context;
+    console.log(frame, changeFrame);
+    console.log(videoTime, changeTime);
+  }
+  // const [url] = useState('http://localhost:5000/video');
+  // const [settings, setSettings] = useState(['Title', 'FPS']);
+  // const [isPlaying, setIsPlaying] = useState(false);
+  // const [volume, setVolume] = useState(0.7);
+  // const [timeStart] = useState(0);
+  // const [fps] = useState(30);
 
-  const controls = [
+  controls = [
     'Play',
     'Time',
     'Progress',
@@ -26,53 +45,57 @@ function ShowVideo() {
     'LastFrame',
   ];
 
-  const handlePlay = () => {
-    setIsPlaying(true);
+  handlePlay = () => {
+    // setIsPlaying(true);
+    this.setState({ isPlaying: true });
   };
 
-  const handlePause = () => {
-    setIsPlaying(false);
+  handlePause = () => {
+    // setIsPlaying(false);
+    this.setState({ isPlaying: false });
   };
 
-  const handleVolume = (value) => {
-    setVolume(value);
+  handleVolume = (value) => {
+    // setVolume(value);
+    this.setState({ volume: value });
   };
 
-  const handleProgress = (e) => {
+  handleProgress = (e) => {
     console.log('Current time: ', e.target.currentTime);
     console.log(e);
-    changeTime(e.target.currentTime);
+    this.context.changeTime(e.target.currentTime);
     this.props.parentCallback(e.target.currentTime);
   };
 
-  const handleDuration = (duration) => {
+  handleDuration = (duration) => {
     console.log('Duration: ', duration);
   };
 
-  return (
-    <div className='container'>
-      <header className='main-header'>
-        <h1 className='app-name'>Video Analyser</h1>
-      </header>
-      <VideoPlayer
-        url={url}
-        controls={controls}
-        isPlaying={isPlaying}
-        volume={volume}
-        loop={false}
-        height={'auto'}
-        width={'640px'}
-        timeStart={timeStart}
-        onPlay={handlePlay}
-        onPause={handlePause}
-        onVolume={handleVolume}
-        onProgress={handleProgress}
-        onDuration={handleDuration}
-        fps={fps}
-        viewSettings={settings}
-      />
-      <div className='controls'>
-        {/* <p className='control-list'>
+  render() {
+    return (
+      <div className='container'>
+        <header className='main-header'>
+          <h1 className='app-name'>Video Analyser</h1>
+        </header>
+        <VideoPlayer
+          url={this.state.url}
+          controls={this.state.controls}
+          isPlaying={this.state.isPlaying}
+          volume={this.state.volume}
+          loop={true}
+          height={'auto'}
+          width={'100%'}
+          timeStart={this.state.timeStart}
+          onPlay={this.handlePlay}
+          onPause={this.handlePause}
+          onVolume={this.handleVolume}
+          onProgress={this.handleProgress}
+          onDuration={this.handleDuration}
+          fps={this.state.fps}
+          viewSettings={this.state.settings}
+        />
+        <div className='controls'>
+          {/* <p className='control-list'>
           Controls:
           {controlsList.map((control) => {
             return (
@@ -88,7 +111,7 @@ function ShowVideo() {
             );
           })}
         </p> */}
-        {/* <p className='control-list'>
+          {/* <p className='control-list'>
           State:
           <span style={{ height: 3 }} />
           controls: {controls.join(', ')}
@@ -101,12 +124,13 @@ function ShowVideo() {
           <span style={{ height: 3 }} />
           fps: {fps}
         </p> */}
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
-// ShowVideo.contextType = VideoContext;
+ShowVideo.contextType = VideoContext;
 
 // export default App
 

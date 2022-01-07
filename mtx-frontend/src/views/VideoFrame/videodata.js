@@ -24,10 +24,17 @@ class VideoData extends Component {
 
   render() {
     return (
-      <div>
-        <Typography variant='h4'>Video Data</Typography>
-        <Typography variant='h6'>Frame: {this.state.frame}</Typography>
-        <Typography variant='h6'>
+      <div className='vidData'>
+        <Typography
+          variant='h4'
+          style={{ marginBottom: '10px', fontWeight: '500' }}
+        >
+          Video Data
+        </Typography>
+        <Typography variant='h6' style={{ fontWeight: '600' }}>
+          Frame: {this.state.frame}
+        </Typography>
+        <Typography variant='h6' style={{ fontWeight: '600' }}>
           Frame Probability: {this.state.frameProbab}
         </Typography>
       </div>

@@ -4,7 +4,9 @@ import VideoData from './videodata';
 import VideoContext, { VideoContextProvider } from './videocontext';
 import { Typography, Grid } from '@material-ui/core';
 import { json, timeParse } from 'd3';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
+import rim from '../../assets/rim.jpeg';
+import gif from '../../assets/stephen-curry-basketball.gif';
 class VideoUI extends Component {
   constructor(props) {
     super(props);
@@ -44,17 +46,22 @@ class VideoUI extends Component {
 
   render() {
     return (
-      <div>
+      <div className='vidAnalyserBody'>
+        <div className='rimBg'>
+          <img src={rim} alt='' />
+        </div>
         <VideoContextProvider>
           <Grid
             container
             spacing={0}
             style={{
-              padding: '10px',
+              // padding: "10px",
+              // margin: "20px 0",
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
               height: '100%',
+              textAlign: 'center',
             }}
           >
             <Grid item xs={6} className='video'>
