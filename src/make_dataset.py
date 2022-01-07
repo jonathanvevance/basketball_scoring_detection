@@ -8,7 +8,6 @@ random.seed(0)
 
 from utils.file_utils import listdir
 from utils.file_utils import copy_tree
-from utils.file_utils import clear_empty_subdirectories
 from utils.file_utils import create_dataset_structure
 from utils.img_video_utils import save_cropped_images
 from utils.img_video_utils import save_frames_from_video_folder
@@ -152,16 +151,6 @@ def split_train_val_sets(final_dir_dict, val_ratio):
         copy_tree(source_video_dir, destination_video_dir)
 
 
-def dataset_cleanup(final_dir_dict):
-
-    clear_empty_subdirectories(final_dir_dict['train']['1'])
-    clear_empty_subdirectories(final_dir_dict['train']['0'])
-    clear_empty_subdirectories(final_dir_dict['val']['1'])
-    clear_empty_subdirectories(final_dir_dict['val']['0'])
-    clear_empty_subdirectories(final_dir_dict['test']['1'])
-    clear_empty_subdirectories(final_dir_dict['test']['0'])
-
-
 @click.command()
 @click.option('--videos', is_flag = True)
 @click.option('--yolov3', is_flag = True)
@@ -199,8 +188,6 @@ def main(videos, yolov3, split, val_ratio):
     if split:
         # Step 4: Split train-test
         split_train_val_sets(final_dir_dict, val_ratio)
-
-    dataset_cleanup(final_dir_dict)
 
 
 if __name__ == '__main__':
