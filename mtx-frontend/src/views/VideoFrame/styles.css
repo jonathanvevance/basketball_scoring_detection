@@ -39,7 +39,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  text-align: left;
+  text-align: center;
   background-image: url(../../../public/loader.png);
   background-repeat: no-repeat;
   background-size: contain;
@@ -89,4 +89,10 @@ button {
 
 label {
   cursor: pointer;
+}
+
+.video-data {
+  align-items: center;
+  justify-content: center;
+  display: flex;
 }
