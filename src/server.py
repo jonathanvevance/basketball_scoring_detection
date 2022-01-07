@@ -36,6 +36,18 @@ def getProbability():
     return jsonify(lineData)
 
 
+@app.route("/getvideodata", methods=["GET", "POST"])
+def getVideoProbab():
+    lineData = []
+    with open("/home/amark/Projects/MTX-HackOlympics/reports/probability_values.csv") as file:
+        reader = csv.DictReader(file, delimiter=",")
+        for index, row in enumerate(reader):
+            lineData.append({"time": row["time"], "value": row["values"], "fps": row["fps"]})
+    # time.sleep(10)
+    print("Sending")
+    return jsonify(lineData)
+
+
 if __name__ == "__main__":
     # app.config['SECRET_KEY'] = 'BlaBlaBla'
     CORS(app)
