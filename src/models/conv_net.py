@@ -13,7 +13,11 @@ class verySimpleNet(nn.Module):
             param.requires_grad = False
 
         if train_loader is not None:
-            sample_image_batch, __ = iter(train_loader).next()
+            sample_batch = iter(train_loader).next()
+            if isinstance(sample_batch, dict):
+                sample_image_batch = sample_batch['X']
+            else:
+                sample_image_batch, __ = sample_batch
             linear_dim = self.get_linear_dim(sample_image_batch)
         else:
             linear_dim = 256 #
@@ -52,10 +56,14 @@ class simpleConvNet(nn.Module):
         self.dropout1 = nn.Dropout2d(0.25)
 
         if train_loader is not None:
-            sample_image_batch, __ = iter(train_loader).next()
+            sample_batch = iter(train_loader).next()
+            if isinstance(sample_batch, dict):
+                sample_image_batch = sample_batch['X']
+            else:
+                sample_image_batch, __ = sample_batch
             linear_dim = self.get_linear_dim(sample_image_batch)
         else:
-            linear_dim = 256 # for the saved model
+            linear_dim = 256 #
 
         self.fc1 = nn.Linear(linear_dim, 1)
 

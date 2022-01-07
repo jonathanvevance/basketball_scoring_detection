@@ -11,5 +11,6 @@ LOAD_MODEL_PTH = "models/best.pt"
 FRAMES_DIR = 'data/evaluation/frames'
 DATASET_ROOT = 'data/evaluation/eval_dataset'
 FINAL_DATASET_DIR = 'data/evaluation/final'
+SAVE_RESULTS_DIR = 'reports'
 
 #! TODO: change paths to repo folder structure

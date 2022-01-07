@@ -32,6 +32,22 @@ def copy_tree(source_folder, destination_folder):
     shutil.copytree(source_folder, destination_folder)
 
 
+def get_empty_subdirectories(folder_path):
+
+    empty_subdir_paths = []
+    non_empty_subdir_paths = []
+    subdir_paths = [os.path.join(folder_path, subdir) for subdir in listdir(folder_path)]
+
+    for subdir_path in tqdm(subdir_paths, desc = f'Examining {folder_path}'):
+        if os.path.isdir(subdir_path):
+            if len(listdir(subdir_path)) == 0:
+                empty_subdir_paths.append(subdir_path)
+            else:
+                non_empty_subdir_paths.append(subdir_path)
+
+    return empty_subdir_paths, non_empty_subdir_paths
+
+
 def clear_empty_subdirectories(folder_path):
 
     num_cleared = 0

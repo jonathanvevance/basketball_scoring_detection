@@ -5,14 +5,13 @@ from torchvision import transforms
 from torch.utils.data import DataLoader
 
 from configs import eval_config as cfg
-from data.dataset import video_folder
+from data.dataset import eval_folder
 from models.conv_net import simpleConvNet
 from utils.mil_utils import mil_model_wrapper
 from utils.train_utils import load_model
 from utils.eval_utils import print_classification_metrics
 from utils.file_utils import listdir
 from utils.file_utils import clear_subfolders_in_folder
-from utils.file_utils import clear_empty_subdirectories
 from utils.file_utils import create_class_structure
 from utils.img_video_utils import filter_videos_func
 from utils.img_video_utils import save_cropped_images
@@ -39,17 +38,6 @@ def get_directories():
     return data_dir_list, frames_dir_list, final_dir_list
 
 
-def dataset_cleanup():
-
-    final_scoring_dir = os.path.join(cfg.FINAL_DATASET_DIR, '1')
-    final_nonscoring_dir = os.path.join(cfg.FINAL_DATASET_DIR, '0')
-
-    num_scoring_undetected = clear_empty_subdirectories(final_scoring_dir)
-    num_nonscoring_undetected = clear_empty_subdirectories(final_nonscoring_dir)
-
-    return num_scoring_undetected, num_nonscoring_undetected
-
-
 def prepare_eval_dataset():
 
     data_dir_list, frames_dir_list, final_dir_list = get_directories()
@@ -73,15 +61,12 @@ def prepare_eval_dataset():
             final_frames_dir = os.path.join(final_dir_list[idx], video)
             save_cropped_images(video_frames_dir, final_frames_dir, standardise = True)
 
-    num_scoring_undetected, num_nonscoring_undetected = dataset_cleanup()
-
-    return (data_dir_list, frames_dir_list, final_dir_list), (num_scoring_undetected, num_nonscoring_undetected)
+    return data_dir_list, frames_dir_list, final_dir_list
 
 
 def evaluate():
 
-    directory_lists_tuple, num_undetected_tuple = prepare_eval_dataset()
-    __, frames_dir_list, final_dir_list = directory_lists_tuple
+    __, frames_dir_list, final_dir_list = prepare_eval_dataset()
 
     print()
     transform = transforms.Compose([
@@ -89,7 +74,7 @@ def evaluate():
         transforms.ToTensor(),
     ])
 
-    dataset = video_folder(cfg.FINAL_DATASET_DIR, transform, cfg.MAX_VIDEO_FRAMES)
+    dataset = eval_folder(cfg.FINAL_DATASET_DIR, transform, cfg.MAX_VIDEO_FRAMES)
     dataloader = DataLoader(dataset = dataset, batch_size = cfg.BATCH_SIZE, shuffle = True)
 
     # set device
@@ -110,8 +95,8 @@ def evaluate():
         cfg.MAX_VIDEO_FRAMES,
         cfg.BATCH_SIZE,
         cfg.DEVICE,
+        cfg.SAVE_RESULTS_DIR,
         cfg.THRESHOLD,
-        num_undetected_tuple # basket undetected counts
     )
 
     # clear temporary files stored
