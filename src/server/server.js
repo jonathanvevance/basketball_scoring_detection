@@ -2,6 +2,9 @@ const express = require('express');
 const multer = require('multer');
 const cors = require('cors');
 const request = require('request');
+const path = require('path');
+const fs = require('fs');
+
 const app = express();
 app.use(cors());
 
@@ -97,6 +100,10 @@ app.get('/getprobab', async (req, res) => {
   } catch (err) {
     res.status(500).send(err);
   }
+});
+
+app.get('/video', (req, res) => {
+  res.sendFile('assets/video.mp4', { root: __dirname });
 });
 
 app.listen(5000, () => console.log('Server Running...'));
