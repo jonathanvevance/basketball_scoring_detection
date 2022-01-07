@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import VideoContext from './videocontext';
-import { json, timeParse } from 'd3';
-import { Typography } from '@material-ui/core';
+import React, { Component } from "react";
+import VideoContext from "./videocontext";
+import { json, timeParse } from "d3";
+import { Typography } from "@material-ui/core";
 
 class VideoData extends Component {
   constructor(props) {
@@ -17,9 +17,9 @@ class VideoData extends Component {
     this.getChartData();
   }
   async getChartData() {
-    const dataset = await json('http://localhost:4000/getvideodata').then(
+    const dataset = await json("http://localhost:4000/getvideodata").then(
       (d) => {
-        const parseDate = timeParse('%s');
+        const parseDate = timeParse("%s");
         d.forEach((i) => {
           i.time = Number(i.time);
           i.value = Number(i.value);
@@ -33,10 +33,17 @@ class VideoData extends Component {
   }
   render() {
     return (
-      <div>
-        <Typography variant='h4'>Video Data</Typography>
-        <Typography variant='h6'>Frame: {this.state.frame}</Typography>
-        <Typography variant='h6'>
+      <div className="vidData">
+        <Typography
+          variant="h4"
+          style={{ marginBottom: "10px", fontWeight: "500" }}
+        >
+          Video Data
+        </Typography>
+        <Typography variant="h6" style={{ fontWeight: "600" }}>
+          Frame: {this.state.frame}
+        </Typography>
+        <Typography variant="h6" style={{ fontWeight: "600" }}>
           Frame Probability: {this.state.frameProbab}
         </Typography>
       </div>

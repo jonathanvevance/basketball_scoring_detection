@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import VideoPlayer from 'react-video-player-extended';
-import './styles.css';
-import VideoContext from './videocontext';
+import React, { useState } from "react";
+import VideoPlayer from "react-video-player-extended";
+import "./styles.css";
+import VideoContext from "./videocontext";
 
 function ShowVideo() {
-  const [url] = useState('http://localhost:5000/video');
-  const [settings, setSettings] = useState(['Title', 'FPS']);
+  const [url] = useState("http://localhost:5000/video");
+  const [settings, setSettings] = useState(["Title", "FPS"]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.7);
   const [timeStart] = useState(0);
@@ -17,13 +17,13 @@ function ShowVideo() {
   console.log(videoTime, changeTime);
 
   const controls = [
-    'Play',
-    'Time',
-    'Progress',
-    'Volume',
-    'FullScreen',
-    'NextFrame',
-    'LastFrame',
+    "Play",
+    "Time",
+    "Progress",
+    "Volume",
+    "FullScreen",
+    "NextFrame",
+    "LastFrame",
   ];
 
   const handlePlay = () => {
@@ -39,17 +39,17 @@ function ShowVideo() {
   };
 
   const handleProgress = (e) => {
-    console.log('Current time: ', e.target.currentTime);
+    console.log("Current time: ", e.target.currentTime);
   };
 
   const handleDuration = (duration) => {
-    console.log('Duration: ', duration);
+    console.log("Duration: ", duration);
   };
 
   return (
-    <div className='container'>
-      <header className='main-header'>
-        <h1 className='app-name'>Video Analyser</h1>
+    <div className="container">
+      <header className="main-header">
+        <h1 className="app-name">Video Analyser</h1>
       </header>
       <VideoPlayer
         url={url}
@@ -57,8 +57,8 @@ function ShowVideo() {
         isPlaying={isPlaying}
         volume={volume}
         loop={true}
-        height={'auto'}
-        width={'640px'}
+        height={"auto"}
+        width={"100%"}
         timeStart={timeStart}
         onPlay={handlePlay}
         onPause={handlePause}
@@ -68,7 +68,7 @@ function ShowVideo() {
         fps={fps}
         viewSettings={settings}
       />
-      <div className='controls'>
+      <div className="controls">
         {/* <p className='control-list'>
           Controls:
           {controlsList.map((control) => {
