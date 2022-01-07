@@ -12,10 +12,10 @@ from data.dataset import CustomTensorDataset
 
 RESIZE = 128
 THRESHOLD = 0.93
-BATCH_SIZE = 128 #! TODO: REQUEST BATCH SIZE AS ENV VAR
-MODEL_WEIGHTS_PATH = 'models/best.pt'
-FRAMES_UPLOAD_DIRECTORY = 'data/inference/frames_upload'
-FRAMES_PROBAB_CSV_PATH = 'reports/probability_values.csv' #! TODO: CHOOSE DIFFERENT FOLDER
+BATCH_SIZE = 128  #! TODO: REQUEST BATCH SIZE AS ENV VAR
+MODEL_WEIGHTS_PATH = "models/best.pt"
+FRAMES_UPLOAD_DIRECTORY = "data/inference/frames_upload"
+FRAMES_PROBAB_CSV_PATH = "reports/probability_values.csv"  #! TODO: CHOOSE DIFFERENT FOLDER
 
 
 def run_predictions_batch(pil_images):
@@ -25,19 +25,16 @@ def run_predictions_batch(pil_images):
 
     is_valid_mask = [True if img else False for img in pil_images]
     pil_images = [img for img in pil_images if img is not None]
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     # load model
     model = load_model_clf(MODEL_WEIGHTS_PATH, device)
     model = model.eval()
 
-    transform = transforms.Compose([
-        transforms.Resize((RESIZE, RESIZE)),
-        transforms.ToTensor()
-    ])
+    transform = transforms.Compose([transforms.Resize((RESIZE, RESIZE)), transforms.ToTensor()])
 
     dataset = CustomTensorDataset(pil_images, transform)
-    dataloader = DataLoader(dataset, batch_size = BATCH_SIZE, shuffle = False)
+    dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=False)
 
     all_valid_probabs = []
     for img_batch in tqdm(dataloader):
@@ -45,7 +42,7 @@ def run_predictions_batch(pil_images):
         probabs_batch = model(img_batch)
 
         # capping probabs at 0.01
-        probabs_batch = torch.where(probabs_batch > 0.01, probabs_batch.double(), 0.)
+        probabs_batch = torch.where(probabs_batch > 0.01, probabs_batch.double(), 0.0)
         all_valid_probabs.extend(torch.squeeze(probabs_batch).tolist())
 
     valid_idx = 0
@@ -65,7 +62,7 @@ def run_predictions(pil_images):
 
     is_scoring = False
     frame_probabs = []
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     # load model
     model = load_model_clf(MODEL_WEIGHTS_PATH, device)
@@ -74,7 +71,7 @@ def run_predictions(pil_images):
     # run predictions, return predictions
     for frame_num, pil_image in enumerate(tqdm(pil_images)):
 
-        if pil_image is None: # no basket detected
+        if pil_image is None:  # no basket detected
             frame_probabs.append([frame_num, 0])
             continue
 
@@ -115,7 +112,7 @@ def predict():
 
     # run predictions
     is_scoring, pred_probabs = run_predictions(pil_images)
-    is_scoring_, pred_probabs_ = run_predictions_batch(pil_images) #! TODO: batch inference
+    is_scoring_, pred_probabs_ = run_predictions_batch(pil_images)  #! TODO: batch inference
 
     for i in range(len(pred_probabs)):
         print(pred_probabs[i], pred_probabs_[i])
@@ -124,11 +121,9 @@ def predict():
     csv_rows = [pred_row + [fps] for pred_row in pred_probabs]
 
     # save as csv file
-    with open(FRAMES_PROBAB_CSV_PATH, 'w', newline = "") as f:
+    with open(FRAMES_PROBAB_CSV_PATH, "w", newline="") as f:
         writer = csv.writer(f)
-        writer.writerow(['time', 'values', 'fps'])
+        writer.writerow(["time", "values", "fps"])
         writer.writerows(csv_rows)
 
     return is_scoring
-
-predict() #! CHANGE
