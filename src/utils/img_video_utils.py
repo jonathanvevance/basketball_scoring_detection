@@ -70,6 +70,7 @@ def save_frames_from_video_inference(): # only during inference
     # https://www.geeksforgeeks.org/python-program-extract-frames-using-opencv/
 
     vidObj = cv2.VideoCapture(VIDEO_UPLOAD_PATH)
+    fps = vidObj.get(cv2.CAP_PROP_FPS)
     count = 0
 
     while True:
@@ -81,6 +82,7 @@ def save_frames_from_video_inference(): # only during inference
         count += 1
 
     clear_folder(VIDEO_UPLOAD_DIRECTORY) # clear this video
+    return fps
 
 
 # ------------------------------------ TRAINING FUNCTIONS --------------------------------------------------
