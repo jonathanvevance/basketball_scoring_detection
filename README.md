@@ -18,7 +18,7 @@
     <br />
     <a href="https://github.com/irfanthayyil">Irfan Thayyil</a>
     ·
-    <a href="https://github.com/Adil-MohammedK">Aadil Muhammed K</a>
+    <a href="https://github.com/Adil-MohammedK">Adil Muhammed K</a>
     ·
     <a href="https://github.com/akshaykrishh">Akshay Krishna</a>
   </p>
@@ -184,7 +184,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- Jonathan Ve Vance - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com -->
 1. Jonathan Ve Vance - [Linkedin](https://linkedin.com/in/jonathanvevance) - jonathanvevance@gmail.com
 2. Irfan Thayyil - [LinkedIn](https://www.linkedin.com/in/mohammed-irfan-thayyil-34311a166) -irfanthayyil@gmail.com
-3. Aadil Muhammed K
+3. Adil Muhammed K - [LinkedIn](https://www.linkedin.com/in/adil-mohammed-065603155) - adilmohammed2000@outlook.com
 4. Akshay Krishna
 
 
