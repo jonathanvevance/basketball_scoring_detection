@@ -32,7 +32,7 @@ def getProbability():
     with open("reports/probability_values.csv") as file:
         reader = csv.DictReader(file, delimiter=",")
         for index, row in enumerate(reader):
-            lineData.append({"time": row["time"], "value": row["values"]})
+            lineData.append({"time": row["time"], "value": row["values"], "is_scoring": is_scoring})
     # time.sleep(10)
     print("Sending")
     return jsonify(lineData)
