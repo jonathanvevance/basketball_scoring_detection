@@ -15,7 +15,7 @@ THRESHOLD = 0.93
 BATCH_SIZE = 128 #! TODO: REQUEST BATCH SIZE AS ENV VAR
 MODEL_WEIGHTS_PATH = 'models/best.pt'
 FRAMES_UPLOAD_DIRECTORY = 'data/inference/frames_upload'
-FRAMES_PROBAB_CSV_PATH = 'reports/probability_values.csv'
+FRAMES_PROBAB_CSV_PATH = 'reports/probability_values.csv' #! TODO: CHOOSE DIFFERENT FOLDER
 
 
 def run_predictions_batch(pil_images):
@@ -63,7 +63,7 @@ def run_predictions_batch(pil_images):
 def run_predictions(pil_images):
 
     is_scoring = False
-    frame_probabs = [['time', 'values']]
+    frame_probabs = []
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     # load model
@@ -93,7 +93,7 @@ def predict():
     """predict Yes or No per frame per video."""
 
     # get frames from video
-    save_frames_from_video_inference()
+    fps = save_frames_from_video_inference()
 
     # run basket detection
     commands = [
@@ -109,14 +109,15 @@ def predict():
     is_scoring, pred_probabs = run_predictions(pil_images)
     # is_scoring, pred_probabs = run_predictions_batch(pil_images)
 
+    # adding a column 'fps' into rows
+    csv_rows = [pred_row + [fps] for pred_row in pred_probabs]
+
     # save as csv file
     with open(FRAMES_PROBAB_CSV_PATH, 'w', newline = "") as f:
         writer = csv.writer(f)
-        writer.writerows(pred_probabs)
+        writer.writerow(['time', 'values', 'fps'])
+        writer.writerows(csv_rows)
 
     return is_scoring
-
-    #! TODO: SEE PROBABS FROM SAVED_MODEL_6.PT - are they good?
-
 
 # predict()
