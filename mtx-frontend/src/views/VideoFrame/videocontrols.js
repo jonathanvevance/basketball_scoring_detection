@@ -69,6 +69,7 @@ class ShowVideo extends Component {
 
   handleDuration = (duration) => {
     console.log('Duration: ', duration);
+    this.context.changeTotalTime(duration);
   };
 
   render() {
@@ -79,7 +80,7 @@ class ShowVideo extends Component {
         </header>
         <VideoPlayer
           url={this.state.url}
-          controls={this.state.controls}
+          controls={this.controls}
           isPlaying={this.state.isPlaying}
           volume={this.state.volume}
           loop={true}

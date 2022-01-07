@@ -16,10 +16,13 @@ class VideoData extends Component {
   }
   componentDidMount() {
     console.log(this.context);
-  }
-  getFrameData = () => {
     this.setState({ currentTime: this.context.videoTime });
     this.setState({ totalTime: this.context.totalTime });
+    this.getFrameData();
+  }
+  getFrameData = () => {
+    console.log(this.context.videoTime, this.state.fps);
+    console.log('Current frame: ', this.state.fps * this.context.videoTime);
   };
 
   render() {

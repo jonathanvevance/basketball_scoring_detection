@@ -35,7 +35,7 @@ class VideoUI extends Component {
       }
     );
     console.log(dataset);
-    console.log('fps', dataset[0]['fps']);
+    console.log('fps: ', dataset[0]['fps']);
     this.setState({ lineData: dataset });
     this.setState({ fps: dataset[0]['fps'] });
   }
