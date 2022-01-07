@@ -21,7 +21,7 @@ FRAMES_PROBAB_CSV_PATH = 'reports/probability_values.csv' #! TODO: CHOOSE DIFFER
 def run_predictions_batch(pil_images):
 
     is_scoring = False
-    frame_probabs = [['time', 'values']]
+    frame_probabs = []
 
     is_valid_mask = [True if img else False for img in pil_images]
     pil_images = [img for img in pil_images if img is not None]
@@ -43,9 +43,10 @@ def run_predictions_batch(pil_images):
     for img_batch in tqdm(dataloader):
         img_batch = img_batch.to(device)
         probabs_batch = model(img_batch)
-        all_valid_probabs.extend(torch.squeeze(probabs_batch).tolist())
 
-    print(all_valid_probabs)
+        # capping probabs at 0.01
+        probabs_batch = torch.where(probabs_batch > 0.01, probabs_batch.double(), 0.)
+        all_valid_probabs.extend(torch.squeeze(probabs_batch).tolist())
 
     valid_idx = 0
     for frame_num, is_valid in enumerate(is_valid_mask):
@@ -81,7 +82,14 @@ def run_predictions(pil_images):
         image_tensor = transforms.ToTensor()(pil_image)
         image_tensor = image_tensor.to(device)
         output = model(torch.unsqueeze(image_tensor, 0))
-        frame_probabs.append([frame_num, output[0].item()])
+
+        # capping probabs at 0.01
+        if output[0].item() < 0.01:
+            probab = 0
+        else:
+            probab = output[0].item()
+
+        frame_probabs.append([frame_num, probab])
 
         if output > THRESHOLD:
             is_scoring = True
@@ -107,7 +115,10 @@ def predict():
 
     # run predictions
     is_scoring, pred_probabs = run_predictions(pil_images)
-    # is_scoring, pred_probabs = run_predictions_batch(pil_images)
+    is_scoring_, pred_probabs_ = run_predictions_batch(pil_images) #! TODO: batch inference
+
+    for i in range(len(pred_probabs)):
+        print(pred_probabs[i], pred_probabs_[i])
 
     # adding a column 'fps' into rows
     csv_rows = [pred_row + [fps] for pred_row in pred_probabs]
@@ -120,4 +131,4 @@ def predict():
 
     return is_scoring
 
-# predict()
+predict() #! CHANGE
