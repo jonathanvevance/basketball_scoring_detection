@@ -1,9 +1,4 @@
 <div id="top"></div>
-<!--
-
--->
-
-
 
 <!-- PROJECT SHIELDS -->
 [![Contributors][contributors-shield]][contributors-url]
@@ -19,7 +14,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/jonathanvevance/basketball_scoring_detection">
-    <img src="images/basketball_logo.png" alt="Logo" width="80" height="80">
+    <img src="readme_images/basketball_logo.png" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">Basketball Scoring Detection</h3>
@@ -94,7 +89,7 @@ This is Team Aai's submission for MTX Shaastra 2022 Hackathon for problem statem
 These instructions are written for an Ubuntu system. If you have a Windows system, please refer to <a href="https://docs.microsoft.com/en-us/windows/wsl/about"> WSL on Windows</a>.
 
 ### Prerequisites
-It is required to bypass password prompts on Ubuntu so that all functions work properly. You may refer to <a href="https://phpraxis.wordpress.com/2016/09/27/enable-sudo-without-password-in-ubuntudebian/"> this link</a>.
+It is required to bypass password prompts on Ubuntu so that all functions work properly. To do this, you may refer to <a href="https://phpraxis.wordpress.com/2016/09/27/enable-sudo-without-password-in-ubuntudebian/"> this link</a>.
 
 ### Installation
 
@@ -102,7 +97,7 @@ It is required to bypass password prompts on Ubuntu so that all functions work p
    ```sh
    git clone https://github.com/jonathanvevance/basketall_scoring_detection.git
    ```
-3. Install NPM packages
+3. In the root directory,
    ```sh
    npm install
    ```
