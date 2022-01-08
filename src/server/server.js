@@ -10,10 +10,8 @@ app.use(cors());
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(
-      null,
-      '/home/amark/Projects/MTX-HackOlympics/data/inference/video_upload/'
-    );
+    let path = './data/inference/video_upload/';
+    cb(null, path);
   },
 
   filename: function (req, file, cb) {
