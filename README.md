@@ -70,7 +70,7 @@ This is Team Aai's submission for MTX Shaastra 2022 Hackathon for problem statem
 
 ## Getting Started
 
-These instructions are written for an Ubuntu system. If you have a Windows system, please refer to <a href="https://docs.microsoft.com/en-us/windows/wsl/about"> WSL on Windows</a>.
+These instructions are written for an Ubuntu system. If you have a Windows system, please refer to <a href="https://docs.microsoft.com/en-us/windows/wsl/about"> WSL on Windows</a>. These instructions have been tested using WSL on a Windows machine.
 
 ### Prerequisites
 
