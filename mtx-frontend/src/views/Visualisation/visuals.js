@@ -34,8 +34,12 @@ class VisualsUI extends Component {
       });
     this.setState({ lineData: dataset, isLoading: false });
     this.setState({ isScoring: dataset[0]['is_scoring'] });
-    if (this.state.isScoring) var msg = 'Score!!!';
-    else var msg = 'Not Scored. Better luck next time';
+    let msg;
+    if (this.state.isScoring === 'TRUE') {
+      msg = 'Score!!!';
+    } else {
+      msg = 'Not Scored. Better luck next time';
+    }
     alert(msg);
   }
 

@@ -17,6 +17,8 @@ class VideoUI extends Component {
       callbackTime: '0',
       lineData: [],
       fps: 30,
+      is_scoring: false,
+      scoreMessage: 'Scroll video to find status',
     };
   }
   componentDidMount() {
@@ -38,6 +40,13 @@ class VideoUI extends Component {
     console.log('fps: ', dataset[0]['fps']);
     this.setState({ lineData: dataset });
     this.setState({ fps: dataset[0]['fps'] });
+    this.setState({ is_scoring: dataset[0]['is_scoring'] });
+    console.log('is_scoring: ', this.state.is_scoring);
+    if (this.state.is_scoring === 'TRUE') {
+      this.setState({ scoreMessage: 'Score!!!' });
+    } else {
+      this.setState({ scoreMessage: 'Not Scoring :(' });
+    }
   }
 
   progressCallback = (childData) => {
@@ -78,6 +87,7 @@ class VideoUI extends Component {
                   key={this.state.callbackTime}
                   data={this.state.lineData}
                   fps={this.state.fps}
+                  scoreMessage={this.state.scoreMessage}
                 />
               )}
             </Grid>

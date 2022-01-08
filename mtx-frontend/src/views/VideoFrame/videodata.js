@@ -12,6 +12,7 @@ class VideoData extends Component {
       currentTime: 0,
       totalTime: 0,
       fps: this.props.fps,
+      scoreMessage: this.props.scoreMessage,
     };
   }
   componentDidMount() {
@@ -37,18 +38,25 @@ class VideoData extends Component {
   render() {
     return (
       <div className='vidData'>
-        <Typography
-          variant='h4'
-          style={{ marginBottom: '10px', fontWeight: '500' }}
-        >
-          Video Data
-        </Typography>
-        <Typography variant='h6' style={{ fontWeight: '600' }}>
-          Frame: {this.state.frame}
-        </Typography>
-        <Typography variant='h6' style={{ fontWeight: '600' }}>
-          Frame Probability: {this.state.frameProbab}
-        </Typography>
+        {this.state.dataset.length > 0 && (
+          <div>
+            <Typography
+              variant='h4'
+              style={{ marginBottom: '10px', fontWeight: '500' }}
+            >
+              Video Data
+            </Typography>
+            <Typography variant='h6' style={{ fontWeight: '600' }}>
+              Frame: {this.state.frame}
+            </Typography>
+            <Typography variant='h6' style={{ fontWeight: '600' }}>
+              Frame Probability: {this.state.frameProbab}
+            </Typography>
+            <Typography variant='h7' style={{ fontWeight: '600' }}>
+              Status: {this.state.scoreMessage}
+            </Typography>
+          </div>
+        )}
       </div>
     );
   }
