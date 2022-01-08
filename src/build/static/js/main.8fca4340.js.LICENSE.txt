@@ -17,6 +17,13 @@ object-assign
 */
 
 /**
+ * @file Cpntains upload function and calls chart
+ * @author Adil MOhammed
+ * @copyright Adil Mohammed 2022
+ * @license MIT
+ */
+
+/**
  * A better abstraction over CSS.
  *
  * @copyright Oleg Isonen (Slobodskoi) / Isonen 2014-present
