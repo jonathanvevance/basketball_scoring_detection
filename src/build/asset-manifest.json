@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.9b52563a.css",
-    "main.js": "/static/js/main.b47a0e0c.js",
+    "main.js": "/static/js/main.dacc07eb.js",
     "static/media/stephen-curry-basketball.gif": "/static/media/stephen-curry-basketball.9dba7089cd6dcd808fc4.gif",
     "static/media/bb_court.jpeg": "/static/media/bb_court.6a730ba997f72c162c2f.jpeg",
     "static/media/rim.jpeg": "/static/media/rim.a9ef5263f0e5fbedda1c.jpeg",
@@ -10,10 +10,10 @@
     "static/media/ProximaNova-Regular.otf": "/static/media/ProximaNova-Regular.ea03f826587148b7335d.otf",
     "index.html": "/index.html",
     "main.9b52563a.css.map": "/static/css/main.9b52563a.css.map",
-    "main.b47a0e0c.js.map": "/static/js/main.b47a0e0c.js.map"
+    "main.dacc07eb.js.map": "/static/js/main.dacc07eb.js.map"
   },
   "entrypoints": [
     "static/css/main.9b52563a.css",
-    "static/js/main.b47a0e0c.js"
+    "static/js/main.dacc07eb.js"
   ]
 }
