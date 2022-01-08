@@ -1,3 +1,4 @@
+"""Util functions for evaluating models."""
 
 import os
 import csv
@@ -19,6 +20,11 @@ from utils.mil_utils import mil_model_wrapper
 
 
 def load_model_clf(MODEL_WEIGHTS_PATH, device):
+    """
+    Saved weights are for utils.mil_utils.mil_model_wrapper
+    class objects. Here we load them into a suitable class object
+    and then recover the model.model classification model inside.
+    """
     model = simpleConvNet()
     model = mil_model_wrapper(model.to(device))
     model.load_state_dict(torch.load(MODEL_WEIGHTS_PATH, map_location = device))
@@ -26,6 +32,7 @@ def load_model_clf(MODEL_WEIGHTS_PATH, device):
 
 
 class get_batch_video_probabs(nn.Module):
+    """Get output scores and labels of a batch of videos."""
     def __init__(self, device, max_video_frames):
         super().__init__()
         self.device = device
@@ -40,6 +47,7 @@ class get_batch_video_probabs(nn.Module):
 
 
 def get_all_video_probabs(model, dataloader, device, max_video_frames):
+    """Get output scores and labels of all videos in the dataloader using batch evaluation."""
 
     model.eval()
     all_paths = []
@@ -69,6 +77,7 @@ def get_all_video_probabs(model, dataloader, device, max_video_frames):
 def print_classification_metrics(
     model, dataset_path, transform, max_video_frames, batch_size, device, save_results_dir = None, threshold = None
 ):
+    """Prints and saves classification metrics - ROC curve, AUROC score, predictions as csv file etc."""
 
     # get dataset, dataloader
     dataset = eval_folder(dataset_path, transform, max_video_frames)

@@ -1,4 +1,5 @@
 #!/.env python3
+"""Util functions for operations using cv2, pil, etc like loading frames of videos."""
 
 import os
 import json
@@ -17,6 +18,7 @@ FRAMES_UPLOAD_DIRECTORY = 'data/inference/frames_upload'
 UPLOAD_FRAMES_COORDS_JSON = 'data/inference/frames_upload/bounding_boxes.json'
 
 def filter_images_func(image_name):
+    """Filter for jpg and png image names."""
     if len(image_name) < 4:
         return False
     if image_name[-3:] in ['jpg', 'png']:
@@ -25,6 +27,7 @@ def filter_images_func(image_name):
 
 
 def filter_videos_func(video_name):
+    """Filter for mp4 video names."""
     if len(video_name) < 4:
         return False
     if video_name[-3:] in ['mp4']:
@@ -32,7 +35,11 @@ def filter_videos_func(video_name):
     return False
 
 
-def get_cropped_pil_images_inference(crop_size = 100, standardise = True): # only during inference
+def get_cropped_pil_images_inference(crop_size = 100, standardise = True):
+    """ Note: USED ONLY DURING INFERENCE.
+    Crop out images according to saved bounding boxe coordinates.
+    Note: bounding_boxes.json is assumed to be present at UPLOAD_FRAMES_COORDS_JSON path.
+    """
 
     frame_imgs = filter(filter_images_func, listdir(FRAMES_UPLOAD_DIRECTORY))
     frame_imgs = sorted(frame_imgs, key = lambda x: int(x[:-4]))
@@ -66,9 +73,12 @@ def get_cropped_pil_images_inference(crop_size = 100, standardise = True): # onl
     return cropped_pil_images
 
 
-def save_frames_from_video_inference(): # only during inference
-    # https://www.geeksforgeeks.org/python-program-extract-frames-using-opencv/
+def save_frames_from_video_inference():
+    """ Note: USED ONLY DURING INFERENCE.
+    Save frames of uploaded video to folder.
+    """
 
+    # https://www.geeksforgeeks.org/python-program-extract-frames-using-opencv/
     vidObj = cv2.VideoCapture(VIDEO_UPLOAD_PATH)
     fps = vidObj.get(cv2.CAP_PROP_FPS)
     count = 0
@@ -87,8 +97,11 @@ def save_frames_from_video_inference(): # only during inference
 
 # ------------------------------------ TRAINING FUNCTIONS --------------------------------------------------
 
-def save_frames_from_video_folder(video_folder, target_folder): # only during training (dataset creation)
-    """Used for multi instance based training."""
+def save_frames_from_video_folder(video_folder, target_folder):
+    """
+    Save frames of videos in the given video folder into folders created
+    for each video, which are created at the target folder.
+    """
 
     video_files = list(filter(filter_videos_func, listdir(video_folder)))
 
@@ -110,7 +123,11 @@ def save_frames_from_video_folder(video_folder, target_folder): # only during tr
             count += 1
 
 
-def save_cropped_images(frames_folder, target_folder, crop_size = 100, standardise = True): # only during training (dataset creation)
+def save_cropped_images(frames_folder, target_folder, crop_size = 100, standardise = True):
+    """
+    Crop and save images from the given frames folder to the target videos.
+    Important: bounding_boxes.json is assusmed to be present at the frames folder.
+    """
 
     make_folder(target_folder) # make target folder
 

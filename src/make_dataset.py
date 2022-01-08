@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+"""Python file to prepare dataset for training."""
+
 import os
 import click
 from tqdm import tqdm
@@ -12,20 +14,14 @@ from utils.file_utils import create_dataset_structure
 from utils.img_video_utils import save_cropped_images
 from utils.img_video_utils import save_frames_from_video_folder
 
-# FRAMES_DIR = 'data/training/frames'
-# DATASET_ROOT = 'data/training/hackolympics_data'
-# CROPPED_DATASET_DIR = 'data/training/cropped'
-# FINAL_DATASET_DIR = 'data/training/final'
-
-#! TODO: remove the lines below. uncomment above
-
-FRAMES_DIR = '/mnt/d/MTX_hackathon/backuppp/data/training/multi_instance/frames'
-DATASET_ROOT = '/mnt/d/MTX_hackathon/backuppp/data/training/hackolympics_data'
-CROPPED_DATASET_DIR = '/mnt/d/MTX_hackathon/backuppp/data/training/multi_instance/cropped'
-FINAL_DATASET_DIR = '/mnt/d/MTX_hackathon/backuppp/data/training/multi_instance/final'
+FRAMES_DIR = 'data/training/frames'
+DATASET_ROOT = 'data/training/hackolympics_data'
+CROPPED_DATASET_DIR = 'data/training/cropped'
+FINAL_DATASET_DIR = 'data/training/final'
 
 
 def get_directories():
+    """Return (create if required) directory paths."""
 
     train_scoring_dir = os.path.join(DATASET_ROOT, 'Training_Data/scoring_clips')
     train_nonscoring_dir = os.path.join(DATASET_ROOT, 'Training_Data/non_scoring_clips')
@@ -94,6 +90,7 @@ def get_directories():
 
 
 def split_train_val_sets(final_dir_dict, val_ratio):
+    """Split train set into train-val sets."""
 
     train_cropped_scoring_folder = os.path.join(CROPPED_DATASET_DIR, 'train/1')
     train_cropped_nonscoring_folder = os.path.join(CROPPED_DATASET_DIR, 'train/0')
@@ -157,7 +154,10 @@ def split_train_val_sets(final_dir_dict, val_ratio):
 @click.option('--split', is_flag = True)
 @click.option('--val-ratio', type = click.FloatRange(0.0, 1.0), default = 0.3)
 def main(videos, yolov3, split, val_ratio):
-    """."""
+    """
+    Main function. The flags (videos, yolov3, split) are added so that make_dataset can be done in parts.
+    The entire make_dataset process may take a long time (yolov3 detector being the slowest step).
+    """
 
     data_dir_list, frames_dir_list, cropped_dir_list, final_dir_dict = get_directories()
 
