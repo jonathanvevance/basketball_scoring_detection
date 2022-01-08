@@ -80,7 +80,7 @@ It is required to bypass password prompts on Ubuntu so that all functions work p
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/jonathanvevance/basketall_scoring_detection.git
+   git clone https://github.com/jonathanvevance/basketball_scoring_detection.git
    ```
 2. From the root directory,
    ```sh
