@@ -42,7 +42,7 @@ class VideoUI extends Component {
     this.setState({ fps: dataset[0]['fps'] });
     this.setState({ is_scoring: dataset[0]['is_scoring'] });
     console.log('is_scoring: ', this.state.is_scoring);
-    if (this.state.is_scoring === 'TRUE') {
+    if (this.state.is_scoring === 'True') {
       this.setState({ scoreMessage: 'Score!!!' });
     } else {
       this.setState({ scoreMessage: 'Not Scoring :(' });
