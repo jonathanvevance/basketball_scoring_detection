@@ -1,9 +1,10 @@
-# Inspired by: https://github.com/jakubmonhart/mil_pytorch/blob/71c7f7183025dcb79da25fef67289d71c6209ce8/mil_pytorch/utils/train_utils.py
+"""MIL functions."""
 
 import torch
 from tqdm import tqdm
 
 class EarlyStopping():
+    """A simple Early Stopping implementation."""
     def __init__(self, patience = 10, delta = 0):
         self.patience = patience
         self.delta = delta
@@ -12,6 +13,7 @@ class EarlyStopping():
         self.counter = 0
 
     def __call__(self, val_loss, model):
+        """Call function."""
         if self.val_loss_min is None:
             self.val_loss_min = val_loss
             self.saved_state_dict = model.state_dict()
@@ -34,12 +36,7 @@ class EarlyStopping():
 
 
 def evaluate_model(model, criterion, val_loader, device, epoch):
-    """
-    model :: mil_model_wrapper object
-    val_loader :: binary_mil_folder object
-    criterion :: mil_loss object
-    """
-
+    """Function to evaluate a model."""
     model.eval()
     val_losses_total = 0
 
@@ -62,9 +59,11 @@ def evaluate_model(model, criterion, val_loader, device, epoch):
 
 
 def save_model(model, save_path):
+    """Save torch model."""
     torch.save(model.state_dict(), save_path)
 
 
 def load_model(model, load_path, device):
+    """Load torch model."""
     model.load_state_dict(torch.load(load_path, map_location = device))
     return model

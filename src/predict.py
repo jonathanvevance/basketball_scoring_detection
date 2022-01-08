@@ -1,3 +1,5 @@
+"""Python file to run inference."""
+
 import os
 import csv
 import torch
@@ -19,7 +21,12 @@ FRAMES_PROBAB_CSV_PATH = "reports/probability_values.csv"  #! TODO: CHOOSE DIFFE
 
 
 def run_predictions_batch(pil_images):
-
+    """
+    Function to run inference on pil_images list in batches (using DataLoader).
+    Returns:
+        is_scoring (bool) = is there a scoring event in these images
+        frame_probabs (list) = list of frame probabilities of scoring.
+    """
     is_scoring = False
     frame_probabs = []
 
@@ -59,7 +66,12 @@ def run_predictions_batch(pil_images):
 
 
 def run_predictions(pil_images):
-
+    """
+    Function to run inference on pil_images list in a for loop.
+    Returns:
+        is_scoring (bool) = is there a scoring event in these images
+        frame_probabs (list) = list of frame probabilities of scoring.
+    """
     is_scoring = False
     frame_probabs = []
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -95,8 +107,20 @@ def run_predictions(pil_images):
 
 
 def predict():
-    """predict Yes or No per frame per video."""
+    """
+    Function to be called for the web application, returns is_scoring.
+    Note: the function assumes a video data/inference/video_upload/video.mp4 exists.
 
+    Saves frame-probabs in csv file with columns:
+        time: frame numbers 1, 2, ...
+        values: frame wise probability values
+        fps: this column contains the fps of the video all the rows
+        is_scoring: this column contains whether the video has a scoring event
+            or not, in all the rows
+
+    Returns:
+        is_scoring = is there a scoring event in the uploaded video.
+    """
     # get frames from video
     fps = save_frames_from_video_inference()
 

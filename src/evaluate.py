@@ -1,3 +1,4 @@
+"""Python file to evaluate a trained model."""
 
 import os
 import torch
@@ -17,20 +18,20 @@ from utils.img_video_utils import filter_videos_func
 from utils.img_video_utils import save_cropped_images
 from utils.img_video_utils import save_frames_from_video_folder
 
-#! TODO: write assumptions about expecting scoring_clips and non_scoring_clips
 
 def get_directories():
+    """Return (create if required) directory paths."""
 
     data_scoring_dir = os.path.join(cfg.DATASET_ROOT, 'scoring_clips')
     data_nonscoring_dir = os.path.join(cfg.DATASET_ROOT, 'non_scoring_clips')
     data_dir_list = [data_scoring_dir, data_nonscoring_dir]
 
-    create_class_structure(cfg.FRAMES_DIR)
+    create_class_structure(cfg.FRAMES_DIR) # create 0/1 folders
     frames_scoring_dir = os.path.join(cfg.FRAMES_DIR, '1')
     frames_nonscoring_dir = os.path.join(cfg.FRAMES_DIR, '0')
     frames_dir_list = [frames_scoring_dir, frames_nonscoring_dir]
 
-    create_class_structure(cfg.FINAL_DATASET_DIR)
+    create_class_structure(cfg.FINAL_DATASET_DIR) # create 0/1 folders
     final_scoring_dir = os.path.join(cfg.FINAL_DATASET_DIR, '1')
     final_nonscoring_dir = os.path.join(cfg.FINAL_DATASET_DIR, '0')
     final_dir_list = [final_scoring_dir, final_nonscoring_dir]
@@ -39,12 +40,14 @@ def get_directories():
 
 
 def prepare_eval_dataset():
+    """Prepare dataset for classification model evaluation."""
 
     data_dir_list, frames_dir_list, final_dir_list = get_directories()
 
     for idx in range(len(data_dir_list)):
         save_frames_from_video_folder(data_dir_list[idx], frames_dir_list[idx])
 
+    # runn yolov3 model for basket detection
     for idx in range(len(frames_dir_list)):
         videos = list(filter(filter_videos_func, listdir(frames_dir_list[idx])))
 
@@ -65,6 +68,7 @@ def prepare_eval_dataset():
 
 
 def evaluate():
+    """Evaluate function."""
 
     __, frames_dir_list, final_dir_list = prepare_eval_dataset()
 

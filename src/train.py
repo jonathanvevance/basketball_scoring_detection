@@ -1,3 +1,5 @@
+"""Python file to run training."""
+
 import os
 import torch
 from tqdm import tqdm
@@ -18,6 +20,7 @@ from utils.eval_utils import print_classification_metrics
 
 
 def train():
+    """Train function."""
 
     # load train/test transforms
     train_transform = transforms.Compose([
@@ -72,6 +75,7 @@ def train():
 
 
 def train_model(model, criterion, optimizer, train_loader, val_loader, epochs, es_patience, es_delta, device):
+    """Runs training loop."""
 
     epoch = 0
     early_stop = False

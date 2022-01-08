@@ -215,7 +215,7 @@ It is required to bypass password prompts on Ubuntu so that all functions work p
 
 ## Roadmap
 
-- [] Interactive video player in the web application.
+- [] Interactive video player with seek bar in the web application.
 - [] Inference speedup using TensorRT on GPU and Intel OpenVino on Intel CPU.
 
 <p align="right">(<a href="#top">back to top</a>)</p>

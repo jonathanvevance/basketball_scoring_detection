@@ -1,3 +1,4 @@
+"""Classes to load datasets."""
 
 import os
 import torch
@@ -11,13 +12,16 @@ from utils.img_video_utils import filter_images_func
 
 
 class binary_mil_folder(Dataset):
-    """ Stack +ve and -ve bags here itself. Pad the two bags individually.
-        In fwd function, we will apply forward() on the tensor consisting of the two bags.
-        Output will be a tensor of scores. We will handle the bags in 'criterion'.
     """
-
+    Two-class MIL folder.
+    - Gives 5D tensors of the shape (B, NF, C, H, W) where NF = 2x the max num of frames
+    of each video (in the given dataset, 2 x 60 = 120).
+    - Each tensor contains frames of a pair of scoring and non scoring video (hence 2x).
+    - Zero padding is done on both videos (individually) so that the NF=120 is maintained,
+    in case there are less than 60 frames in any video.
+    """
     def __init__(self, dataset_path, transform = None, max_video_frames = 60):
-
+        """Init function."""
         self.scoring_path = os.path.join(dataset_path, '1')
         self.nonscoring_path = os.path.join(dataset_path, '0')
 
@@ -32,10 +36,24 @@ class binary_mil_folder(Dataset):
         self.max_video_frames = max_video_frames
 
     def __len__(self, ):
+        """Returns number of scoring videos."""
         return len(self.scoring_videopaths)
 
     def __getitem__(self, idx):
+        """
+        Implementation detail:
+            The dataloader is built on list of scoring videos. When the scoring video
+        specified by 'idx' is requested in __getitem__, a random index for non scoring
+        video is sampled and the sampled non scoring video is paired with the requested
+        non scoring video. The frames from this pair of videos are (torch) stacked.
 
+            It is known that the first 60 frames (with appropriate padding) will be from
+        a scoring video and the last 60 will be from the non scoring video. But different
+        videos may have different number of frames available - this is because, only those
+        frames from which the basketball hoop has been located, ends up in the final MIL
+        training dataset. So instead of any labels, we send the information of the number
+        of frames from the scoring and the non scoring video, before zero padding.
+        """
         scoring_video_path = self.scoring_videopaths[idx]
 
         # sample a random nonscoring video
@@ -80,9 +98,16 @@ class binary_mil_folder(Dataset):
 
 
 class eval_folder(Dataset):
-
+    """
+    Evaluation (video) folder.
+    - Gives 5D tensors of the shape (B, NF, C, H, W) where NF = max num of frames of each
+    video (in the given dataset = 60).
+    - Each tensor contains frames of a scoring or a non scoring video.
+    - Zero padding is done so that the NF=60 is maintained, in case there are less than 60
+    frames in the requested video video.
+    """
     def __init__(self, dataset_path, transform, max_video_frames):
-
+        """Init function."""
         self.scoring_path = os.path.join(dataset_path, '1')
         self.nonscoring_path = os.path.join(dataset_path, '0')
 
@@ -102,7 +127,16 @@ class eval_folder(Dataset):
         self.max_video_frames = max_video_frames
 
     def get_basket_undetected_videos(self):
+        """
+            In the evaluation folder, there can be subfolders for videos where the yolov3 basket
+        detector was not able to find any basket frames. This will result in empty folders for those
+        videos. We filter out these rows in advance because the dataloader may be requested to return
+        fully zero padded tensors otherwise.
 
+        At inference, these videos will be predicted as 0. So this function returns scores (all 0s), labels
+        (and paths) of these videos which will be used to augment the predictions and labels from non empty
+        folders.
+        """
         num_scoring_undetected = len(self.scoring_basket_undetected_videopaths)
         num_nonscoring_undetected = len(self.nonscoring_basket_undetected_videopaths)
         augment_scores = [0 for __ in range(num_scoring_undetected + num_nonscoring_undetected)]
@@ -112,9 +146,17 @@ class eval_folder(Dataset):
         return augment_scores, augment_labels, undetected_paths
 
     def __len__(self):
+        """Returns number of videos."""
         return len(self.labels)
 
     def __getitem__(self, idx):
+        """
+        Returns dictionary with key-values
+            X: data tensor
+            Y: lebels tensor
+            len: number of valid frames (without zero padding)
+            path: path of the video (for debugging, saving results)
+        """
 
         bag_tensors = []
         video_path = self.video_paths[idx]
@@ -151,10 +193,12 @@ class CustomTensorDataset(Dataset):
         self.transform = transform
 
     def __getitem__(self, index):
+        """Returns tensor at index."""
         x = self.tensors[index]
         if self.transform:
             x = self.transform(x)
         return x
 
     def __len__(self):
+        """Returns number of tensors."""
         return len(self.tensors)
