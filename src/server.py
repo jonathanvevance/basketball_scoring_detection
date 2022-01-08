@@ -1,5 +1,4 @@
 from os import close
-from typing import Dict
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import csv
@@ -32,7 +31,7 @@ def getProbability():
     with open("reports/probability_values.csv") as file:
         reader = csv.DictReader(file, delimiter=",")
         for index, row in enumerate(reader):
-            lineData.append({"time": row["time"], "value": row["values"], "is_scoring": is_scoring})
+            lineData.append({"time": row["time"], "value": row["values"], "is_scoring": row["is_scoring"]})
     # time.sleep(10)
     print("Sending")
     return jsonify(lineData)
@@ -44,7 +43,9 @@ def getVideoProbab():
     with open("reports/probability_values.csv") as file:
         reader = csv.DictReader(file, delimiter=",")
         for index, row in enumerate(reader):
-            lineData.append({"time": row["time"], "value": row["values"], "fps": row["fps"]})
+            lineData.append(
+                {"time": row["time"], "value": row["values"], "fps": row["fps"], "is_scoring": row["is_scoring"]}
+            )
     # time.sleep(10)
     print("Sending")
     return jsonify(lineData)
