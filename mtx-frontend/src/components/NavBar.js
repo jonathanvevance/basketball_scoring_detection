@@ -1,3 +1,9 @@
+/**
+ * @file Loads NavBar to frontend
+ * @author Adil Mohammed K adilmohammed2000@outlook.com
+ * @license MIT
+ */
+
 import React, { useState } from 'react';
 import { Divider } from '@material-ui/core';
 import {
@@ -9,6 +15,10 @@ import {
   NavItem,
   Nav,
 } from 'reactstrap';
+/**
+ * Loads the NavBar to the frontend
+ * @return {JSX} Returns NavBar JSX Elements
+ */
 
 const NavBar = (props) => {
   const [isOpen, setIsOpen] = useState(false);

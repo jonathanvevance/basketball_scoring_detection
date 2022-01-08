@@ -22,9 +22,6 @@ class ChartControls extends React.Component {
   componentDidMount() {
     console.log(this.context);
     const { index, changeIndex } = this.context;
-    // this.setState({ newData: this.changeData(this.context.index) });
-    // console.log(this.changeData(index));
-    // console.log(this.state.newData);
     this.drawLineChart(this.changeData(index));
   }
   changeData = (index) => {
@@ -71,10 +68,8 @@ class ChartControls extends React.Component {
   async drawLineChart(dataset) {
     let activeIndex = null;
 
-    console.log(dataset);
     const yAccessor = (d) => d.value;
     const xAccessor = (d) => d['time'];
-    // console.log(xAccessor(dataset[2]));
 
     let dimensions = {
       width: window.innerWidth * 0.8,
@@ -97,9 +92,6 @@ class ChartControls extends React.Component {
       .attr('width', dimensions.width)
       .attr('height', dimensions.height);
 
-    //Log our new Wrapper Variable to the console to see what it looks like
-    // console.log(wrapper);
-
     // 4. Create a Bounding Box
 
     const bounds = wrapper
@@ -120,15 +112,6 @@ class ChartControls extends React.Component {
       .scaleLinear()
       .domain(d3.extent(dataset, yAccessor))
       .range([dimensions.boundedHeight, 0]);
-
-    // const referenceBandPlacement = yScale(0.2);
-    // const referenceBand = bounds
-    //   .append("rect")
-    //   .attr("x", 0)
-    //   .attr("width", dimensions.boundedWidth)
-    //   .attr("y", referenceBandPlacement)
-    //   .attr("height", dimensions.boundedHeight - referenceBandPlacement)
-    //   .attr("fill", "#ffece6");
 
     //6. Convert a datapoints into X and Y value
 

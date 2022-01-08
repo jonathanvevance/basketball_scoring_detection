@@ -1,6 +1,13 @@
+/**
+ * @file Loads the video data displayer
+ */
 import React, { Component } from 'react';
 import VideoContext from './videocontext';
 import { Typography } from '@material-ui/core';
+/**
+ * Retrieves the video data from the context. Gets rendered in the VideoFrame component each time progress is changed
+ * @extends Component
+ */
 
 class VideoData extends Component {
   constructor(props) {
@@ -15,18 +22,15 @@ class VideoData extends Component {
       scoreMessage: this.props.scoreMessage,
     };
   }
+
   componentDidMount() {
-    console.log(this.context);
+    // console.log(this.context);
     this.setState({ currentTime: this.context.videoTime });
     this.setState({ totalTime: this.context.totalTime });
     this.getFrameData();
   }
+
   getFrameData = () => {
-    console.log(this.context.videoTime, this.state.fps);
-    console.log(
-      'current frame without ceil(): ',
-      this.state.fps * this.context.videoTime
-    );
     const currentFrame = Math.ceil(this.state.fps * this.context.videoTime);
     console.log('Current frame: ', currentFrame);
     if (currentFrame < this.state.dataset.length) {

@@ -1,6 +1,17 @@
+/**
+ * @file React Context for Dropdown and chart
+ * @author Adil Mohammed
+ * @copyright Adil Mohammed 2022
+ * @license MIT
+ */
+
 import React, { Component, useContext } from 'react';
 
 const IndexContext = React.createContext();
+/**
+ * Provides the COntext for dropdown and chart
+ * @extends ParentClassNameHereIfAny
+ */
 
 export class IndexProvider extends Component {
   state = {

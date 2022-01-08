@@ -1,3 +1,8 @@
+/**
+ * @file Main App Component
+ * @author Adil Mohammed adilmohammed2000@outlook.com
+ * @license MIT
+ */
 import React from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
@@ -17,6 +22,9 @@ var routes = [
   { path: '/charts', component: VisualsUI },
   { path: '/videoscrub', component: VideoUI },
 ];
+/**
+ * Loads NavBar and Routes to the frontend
+ */
 
 export default class App extends React.Component {
   state = {

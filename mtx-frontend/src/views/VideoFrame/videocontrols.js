@@ -1,3 +1,8 @@
+/**
+ * @file Video Displayer Component
+ * @author Adil Mohammed
+ */
+
 import React, { Component } from 'react';
 import VideoPlayer from 'react-video-player-extended';
 import './styles.css';
@@ -28,12 +33,6 @@ class ShowVideo extends Component {
     console.log(frame, changeFrame);
     console.log(videoTime, changeTime);
   }
-  // const [url] = useState('http://localhost:5000/video');
-  // const [settings, setSettings] = useState(['Title', 'FPS']);
-  // const [isPlaying, setIsPlaying] = useState(false);
-  // const [volume, setVolume] = useState(0.7);
-  // const [timeStart] = useState(0);
-  // const [fps] = useState(30);
 
   controls = [
     'Play',
@@ -62,7 +61,6 @@ class ShowVideo extends Component {
 
   handleProgress = (e) => {
     console.log('Current time: ', e.target.currentTime);
-    console.log(e);
     this.context.changeTime(e.target.currentTime);
     this.props.parentCallback(e.target.currentTime);
   };
@@ -95,37 +93,6 @@ class ShowVideo extends Component {
           fps={this.state.fps}
           viewSettings={this.state.settings}
         />
-        <div className='controls'>
-          {/* <p className='control-list'>
-          Controls:
-          {controlsList.map((control) => {
-            return (
-              <label key={control.id.toString()} htmlFor={control.id}>
-                <input
-                  id={control.id}
-                  type='checkbox'
-                  checked={controls.includes(control.id)}
-                  onChange={handleControlToggle}
-                />{' '}
-                {control.title}
-              </label>
-            );
-          })}
-        </p> */}
-          {/* <p className='control-list'>
-          State:
-          <span style={{ height: 3 }} />
-          controls: {controls.join(', ')}
-          <span style={{ height: 3 }} />
-          isPlaying: {isPlaying.toString()}
-          <span style={{ height: 3 }} />
-          volume: {volume}
-          <span style={{ height: 3 }} />
-          timeStart: {timeStart}
-          <span style={{ height: 3 }} />
-          fps: {fps}
-        </p> */}
-        </div>
       </div>
     );
   }

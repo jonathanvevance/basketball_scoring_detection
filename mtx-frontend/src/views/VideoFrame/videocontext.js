@@ -1,7 +1,15 @@
+/**
+ * @file React Context for VideoFrame
+ * @author Adil Mohammed
+ */
+
 import React, { Component, useContext } from 'react';
 
 const VideoContext = React.createContext();
 
+/**
+ * Context Provider for VideoFrame
+ */
 export class VideoContextProvider extends Component {
   state = {
     frame: '0',

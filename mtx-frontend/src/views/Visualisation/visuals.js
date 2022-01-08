@@ -1,3 +1,9 @@
+/**
+ * @file Visualisation Component. Displays Chart and dropdown
+ * @author Adil Mohammed
+ * @license MIT
+ */
+
 import React, { Component } from 'react';
 import SimpleListMenu from './dropmenu';
 import * as d3 from 'd3';
@@ -5,6 +11,12 @@ import ChartControls from './chart';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import IndexContext, { IndexProvider } from './indexcontext';
 import loader from '../../assets/loader.png';
+
+/**
+ * Calls data from server and displays chart
+ * @extends Component
+ */
+
 class VisualsUI extends Component {
   constructor(props) {
     super(props);
@@ -20,6 +32,10 @@ class VisualsUI extends Component {
   callbackFunction = (childData) => {
     this.setState({ dropIndex: childData });
   };
+  /**
+   * Gets chart data from server using JSON
+   * @return {Array} Returns the chart data
+   */
 
   async getChartData() {
     const dataset = await d3

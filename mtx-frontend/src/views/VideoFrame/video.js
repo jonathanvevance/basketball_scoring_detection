@@ -1,8 +1,13 @@
+/**
+ * @file To Load video and video data
+ * @author Adil Mohammed
+ */
+
 import React, { Component } from 'react';
 import ShowVideo from './videocontrols';
 import VideoData from './videodata';
 import VideoContext, { VideoContextProvider } from './videocontext';
-import { Typography, Grid } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { json, timeParse } from 'd3';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import rim from '../../assets/rim.jpeg';
@@ -27,7 +32,6 @@ class VideoUI extends Component {
   async getChartData() {
     const dataset = await json('http://localhost:4000/getvideodata').then(
       (d) => {
-        const parseDate = timeParse('%s');
         d.forEach((i) => {
           i.time = Number(i.time);
           i.value = Number(i.value);
@@ -36,7 +40,6 @@ class VideoUI extends Component {
         return d;
       }
     );
-    console.log(dataset);
     console.log('fps: ', dataset[0]['fps']);
     this.setState({ lineData: dataset });
     this.setState({ fps: dataset[0]['fps'] });
