@@ -1,3 +1,8 @@
+/**
+ * @file NodeJS server for the video upload and downlaod
+ * @author Adil Mohammed
+ * @license MIT
+ */
 const express = require('express');
 const multer = require('multer');
 const cors = require('cors');
@@ -30,6 +35,11 @@ var upload = multer({
     }
   },
 });
+/**
+ * Fuctions to send python server request
+ * @param {string} word - filename
+ * @return {Promise} Promise to return the response
+ */
 
 function newVideo(word) {
   return new Promise(function (fulfill, reject) {
@@ -68,6 +78,11 @@ function getProbab(name) {
     );
   });
 }
+/**
+ * Gets the file uploaded by the user
+ * @param {FileCallback} file - gets the file
+ * @return {JSON} JSON message about status of file upload
+ */
 
 app.post('/upload', upload.single('file'), async (req, res) => {
   try {
@@ -99,6 +114,10 @@ app.get('/getprobab', async (req, res) => {
     res.status(500).send(err);
   }
 });
+/**
+ * Function to upload video to frontend
+ * @return {File} Returns the file
+ */
 
 app.get('/video', (req, res) => {
   res.sendFile('assets/video.mp4', { root: __dirname });
