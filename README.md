@@ -1,6 +1,5 @@
 <div id="top"></div>
 
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -23,8 +22,6 @@
     <a href="https://github.com/akshaykrishh">Akshay Krishna</a>
   </p>
 </div>
-
-
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -51,8 +48,8 @@
   </ol>
 </details>
 
-
 <!-- ABOUT THE PROJECT -->
+
 ## About The Project
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
@@ -61,21 +58,22 @@ This is Team Aai's submission for MTX Shaastra 2022 Hackathon for problem statem
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
 ### Built With
 
-* [Pytorch](https://pytorch.org//)
-* [React.js](https://reactjs.org/)
+- [Pytorch](https://pytorch.org//)
+- [React.js](https://reactjs.org/)
+- [NodeJS](https://nodejs.org/en/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
 <!-- GETTING STARTED -->
+
 ## Getting Started
 
 These instructions are written for an Ubuntu system. If you have a Windows system, please refer to <a href="https://docs.microsoft.com/en-us/windows/wsl/about"> WSL on Windows</a>.
 
 ### Prerequisites
+
 It is required to bypass password prompts on Ubuntu so that all functions work properly. To do this, you may refer to <a href="https://phpraxis.wordpress.com/2016/09/27/enable-sudo-without-password-in-ubuntudebian/"> this link</a>.
 
 ### Installation
@@ -97,22 +95,69 @@ It is required to bypass password prompts on Ubuntu so that all functions work p
    ```sh
    sudo chmod -R 777 data
    ```
-5. To install NodeJS backend dependencies, from the root directory
+5. To install NodeJS backend dependencies, from the root directory. **If npm and node not installed in your system**, refer the section below
    ```sh
-   cd src/server
+   cd src/server/
    npm install
+   npm install -g serve
    ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
+### Possible Errors
+
+1. /usr/bin/env: ‘bash\r’: No such file or directory (in WSL). To solve,
+
+   ```sh
+   sudo nano /etc/wsl.conf
+   ```
+
+   Add following line to file,
+
+   ```sh
+   [interop]
+   appendWindowsPath = false
+   ```
+
+   Then restart WSL with `wsl --shutdown` in PowerShell.
+
+2. npm and node not installed in Fresh WSL or Ubuntu installation. To install npm and node,
+   ```sh
+   sudo apt-get install curl
+   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+   ```
+   To verify installation, enter: `command -v nvm` .This should return 'nvm', if you receive 'command not found' or no response at all, close your current terminal, reopen it, and try again.  
+   Then to install nodeJS,
+   ```sh
+   nvm install --lts
+   ```
+   Verify that Node.js is installed and the currently default version with: `node --version`. Then verify that you have npm as well, with: `npm --version`
 
 <!-- USAGE EXAMPLES -->
+
 ## Usage
 
 ### Running the web app
 
+1. Go to root of repo folder
+2. In one terminal, from root directory, start Python server by
+   ```sh
+   source .env/bin/activate
+   python3 src/server.py
+   ```
+3. In second terminal, from root directory, start the backend nodeJS server,
+   ```sh
+   node src/server/server.js
+   ```
+4. In third Terminal, from root directory, start the frontend UI by,
+   ```sh
+   serve -s src/build
+   ```
+   Go to link shown in the terminal. Or open a browser and use this [link](http://localhost:3000)
+
 ### Evaluating the model on some dataset:
-1. Place the dataset in data/evaluation/eval_dataset folder. The folder structure expected is:
+
+1.  Place the dataset in data/evaluation/eval_dataset folder. The folder structure expected is:
 
         eval_dataset
             ├── scoring_clips
@@ -124,19 +169,19 @@ It is required to bypass password prompts on Ubuntu so that all functions work p
                 ├── clip_6.mp4
                 ├── ...
 
-2. 2. From the root directory, activate the python venv by running:
+2.  2. From the root directory, activate the python venv by running:
     ```sh
     source .env/bin/activate
     ```
-3. Edit the src/configs/eval_config.py file with the required evaluation settings.
-4. From the root directory, start training by running:
+3.  Edit the src/configs/eval_config.py file with the required evaluation settings.
+4.  From the root directory, start training by running:
     ```sh
     python src/evaluate.py
     ```
 
 ### Training the model on some dataset:
 
-1. Place the dataset in data/training/hackolympics_data folder. The folder structure expected is:
+1.  Place the dataset in data/training/hackolympics_data folder. The folder structure expected is:
 
         hackolympics_data
             ├── scoring_clips
@@ -148,64 +193,64 @@ It is required to bypass password prompts on Ubuntu so that all functions work p
                 ├── clip_6.mp4
                 ├── ...
 
-2. From the root directory, activate the python venv by running:
+2.  From the root directory, activate the python venv by running:
     ```sh
     source .env/bin/activate
     ```
-3. From the root directory, prepare the dataset by running:
+3.  From the root directory, prepare the dataset by running:
+
     ```sh
     python src/make_dataset.py --videos --yolov3 --split
     ```
 
-4. Edit the src/configs/train_config.py file with the required training settings.
-5. From the root directory, start training by running:
+4.  Edit the src/configs/train_config.py file with the required training settings.
+5.  From the root directory, start training by running:
     ```sh
     python src/train.py
     ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
 <!-- ROADMAP -->
+
 ## Roadmap
 
-- [] Interactive video player in the web application. 
+- [] Interactive video player in the web application.
 - [] Inference speedup using TensorRT on GPU and Intel OpenVino on Intel CPU.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
 <!-- LICENSE -->
+
 ## License
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
 <!-- CONTACT -->
+
 ## Contact Us
 
 <!-- Jonathan Ve Vance - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com -->
+
 1. Jonathan Ve Vance - [Linkedin](https://linkedin.com/in/jonathanvevance) - jonathanvevance@gmail.com
 2. Irfan Thayyil - [LinkedIn](https://www.linkedin.com/in/mohammed-irfan-thayyil-34311a166) -irfanthayyil@gmail.com
 3. Adil Muhammed K - [LinkedIn](https://www.linkedin.com/in/adil-mohammed-065603155) - adilmohammed2000@outlook.com
 4. Akshay Krishna - [LinkedIn](https://www.linkedin.com/in/akshaykrishh/) - akshaykrishnakanth@gmail.com
 
-
 Project Link: [https://github.com/jonathanvevance/basketall_scoring_detection](https://github.com/jonathanvevance/basketall_scoring_detection)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
 <!-- ACKNOWLEDGMENTS -->
+
 ## Acknowledgments
 
-* []() We obtained pretrained weights for basket (hoop) detector yolov3 model from <a href = "https://github.com/SkalskiP/ILearnDeepLearning.py"> this great repository</a>. Huge shoutout to the author.
+- []() We obtained pretrained weights for basket (hoop) detector yolov3 model from <a href = "https://github.com/SkalskiP/ILearnDeepLearning.py"> this great repository</a>. Huge shoutout to the author.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
-
 <!-- MARKDOWN LINKS & IMAGES -->
+
 [product-screenshot]: images/screenshot.png
