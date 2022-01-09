@@ -12,7 +12,7 @@
   <p align="center">
     Using Yolov3 and Multi Instance Learning
     <br />
-    <a href="https://github.com/jonathanvevance/basketball_scoring_detection"><strong>Explore the docs »</strong></a>
+    <a href="#about-the-project"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://github.com/irfanthayyil">Irfan Thayyil</a>
@@ -53,7 +53,7 @@
 ## About The Project
 
 <!-- [![Product Name Screen Shot][product-screenshot]](https://example.com) -->
-[![Product Name Screen Shot][product-screenshot]](https://github.com/jonathanvevance/basketball_scoring_detection)
+[![Product Name Screen Shot][product-screenshot]](#about-the-project)
 
 This is Team Aai's submission for MTX Shaastra 2022 Hackathon for problem statement #1. We have used a <a href = "https://arxiv.org/abs/1804.02767"> yolov3 objection detection model </a> for detecting basketball hoops in each frame, and after cropping out the basket, we run a simple convolutional network which is trained using <a href = "https://en.wikipedia.org/wiki/Multiple_instance_learning"> multi instance learning </a>.
 
