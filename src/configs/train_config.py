@@ -10,13 +10,11 @@ ES_PATIENCE = 5
 ES_DELTA = 0
 
 # Data, saving, etc settings
-DATASET_FOLDER = '/mnt/d/MTX_hackathon/backuppp/data/training/multi_instance/final'
+DATASET_FOLDER = 'data/training/final'
 SAVE_MODEL = True
-SAVE_MODEL_PTH = '/mnt/d/MTX_hackathon/best__.pt'
+SAVE_MODEL_PTH = 'models/best_.pt'
 LOAD_MODEL = True
-LOAD_MODEL_PTH = '/mnt/d/MTX_hackathon/best.pt'
+LOAD_MODEL_PTH = 'models/best.pt'
 
 # Others
 EVALUATE_ON_TEST_SET = True
-
-#! TODO: change paths to repo folder structure

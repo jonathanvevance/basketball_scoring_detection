@@ -74,13 +74,35 @@ def get_all_video_probabs(model, dataloader, device, max_video_frames):
     return all_scores, all_labels, all_paths
 
 
+def get_optimal_threshold(model, val_path, transform, max_video_frames, batch_size, device):
+    """Returns optimal threshold based on (TPR - FPR) score on validation set."""
+
+    # get dataset, dataloader
+    dataset = eval_folder(val_path, transform, max_video_frames)
+    dataloader = DataLoader(dataset = dataset, batch_size = batch_size, shuffle = True)
+
+    # criteria
+    scores, labels, paths = get_all_video_probabs(model, dataloader, device, max_video_frames)
+
+    # account for (basket) undetected videos (tjese wo;; )
+    augment_scores, augment_labels, augment_paths = dataset.get_basket_undetected_videos()
+    scores, labels, paths = scores + augment_scores, labels  + augment_labels, paths + augment_paths
+
+    # decide optimal threshold (TPR - FPR)
+    fpr, tpr, thresholds = roc_curve(labels, scores)
+    optimal_idx = np.argmax(tpr - fpr)
+    optimal_threshold = thresholds[optimal_idx]
+
+    return optimal_threshold
+
+
 def print_classification_metrics(
-    model, dataset_path, transform, max_video_frames, batch_size, device, save_results_dir = None, threshold = None
+    model, test_path, transform, max_video_frames, batch_size, device, save_results_dir = None, threshold = None, val_path = None
 ):
     """Prints and saves classification metrics - ROC curve, AUROC score, predictions as csv file etc."""
 
     # get dataset, dataloader
-    dataset = eval_folder(dataset_path, transform, max_video_frames)
+    dataset = eval_folder(test_path, transform, max_video_frames)
     dataloader = DataLoader(dataset = dataset, batch_size = batch_size, shuffle = True)
 
     # criteria
@@ -99,11 +121,8 @@ def print_classification_metrics(
     if save_results_dir:
         plt.savefig(os.path.join(save_results_dir, 'roc_curve.jpg'))
 
-    # decide optimal threshold (TPR - FPR)
-    if threshold is None:
-        fpr, tpr, thresholds = roc_curve(labels, scores)
-        optimal_idx = np.argmax(tpr - fpr)
-        threshold = thresholds[optimal_idx]
+    if threshold is None: # when calling from src/train.py
+        threshold = get_optimal_threshold(model, val_path, transform, max_video_frames, batch_size, device)
 
     # get classification report
     print("Threshold is", threshold)
@@ -115,7 +134,7 @@ def print_classification_metrics(
     if save_results_dir:
 
         results_dict = {
-            'dataset': dataset_path,
+            'dataset': test_path,
             'auroc_score': auroc_score,
             'threshold': threshold,
             'classification_report': report
