@@ -76,6 +76,28 @@ These instructions are written for an Ubuntu system. If you have a Windows syste
 
 It is required to bypass password prompts on Ubuntu so that all functions work properly. To do this, you may refer to <a href="https://phpraxis.wordpress.com/2016/09/27/enable-sudo-without-password-in-ubuntudebian/"> this link</a>.
 
+### Docker Usage (In progress)
+
+1. Clone the repo
+   ```sh
+   git clone https://github.com/jonathanvevance/basketall_scoring_detection.git
+   ```
+1. Change to docker branch
+   ```sh
+   git checkout docker
+   ```
+2. From root of repo, Build docker image
+   ```sh
+   docker build . -t aai-mtx
+   ```
+3. Run docker container
+   ```sh
+   docker run --gpus all -p 3000:3000 aai-mtx
+   ```
+ 4. Load the UI by using the [link](http://localhost:3000)
+
+- [] Has to work on solving the issue with backend not connecting with frontend
+
 ### Installation
 
 1. Clone the repo
