@@ -86,4 +86,4 @@ RUN cd src/server \
 EXPOSE 4000
 
 COPY docker_script.sh docker_script.sh
-# CMD ./docker_script.sh
+CMD ./docker_script.sh
