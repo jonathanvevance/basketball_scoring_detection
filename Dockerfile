@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM nvidia/cuda:10.2-base AS base
+FROM nvidia/cuda:11.0-base AS base
 CMD nvidia-smi
 
 #set up environment
@@ -10,7 +10,9 @@ RUN apt-get update && apt-get install --no-install-recommends --no-install-sugge
     python3-pip \
     python3-venv \
     dos2unix \
-	ffmpeg libsm6 libxext6
+    ffmpeg \
+    libsm6 \
+    libxext6
 
 FROM base AS dependencies
 WORKDIR /app
@@ -70,7 +72,7 @@ COPY src/yolov3_helper/detect.py src/yolov3_helper/yolov3/detect.py
 ### Solution 5 - THIS WORKED
 ENV NVM_DIR /root/.nvm
 RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.39.0/install.sh | bash
-ENV NODE_VERSION v8.1.2
+ENV NODE_VERSION v16.13.0
 RUN /bin/bash -c "source $NVM_DIR/nvm.sh && nvm install $NODE_VERSION && nvm use --delete-prefix $NODE_VERSION"
 
 ENV NODE_PATH $NVM_DIR/versions/node/$NODE_VERSION/lib/node_modules
@@ -80,10 +82,12 @@ ENV PATH      $NVM_DIR/versions/node/$NODE_VERSION/bin:$PATH
 RUN node --version
 RUN npm --version
 
-RUN cd src/server \
-    npm install && npm install -g serve
+RUN cd src/server/ && npm install && npm install -g serve
 
 EXPOSE 4000
+EXPOSE 3000
+EXPOSE 5000
 
 COPY docker_script.sh docker_script.sh
+RUN chmod +x docker_script.sh
 CMD ./docker_script.sh
