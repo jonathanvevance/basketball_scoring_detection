@@ -72,7 +72,7 @@ This is Team Aai's submission for MTX Shaastra 2022 Hackathon for problem statem
 
 ## Getting Started
 
-These instructions are written for an Ubuntu system. If you have a Windows system, please refer to <a href="https://docs.microsoft.com/en-us/windows/wsl/about"> WSL on Windows</a>. These instructions have been tested using WSL on a Windows machine. If you want to work with <a href = "https://www.docker.com/"> Docker </a> containers, switch to <a href = "https://github.com/jonathanvevance/basketball_scoring_detection/tree/docker"> docker branch </a>.
+These instructions are written for an Ubuntu system. If you have a Windows system, please refer to <a href="https://docs.microsoft.com/en-us/windows/wsl/about"> WSL on Windows</a>. These instructions have been tested using WSL on a Windows machine. If you want to work with <a href = "https://www.docker.com/"> Docker </a> containers, switch to <a href = "https://github.com/jonathanvevance/basketball_scoring_detection/tree/docker"> docker branch </a> (Work in Progress) .
 
 ### Prerequisites
 
