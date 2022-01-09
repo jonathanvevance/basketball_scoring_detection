@@ -70,7 +70,10 @@ def train():
             test_transform,
             cfg.MAX_VIDEO_FRAMES,
             cfg.BATCH_SIZE,
-            cfg.DEVICE
+            cfg.DEVICE,
+            save_results_dir = None,
+            threshold = None,
+            val_path = os.path.join(cfg.DATASET_FOLDER, 'val'),
         )
 
 
