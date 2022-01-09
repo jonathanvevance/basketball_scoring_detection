@@ -64,6 +64,7 @@ This is Team Aai's submission for MTX Shaastra 2022 Hackathon for problem statem
 - [Pytorch](https://pytorch.org//)
 - [React.js](https://reactjs.org/)
 - [NodeJS](https://nodejs.org/en/)
+- [Docker](https://www.docker.com/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -71,7 +72,7 @@ This is Team Aai's submission for MTX Shaastra 2022 Hackathon for problem statem
 
 ## Getting Started
 
-These instructions are written for an Ubuntu system. If you have a Windows system, please refer to <a href="https://docs.microsoft.com/en-us/windows/wsl/about"> WSL on Windows</a>. These instructions have been tested using WSL on a Windows machine. If you want to work with <a href = "https://www.docker.com/"> Docker </a> containers, switch to <a href = "https://github.com/jonathanvevance/basketball_scoring_detection/blob/docker"> docker branch </a>.
+These instructions are written for an Ubuntu system. If you have a Windows system, please refer to <a href="https://docs.microsoft.com/en-us/windows/wsl/about"> WSL on Windows</a>. These instructions have been tested using WSL on a Windows machine. If you want to work with <a href = "https://www.docker.com/"> Docker </a> containers, switch to <a href = "https://github.com/jonathanvevance/basketball_scoring_detection/tree/docker"> docker branch </a>.
 
 ### Prerequisites
 
@@ -216,6 +217,7 @@ It is required to bypass password prompts on Ubuntu so that all functions work p
 
 ## Roadmap
 
+- [] Get Docker UI to properly work with backend
 - [] Interactive video player with seek bar in the web application.
 - [] Inference speedup using TensorRT on GPU and Intel OpenVino on Intel CPU.
 
