@@ -123,4 +123,4 @@ app.get('/video', (req, res) => {
   res.sendFile('assets/video.mp4', { root: __dirname });
 });
 
-app.listen(5000, () => console.log('Server Running...'));
+app.listen(5000, '0.0.0.0', () => console.log('Server Running...'));

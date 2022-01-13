@@ -89,4 +89,4 @@ def getVideoProbab():
 if __name__ == "__main__":
     """Runs the server at port 4000"""
     CORS(app)
-    app.run(port=4000, debug=True)
+    app.run(host='0.0.0.0',port=4000, debug=True)
