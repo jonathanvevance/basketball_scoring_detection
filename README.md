@@ -76,27 +76,43 @@ These instructions are written for an Ubuntu system. If you have a Windows syste
 
 It is required to bypass password prompts on Ubuntu so that all functions work properly. To do this, you may refer to <a href="https://phpraxis.wordpress.com/2016/09/27/enable-sudo-without-password-in-ubuntudebian/"> this link</a>.
 
-### Docker Usage (In progress)
+### Docker Usage
 
 1. Clone the repo
    ```sh
    git clone https://github.com/jonathanvevance/basketall_scoring_detection.git
    ```
-1. Change to docker branch
+2. Change to docker branch
    ```sh
    git checkout docker
    ```
-2. From root of repo, Build docker image
+3. From root of repo, Build docker image
    ```sh
    docker build . -t aai-mtx
    ```
-3. Run docker container
+4. Run docker container
    ```sh
-   docker run --gpus all -p 3000:3000 aai-mtx
+   docker run --gpus all -p 3000:3000 -p 4000:4000 -p 5000:5000 --name basketball aai-mtx
    ```
- 4. Load the UI by using the [link](http://localhost:3000)
+5. Load the UI by using the [link](http://localhost:3000)
+6. To check logs of docker container,
+   ```sh
+   docker logs basketball
+   ```
+7. To stop docker container,
+   ```sh
+   docker stop basketball
+   ```
+8. To remove container,
+   ```sh
+   docker rm basketball
+   ```
 
-- [] Has to work on solving the issue with backend not connecting with frontend
+#### Possible error in Docker
+
+1. docker: Error response from daemon: Ports are not available: listen tcp 0.0.0.0:3000: bind: An attempt was made to access a socket in a way forbidden by its access permissions.  
+   Try this solution: [Solution](https://stackoverflow.com/questions/57891647/port-issue-with-docker-for-windows/66865808#66865808)  
+   Or close any programs using these ports: 3000,4000,5000
 
 ### Installation
 
