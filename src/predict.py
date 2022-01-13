@@ -127,7 +127,7 @@ def predict():
     # run basket detection
     commands = [
         "cd ./src/yolov3_helper",
-        "sudo bash predict.sh" + " ../../../" + FRAMES_UPLOAD_DIRECTORY + " ../../../" + FRAMES_UPLOAD_DIRECTORY,
+        "bash predict.sh" + " ../../../" + FRAMES_UPLOAD_DIRECTORY + " ../../../" + FRAMES_UPLOAD_DIRECTORY,
     ]
     os.system(";".join(commands))  # bounding boxes saved to src/yolov3_helper/yolov3/output/bounding_boxes.json
 

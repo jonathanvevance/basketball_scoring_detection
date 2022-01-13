@@ -56,7 +56,7 @@ def prepare_eval_dataset():
 
             commands = [
                 'cd ./src/yolov3_helper',
-                'sudo bash predict.sh' + ' ../../../' + video_frames_dir + ' ../../../' + video_frames_dir
+                'bash predict.sh' + ' ../../../' + video_frames_dir + ' ../../../' + video_frames_dir
             ]
             os.system(';'.join(commands)) # this stores json in video_frames_dir itself
 

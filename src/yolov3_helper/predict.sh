@@ -1,5 +1,4 @@
 cd yolov3
-source .env/bin/activate
 
 python3 detect.py \
   --cfg cfg/basketball.cfg \
