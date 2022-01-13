@@ -78,7 +78,11 @@ It is required to bypass password prompts on Ubuntu so that all functions work p
 
 ### Docker Usage
 
-1. Clone the repo
+#### Building image from Dockerfile
+
+(This method uses less data of about 1.6 GB but will need to build from scratch)
+
+1. Clone the repo.
    ```sh
    git clone https://github.com/jonathanvevance/basketall_scoring_detection.git
    ```
@@ -104,6 +108,32 @@ It is required to bypass password prompts on Ubuntu so that all functions work p
    docker stop basketball
    ```
 8. To remove container,
+   ```sh
+   docker rm basketball
+   ```
+
+#### Pulling from Docker Hub
+
+(Warning: This image is about 5.6 GB. Use this method if you have fast network and enough data)
+
+1. Pull docker image.
+   ```sh
+   docker pull adilmohammed2000/aai-mtx
+   ```
+2. Run docker container
+   ```sh
+   docker run --gpus all -p 3000:3000 -p 4000:4000 -p 5000:5000 --name basketball adilmohammed2000/aai-mtx
+   ```
+3. Load the UI by using the [link](http://localhost:3000)
+4. To check logs of docker container,
+   ```sh
+   docker logs basketball
+   ```
+5. To stop docker container,
+   ```sh
+   docker stop basketball
+   ```
+6. To remove container,
    ```sh
    docker rm basketball
    ```
