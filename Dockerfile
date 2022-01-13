@@ -36,7 +36,8 @@ WORKDIR /app
 RUN cd src/yolov3_helper/yolov3 \
     python3 detect.py --cfg cfg/basketball.cfg --weights ../basketball/weights/best.pt --source ../basketball/samples --names data/basketball.names --save-txt --classes 1
 COPY src/yolov3_helper/detect.py src/yolov3_helper/yolov3/detect.py
-
+# Downloading resnet18 pretrained weights
+RUN python3 -c "from src.models.conv_net import simpleConvNet; model = simpleConvNet()"
 ### From readme
 # RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
 # RUN nvm install --lts
