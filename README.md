@@ -63,6 +63,7 @@ This is Team Aai's submission for MTX Shaastra 2022 Hackathon for problem statem
 - [Pytorch](https://pytorch.org//)
 - [React.js](https://reactjs.org/)
 - [NodeJS](https://nodejs.org/en/)
+- [Docker](https://www.docker.com/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
