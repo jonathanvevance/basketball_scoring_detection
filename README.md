@@ -69,15 +69,7 @@ This is Team Aai's submission for MTX Shaastra 2022 Hackathon for problem statem
 
 <!-- GETTING STARTED -->
 
-## Getting Started
-
-These instructions are written for an Ubuntu system. If you have a Windows system, please refer to <a href="https://docs.microsoft.com/en-us/windows/wsl/about"> WSL on Windows</a>.
-
-### Prerequisites
-
-It is required to bypass password prompts on Ubuntu so that all functions work properly. To do this, you may refer to <a href="https://phpraxis.wordpress.com/2016/09/27/enable-sudo-without-password-in-ubuntudebian/"> this link</a>.
-
-### Docker Usage
+## Getting Started: Docker
 
 #### Building image from Dockerfile
 
@@ -144,7 +136,16 @@ It is required to bypass password prompts on Ubuntu so that all functions work p
 1. docker: Error response from daemon: Ports are not available: listen tcp 0.0.0.0:3000: bind: An attempt was made to access a socket in a way forbidden by its access permissions.  
    Try this solution: [Solution](https://stackoverflow.com/questions/57891647/port-issue-with-docker-for-windows/66865808#66865808) or close any programs using these ports: 3000,4000,5000
 
-### Installation
+<br/><br/>
+## Getting Started: Ubuntu
+
+These instructions are written for an Ubuntu system. If you have a Windows system, please refer to <a href="https://docs.microsoft.com/en-us/windows/wsl/about"> WSL on Windows</a>.
+
+### Prerequisites
+
+It is required to bypass password prompts on Ubuntu so that all functions work properly. To do this, you may refer to <a href="https://phpraxis.wordpress.com/2016/09/27/enable-sudo-without-password-in-ubuntudebian/"> this link</a>.
+
+### Installation 
 
 1. Clone the repo
    ```sh
