@@ -52,7 +52,7 @@
 
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![Product Name Screen Shot][product-screenshot]](#about-the-project)
 
 This is Team Aai's submission for MTX Shaastra 2022 Hackathon for problem statement #1. We have used a <a href = "https://arxiv.org/abs/1804.02767"> yolov3 objection detection model </a> for detecting basketball hoops in each frame, and after cropping out the basket, we run a simple convolutional network which is trained using <a href = "https://en.wikipedia.org/wiki/Multiple_instance_learning"> multi instance learning </a>.
 
@@ -321,4 +321,4 @@ Project Link: [https://github.com/jonathanvevance/basketall_scoring_detection](h
 
 <!-- MARKDOWN LINKS & IMAGES -->
 
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: readme_images/app_screenshot.png
