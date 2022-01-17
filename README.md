@@ -71,7 +71,7 @@ This is Team Aai's submission for MTX Shaastra 2022 Hackathon for problem statem
 
 ## Getting Started: Docker
 
-#### Building image from Dockerfile
+### Building image from Dockerfile
 
 (This method uses less data of about 1.6 GB but will need to build from scratch)
 
@@ -105,7 +105,7 @@ This is Team Aai's submission for MTX Shaastra 2022 Hackathon for problem statem
    docker rm basketball
    ```
 
-#### Pulling from Docker Hub
+### Pulling from Docker Hub
 
 (Warning: This image is about 5.6 GB. Use this method if you have fast network and enough data)
 
@@ -131,7 +131,7 @@ This is Team Aai's submission for MTX Shaastra 2022 Hackathon for problem statem
    docker rm basketball
    ```
 
-#### Possible error in Docker
+### Possible error in Docker
 
 1. docker: Error response from daemon: Ports are not available: listen tcp 0.0.0.0:3000: bind: An attempt was made to access a socket in a way forbidden by its access permissions.  
    Try this solution: [Solution](https://stackoverflow.com/questions/57891647/port-issue-with-docker-for-windows/66865808#66865808) or close any programs using these ports: 3000,4000,5000
