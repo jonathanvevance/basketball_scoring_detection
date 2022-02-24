@@ -217,7 +217,6 @@ It is required to bypass password prompts on Ubuntu so that all functions work p
 
 ## Roadmap
 
-- [] Get Docker UI to properly work with backend
 - [] Interactive video player with seek bar in the web application.
 - [] Inference speedup using TensorRT on GPU and Intel OpenVino on Intel CPU.
 
